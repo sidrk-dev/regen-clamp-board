@@ -1,0 +1,64 @@
+* Brake latch test (rev C). Delete the four interlock lines (R34, Q10, R35, Q11) to see the latch rev B could hit:
+* the PSU then keeps feeding about 24 A into the brake resistor after the regen pulse ends.
+* with interlock: 48 V supply, RV1 at minimum, worst-case 1% sense resistors (release below VIN)
+.model DSS D(Is=1e-6 N=1.5 Rs=0.05 Cjo=100p)
+.model D4148 D(Is=2.5n N=1.75 Rs=0.6 Cjo=2p)
+.model QN NPN(Is=1e-14 Bf=150 Vaf=100 Cje=8p Cjc=4p Tf=0.3n)
+.model QP PNP(Is=1e-14 Bf=150 Vaf=100 Cje=10p Cjc=5p Tf=0.4n)
+.model NFET VDMOS(nchan Vto=3 Kp=60 Rd=2m Rs=1m Cgdmax=1.5n Cgdmin=60p Cgs=6n Cjo=1n Rb=5m)
+.model SWI SW(Vt=0.5 Vh=0.1 Ron=2m Roff=1meg)
+VPSU vin 0 48
+* ideal diode Q1||Q7: on while DGATE is up; LM74800 DGATE = A + 11 V when forward, = A within 0.5 us of reverse
+SID vin vout dg_on 0 SWI
+DBODY vin vout DSS
+BDG dgctl 0 V = V(vin)-V(vout) > -0.0045 ? 1 : 0
+RDGF dgctl dg_on 2.8k
+CDGF dg_on 0 1n
+BDGATE dgate 0 V = V(vin) + 11*V(dg_on)
+Cbulk vout 0 1880u IC=47.9
+Cmotor vout 0 600u IC=47.9
+IREGEN 0 vout PWL(0 0 10m 0 10.1m 15 50m 15 50.1m 0)
+VREG vreg 0 11.6
+R10 vout sp 99000
+R11 sp 0 20200
+R12 sp 0 222200
+R13 vg sp 504900
+R14 vin sn 101000
+R15 sn 0 19800
+R16 trim sn 148500
+VTRIM trim 0 4.69
+VOS sn snx -0.009
+BCMPA cmpctl 0 V = V(sp) > V(snx) ? 0 : 1
+RCF cmpctl cmpd 1k
+CCF cmpd 0 300p
+SOA cmpout 0 cmpd 0 OCSW
+.model OCSW SW(Vt=0.5 Ron=60 Roff=100meg)
+R17 vreg pu 4.7k
+RTH pu cmpout 0.01
+R27 cmpout 0 100k
+Q5 vreg cmpout vg QN
+Q6 0 cmpout vg QP
+R18 vg gate 10
+R28 vg gate2 10
+R29 gate2 0 10k
+M9 drn gate2 0 0 NFET
+R19 gate 0 10k
+M3 drn gate 0 0 NFET
+RBR vout brl 2
+LBR brl drn 1u
+D4 drn vout DSS
+
+* brake interlock: Q10 (MMBT5401) senses DGATE above VIN, Q11 (MMBT3904) clamps CMP_OUT
+R34 dgate ilke 47k
+Q10 ilkb vin ilke QP
+R35 ilkb 0 100k
+Q11 cmpout ilkb 0 QN
+
+.tran 2u 150m 0 2u uic
+.control
+run
+meas tran ipsu_after AVG i(VPSU) from=100m to=150m
+meas tran gate_after AVG v(gate) from=100m to=150m
+meas tran rise_max MAX v(vout) from=10m to=60m
+.endc
+.end

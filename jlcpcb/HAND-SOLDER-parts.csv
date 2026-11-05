@@ -1,0 +1,10 @@
+Qty,Designator,Part,LCSC Part #
+5,"C7,C8,C15,C16,C17",470uF 63V,C165665
+1,J1,XT60PW-M (from PSU),C98732
+1,J2,XT30PW-F (out 1: arm bus),C2913282
+1,J3,XT30PW-F (out 2: gripper),C2913282
+1,J4,XT30PW-F (out 3: spare),C2913282
+1,J5,"XT60PW-F (brake resistor, 2 ohm 200 W)",C428722
+1,J11,Brake resistor thermal switch (NC) or jumper,C492401
+1,RV1,10k trim: brake threshold,C58159
+2,"off-board, in brake resistor lead (1 + spare)","Q136 thermal fuse, 136 C, 25 A, DC 120 V",C22396303

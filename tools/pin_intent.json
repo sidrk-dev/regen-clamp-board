@@ -1,0 +1,321 @@
+{
+ "_about": "What each terminal must connect to, by FUNCTION, written from the circuit's purpose and independent of pin numbers. check_parts.py joins this with the blind datasheet ledger.",
+ "numbered": {
+  "U1": {
+   "lcsc": "C3215600",
+   "funcs": {
+    "DGATE": "DGATE",
+    "A": "VIN",
+    "VSNS": "VIN",
+    "SW": "OV_TOP",
+    "OV": "OV",
+    "EN/UVLO": "EN",
+    "GND": "GND",
+    "HGATE": "HGATE",
+    "OUT": "VOUT",
+    "VS": "MID",
+    "CAP": "CAP",
+    "C": "MID",
+    "RTN": null
+   }
+  },
+  "U2": {
+   "lcsc": "C3113",
+   "funcs": {
+    "REF": "REF_FB",
+    "K": "REF_K",
+    "A": "GND"
+   }
+  },
+  "U3": {
+   "lcsc": "C7955",
+   "funcs": {
+    "OUT1": "CMP_OUT",
+    "IN1-": "SENSE_N",
+    "IN1+": "SENSE_P",
+    "GND": "GND",
+    "IN2+": "LED_REF",
+    "IN2-": "STRETCH",
+    "OUT2": "LEDR_K",
+    "VCC": "VREG"
+   }
+  },
+  "Q1": {
+   "lcsc": "C410926",
+   "funcs": {
+    "G": "DG1",
+    "D": "MID",
+    "S": "VIN"
+   }
+  },
+  "Q7": {
+   "lcsc": "C410926",
+   "funcs": {
+    "G": "DG7",
+    "D": "MID",
+    "S": "VIN"
+   }
+  },
+  "Q2": {
+   "lcsc": "C410926",
+   "funcs": {
+    "G": "HG2",
+    "D": "MID",
+    "S": "VOUT"
+   }
+  },
+  "Q8": {
+   "lcsc": "C410926",
+   "funcs": {
+    "G": "HG8",
+    "D": "MID",
+    "S": "VOUT"
+   }
+  },
+  "Q3": {
+   "lcsc": "C410926",
+   "funcs": {
+    "G": "BRK_GATE",
+    "D": "BRK_DRAIN",
+    "S": "GND"
+   }
+  },
+  "Q9": {
+   "lcsc": "C410926",
+   "funcs": {
+    "G": "BRK_GATE2",
+    "D": "BRK_DRAIN",
+    "S": "GND"
+   }
+  },
+  "Q4": {
+   "lcsc": "C2145",
+   "funcs": {
+    "B": "REF_K",
+    "E": "VREG",
+    "C": "RAIL_C"
+   }
+  },
+  "Q5": {
+   "lcsc": "C20526",
+   "funcs": {
+    "B": "CMP_OUT",
+    "E": "VG",
+    "C": "VREG"
+   }
+  },
+  "Q6": {
+   "lcsc": "C105432",
+   "funcs": {
+    "B": "CMP_OUT",
+    "E": "VG",
+    "C": "GND"
+   }
+  },
+  "Q10": {
+   "lcsc": "C8326",
+   "funcs": {
+    "B": "VIN",
+    "E": "ILK_E",
+    "C": "ILK_B"
+   }
+  },
+  "Q11": {
+   "lcsc": "C20526",
+   "funcs": {
+    "B": "ILK_B",
+    "E": "GND",
+    "C": "CMP_OUT"
+   }
+  },
+  "Q12": {
+   "lcsc": "C105432",
+   "funcs": {
+    "B": "THB",
+    "E": "PU_TH",
+    "C": "THC"
+   }
+  },
+  "RV1": {
+   "lcsc": "C58159",
+   "funcs": {
+    "END_CW": "VREG",
+    "WIPER": "TRIM",
+    "END_CCW": "TRIM_LO"
+   }
+  }
+ },
+ "two_terminal": {
+  "_pads": "KiCad library convention used by these footprints: Device:D and Device:LED pad 1 = cathode, pad 2 = anode.",
+  "D1": {
+   "lcsc": "C42371549",
+   "K": "VIN",
+   "A": "GND"
+  },
+  "D2": {
+   "lcsc": "C42371549",
+   "K": "VOUT",
+   "A": "GND"
+  },
+  "D4": {
+   "lcsc": "C14996",
+   "K": "VOUT",
+   "A": "BRK_DRAIN"
+  },
+  "D7": {
+   "lcsc": "C14996",
+   "K": "VOUT",
+   "A": "BRK_DRAIN"
+  },
+  "D5": {
+   "lcsc": "C2128",
+   "K": "STR_D",
+   "A": "VG"
+  },
+  "D3": {
+   "lcsc": "C2297",
+   "K": "GND",
+   "A": "LEDG_A"
+  },
+  "D6": {
+   "lcsc": "C2286",
+   "K": "LEDR_K",
+   "A": "LEDR_A"
+  },
+  "D8": {
+   "lcsc": "C2290",
+   "K": "GND",
+   "A": "LEDV_A"
+  },
+  "D9": {
+   "lcsc": "C2296",
+   "K": "GND",
+   "A": "LEDT_A"
+  },
+  "D10": {
+   "lcsc": "C2128",
+   "K": "REF_K",
+   "A": "VREG"
+  },
+  "D11": {
+   "lcsc": "C2932744",
+   "K": "HGATE",
+   "A": "VOUT"
+  }
+ },
+ "polarized_pads": {
+  "_pads": "Pad 1 = negative, pad 2 = positive on these AMASS footprints (their silkscreen marks); C7 etc: Device:C_Polarized pad 1 = positive.",
+  "J1": {
+   "lcsc": "C98732",
+   "plus": [
+    "2",
+    "VIN"
+   ],
+   "minus": [
+    "1",
+    "GND"
+   ]
+  },
+  "J2": {
+   "lcsc": "C2913282",
+   "plus": [
+    "2",
+    "VOUT"
+   ],
+   "minus": [
+    "1",
+    "GND"
+   ]
+  },
+  "J3": {
+   "lcsc": "C2913282",
+   "plus": [
+    "2",
+    "VOUT"
+   ],
+   "minus": [
+    "1",
+    "GND"
+   ]
+  },
+  "J4": {
+   "lcsc": "C2913282",
+   "plus": [
+    "2",
+    "VOUT"
+   ],
+   "minus": [
+    "1",
+    "GND"
+   ]
+  },
+  "C7": {
+   "lcsc": "C165665",
+   "plus": [
+    "1",
+    "VOUT"
+   ],
+   "minus": [
+    "2",
+    "GND"
+   ]
+  },
+  "C8": {
+   "lcsc": "C165665",
+   "plus": [
+    "1",
+    "VOUT"
+   ],
+   "minus": [
+    "2",
+    "GND"
+   ]
+  },
+  "C15": {
+   "lcsc": "C165665",
+   "plus": [
+    "1",
+    "VOUT"
+   ],
+   "minus": [
+    "2",
+    "GND"
+   ]
+  },
+  "C16": {
+   "lcsc": "C165665",
+   "plus": [
+    "1",
+    "VOUT"
+   ],
+   "minus": [
+    "2",
+    "GND"
+   ]
+  },
+  "C17": {
+   "lcsc": "C165665",
+   "plus": [
+    "1",
+    "VIN"
+   ],
+   "minus": [
+    "2",
+    "GND"
+   ]
+  }
+ },
+ "switch": {
+  "SW1": {
+   "lcsc": "C431540",
+   "COM": "EN",
+   "THROW_GND": "GND",
+   "THROW_OPEN": null
+  }
+ },
+ "unpolarized_not_checked": [
+  "J5 (brake resistor, either way round)",
+  "J11 (2-pin thermal loop)",
+  "resistors and non-polarized capacitors"
+ ]
+}

@@ -1,0 +1,8 @@
+[["load_toolset",{"name":["sch_export","verification","design_review","manufacturing"]}],
+ ["run_erc",{"schematic":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_sch","severity":"warning"}],
+ ["run_drc",{"board":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_pcb","refill_zones":true,"limit":1,"severity":"error"}],
+ ["run_design_review",{"schematic":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_sch","board":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_pcb","severity_filter":"error"}],
+ ["validate_for_manufacturing",{"board":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_pcb"}],
+ ["audit_manufacturing",{"board":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_pcb"}],
+ ["check_bom_health",{"schematic":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_sch"}],
+ ["estimate_cost",{"board":"/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board/regen_precharge.kicad_pcb","quantity":5}]]
