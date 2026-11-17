@@ -37,9 +37,19 @@ for c, p in parts.items():
         want = f"{r[1]:g}{r[0]}Ω"
         if want not in d:
             print(f"FAIL {c} {p['refs']}: wanted {want}, catalogue says {d[:80]}"); bad += 1
+    mt = re.search(r"([\d.]+)%", p["value"])
+    if r and mt and f"±{mt[1]}%" not in d:
+        print(f"FAIL {c} {p['refs']}: wanted ±{mt[1]}%, catalogue says {d[:80]}"); bad += 1
     m = re.match(r"([\d.]+)(uF|nF)", p["value"])
     if m and f"{m[1]}{m[2]}" not in d:
         print(f"FAIL {c} {p['refs']}: wanted {m[0]}, catalogue says {d[:80]}"); bad += 1
+    # voltage rating of capacitors and the can size of the electrolytics (independent review, 15 Nov 2026: neither was checked)
+    mv = re.search(r"(\d+)V\b", p["value"])
+    if m and mv and not re.search(rf"(?<![\d.]){mv[1]}V\b", d):
+        print(f"FAIL {c} {p['refs']}: wanted a {mv[1]} V part, catalogue says {d[:80]}"); bad += 1
+    mc = re.search(r"CP_Radial_D([\d.]+)mm_P([\d.]+)mm", p["footprint"])
+    if mc and not (f"D{float(mc[1]):g}x" in (x.get("package") or "") + d and re.search(rf"(?<![\d.]){float(mc[2]):g}mm", d)):
+        print(f"FAIL {c} {p['refs']}: footprint is {mc[1]} mm diameter on {mc[2]} mm pitch, catalogue says {(x.get('package') or '')} {d[:60]}"); bad += 1
     if not r and not m and not any(w in (x.get("mfr") or "") + d for w in re.split(r"[ (]", p["value"])[:1]):
         human.append(f"{c} {p['refs']}: {p['value']} vs {x.get('mfr')}")
 json.dump(list(parts.values()), open(out, "w"), indent=1, ensure_ascii=False)

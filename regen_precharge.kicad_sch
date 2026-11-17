@@ -9476,15 +9476,6 @@
 				)
 			)
 		)
-		(property "Assembly" "Hand-solder"
-			(at 48.26 76.2 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(instances
 			(project "regen_precharge"
 				(path "/ec9d76d6-577e-4a0e-9836-f7a8c5ef1527"
@@ -10793,15 +10784,6 @@
 				)
 			)
 		)
-		(property "Assembly" "Hand-solder"
-			(at 360.68 129.54 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(instances
 			(project "regen_precharge"
 				(path "/ec9d76d6-577e-4a0e-9836-f7a8c5ef1527"
@@ -11245,15 +11227,6 @@
 			)
 		)
 		(property "LCSC" "C42371549"
-			(at 543.56 78.74 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Assembly" "Hand-solder"
 			(at 543.56 78.74 0)
 			(hide yes)
 			(effects
@@ -11721,15 +11694,6 @@
 				)
 			)
 		)
-		(property "Assembly" "Hand-solder"
-			(at 35.56 195.58 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(instances
 			(project "regen_precharge"
 				(path "/ec9d76d6-577e-4a0e-9836-f7a8c5ef1527"
@@ -11860,15 +11824,6 @@
 			)
 		)
 		(property "LCSC" "C19077413"
-			(at 68.58 213.36 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Assembly" "Hand-solder"
 			(at 68.58 213.36 0)
 			(hide yes)
 			(effects
@@ -12078,15 +12033,6 @@
 			)
 		)
 		(property "LCSC" "C41375109"
-			(at 88.9 205.74 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Assembly" "Hand-solder"
 			(at 88.9 205.74 0)
 			(hide yes)
 			(effects
@@ -14271,15 +14217,6 @@
 				)
 			)
 		)
-		(property "Assembly" "Hand-solder"
-			(at 680.72 219.71 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
 		(instances
 			(project "regen_precharge"
 				(path "/ec9d76d6-577e-4a0e-9836-f7a8c5ef1527"
@@ -15647,15 +15584,6 @@
 			)
 		)
 		(property "LCSC" "C14996"
-			(at 693.42 219.71 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Assembly" "Hand-solder"
 			(at 693.42 219.71 0)
 			(hide yes)
 			(effects
@@ -17056,7 +16984,7 @@
 				)
 			)
 		)
-		(property "Footprint" "jlc:Fiducial_1mm_Mask2mm"
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
 			(at 355.6 497.84 0)
 			(hide yes)
 			(effects
@@ -17116,7 +17044,7 @@
 				)
 			)
 		)
-		(property "Footprint" "jlc:Fiducial_1mm_Mask2mm"
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
 			(at 375.92 497.84 0)
 			(hide yes)
 			(effects
@@ -17176,7 +17104,7 @@
 				)
 			)
 		)
-		(property "Footprint" "jlc:Fiducial_1mm_Mask2mm"
+		(property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm"
 			(at 396.24 497.84 0)
 			(hide yes)
 			(effects

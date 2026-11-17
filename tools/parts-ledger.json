@@ -25,40 +25,40 @@
    "pin_layout": "Transparent top view, as Figure 6-1: left edge top to bottom 1, 2, 3, 4, 5, 6; right edge bottom to top 7, 8, 9, 10, 11, 12. EP is the large central underside thermal pad; pin-1 index is at the upper-left in this orientation.",
    "polarity": "Not a two-terminal part. EP/RTN is not GND: pin table says leave exposed pad floating and do not connect to GND plane.",
    "ratings": {
-    "A_to_GND_absolute_min": "\u221265 V",
+    "A_to_GND_absolute_min": "−65 V",
     "A_to_GND_absolute_max": "70 V",
-    "VS_to_GND_absolute_min": "\u22121 V",
+    "VS_to_GND_absolute_min": "−1 V",
     "VS_to_GND_absolute_max": "70 V",
-    "VSNS_SW_EN_UVLO_C_OV_OUT_to_GND_absolute_min_when_A_positive": "\u22120.3 V",
+    "VSNS_SW_EN_UVLO_C_OV_OUT_to_GND_absolute_min_when_A_positive": "−0.3 V",
     "VSNS_SW_EN_UVLO_C_OV_OUT_to_GND_absolute_max_when_A_positive": "70 V",
     "VSNS_SW_EN_UVLO_C_OV_OUT_to_GND_absolute_min_when_A_nonpositive": "V(A)",
     "VSNS_SW_EN_UVLO_C_OV_OUT_to_GND_absolute_max_when_A_nonpositive": "(70 + V(A)) V",
-    "RTN_to_GND_absolute_min": "\u221265 V",
+    "RTN_to_GND_absolute_min": "−65 V",
     "RTN_to_GND_absolute_max": "0.3 V",
-    "VSNS_SW_current_absolute_min": "\u22121 mA",
+    "VSNS_SW_current_absolute_min": "−1 mA",
     "VSNS_SW_current_absolute_max": "10 mA",
-    "EN_UVLO_low_current_when_A_positive": "\u22121 mA",
+    "EN_UVLO_low_current_when_A_positive": "−1 mA",
     "EN_UVLO_low_current_when_A_nonpositive": "Internally limited",
-    "OUT_to_VS_absolute_min": "\u221265 V",
+    "OUT_to_VS_absolute_min": "−65 V",
     "OUT_to_VS_absolute_max": "16.5 V",
-    "CAP_to_VS_absolute_min": "\u22120.3 V",
+    "CAP_to_VS_absolute_min": "−0.3 V",
     "CAP_to_VS_absolute_max": "15 V",
-    "CAP_to_A_absolute_min": "\u22120.3 V",
+    "CAP_to_A_absolute_min": "−0.3 V",
     "CAP_to_A_absolute_max": "85 V",
-    "DGATE_to_A_absolute_min": "\u22120.3 V",
+    "DGATE_to_A_absolute_min": "−0.3 V",
     "DGATE_to_A_absolute_max": "15 V",
-    "HGATE_to_OUT_absolute_min": "\u22120.3 V",
+    "HGATE_to_OUT_absolute_min": "−0.3 V",
     "HGATE_to_OUT_absolute_max": "15 V",
-    "C_to_A_absolute_min": "\u22125 V",
+    "C_to_A_absolute_min": "−5 V",
     "C_to_A_absolute_max": "85 V",
     "power_dissipation_absolute_max": "UNKNOWN",
-    "operating_junction_temperature_min": "\u221240 \u00b0C",
-    "operating_junction_temperature_max": "150 \u00b0C",
+    "operating_junction_temperature_min": "−40 °C",
+    "operating_junction_temperature_max": "150 °C",
     "operating_input_voltage_min": "3 V",
     "operating_input_voltage_max": "65 V",
     "minimum_operating_current": "UNKNOWN",
-    "quiescent_current_typ_EN_2V": "397 \u00b5A",
-    "quiescent_current_max_A_VS_24V_EN_2V": "495 \u00b5A",
+    "quiescent_current_typ_EN_2V": "397 µA",
+    "quiescent_current_max_A_VS_24V_EN_2V": "495 µA",
     "common_mode_range": "UNKNOWN"
    },
    "mechanical": {
@@ -97,9 +97,9 @@
     "cathode_current_continuous_range": "-100-+150 mA",
     "reference_input_current_range": "0.05-+10 mA",
     "power_dissipation_SOT23": "300 mW",
-    "operating_temperature_range": "-25~+85 \u00b0C",
-    "junction_temperature": "150 \u00b0C",
-    "storage_temperature_range": "-65~+150 \u00b0C",
+    "operating_temperature_range": "-25~+85 °C",
+    "junction_temperature": "150 °C",
+    "storage_temperature_range": "-65~+150 °C",
     "minimum_cathode_current_for_regulation_typ": "0.45 mA",
     "minimum_cathode_current_for_regulation_max": "1.0 mA",
     "reference_voltage_min": "2.475 V",
@@ -108,12 +108,12 @@
     "common_mode_range": "UNKNOWN"
    },
    "mechanical": {
-    "body_length": "2.800\u20133.000 mm",
-    "body_width": "1.200\u20131.400 mm",
-    "overall_width": "2.250\u20132.550 mm",
-    "height": "0.900\u20131.150 mm",
+    "body_length": "2.800–3.000 mm",
+    "body_width": "1.200–1.400 mm",
+    "overall_width": "2.250–2.550 mm",
+    "height": "0.900–1.150 mm",
     "lead_pitch": "0.950 TYP mm",
-    "outer_lead_spacing": "1.800\u20132.000 mm"
+    "outer_lead_spacing": "1.800–2.000 mm"
    },
    "variants_warning": "Do not use CD431 SOT-23: it is 1=K, 2=REF, 3=A. CJ431 SOT-89 and TO-92 are 1=REF, 2=A, 3=K, different from CJ431 SOT-23.",
    "confidence": "high",
@@ -128,47 +128,47 @@
    "evidence": "drawing",
    "pins": {
     "1": "Output A",
-    "2": "Inputs A \u2212",
+    "2": "Inputs A −",
     "3": "Inputs A +",
     "4": "GND",
     "5": "Inputs B +",
-    "6": "Inputs B \u2212",
+    "6": "Inputs B −",
     "7": "Output B",
     "8": "VCC"
    },
    "pin_layout": "Top view in p1 pin-connection drawing, notch at top: pins 1, 2, 3, 4 run down the left side; pins 8, 7, 6, 5 run down the right side. SOIC-8 has no exposed pad shown.",
-   "polarity": "Supply is pin 8 VCC relative to pin 4 GND. Input polarity is indicated by the + and \u2212 signs inside each comparator in the pin drawing.",
+   "polarity": "Supply is pin 8 VCC relative to pin 4 GND. Input polarity is indicated by the + and − signs inside each comparator in the pin drawing.",
    "ratings": {
-    "supply_voltage_absolute_max": "+36 or \u00b118 V",
+    "supply_voltage_absolute_max": "+36 or ±18 V",
     "input_differential_voltage_absolute_max": "36 V",
-    "input_common_mode_absolute_range": "\u22120.3 to +36 V",
+    "input_common_mode_absolute_range": "−0.3 to +36 V",
     "output_voltage_absolute_max": "36 V",
     "output_sink_current_absolute_max": "20 mA",
     "output_short_circuit_to_ground": "Continuous",
     "power_dissipation_at_TA_25C": "570 mW",
-    "power_derating_above_25C": "5.7 mW/\u00b0C",
-    "operating_ambient_temperature_LM393": "0 to +70 \u00b0C",
-    "junction_temperature_max": "150 \u00b0C",
-    "storage_temperature_range": "\u221265 to +150 \u00b0C",
+    "power_derating_above_25C": "5.7 mW/°C",
+    "operating_ambient_temperature_LM393": "0 to +70 °C",
+    "junction_temperature_max": "150 °C",
+    "storage_temperature_range": "−65 to +150 °C",
     "minimum_operating_current": "UNKNOWN",
     "supply_current_typ_both_comparators_VCC_5V_TA_25C": "0.4 mA",
     "supply_current_max_both_comparators_VCC_5V_TA_25C": "1.0 mA",
     "supply_current_max_both_comparators_VCC_30V": "2.5 mA",
     "operating_common_mode_min": "0 V",
-    "operating_common_mode_max_TA_25C": "VCC \u22121.5 V",
-    "operating_common_mode_max_full_temperature": "VCC \u22122.0 V",
+    "operating_common_mode_max_TA_25C": "VCC −1.5 V",
+    "operating_common_mode_max_full_temperature": "VCC −2.0 V",
     "single_supply_range": "2.0 Vdc to 36 Vdc"
    },
    "mechanical": {
-    "body_length": "4.80\u20135.00 mm",
-    "body_width": "3.80\u20134.00 mm",
-    "overall_width": "5.80\u20136.20 mm",
-    "height": "1.35\u20131.75 mm",
+    "body_length": "4.80–5.00 mm",
+    "body_width": "3.80–4.00 mm",
+    "overall_width": "5.80–6.20 mm",
+    "height": "1.35–1.75 mm",
     "lead_pitch": "1.27 BSC mm"
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "Exact LM393DR2G orderable part is listed in SOIC-8 on p7; p9 gives SOIC-8 NB CASE 751 dimensions. Ratings p2, operating common-mode range and supply current p3. Other devices in the PDF have different temperature grades; only LM393 0 to +70 \u00b0C is used here. No minimum supply-current guarantee is printed (minimum column is a dash). Names Inputs A/B and the polarity signs are taken directly from the p1 pin drawing."
+   "notes": "Exact LM393DR2G orderable part is listed in SOIC-8 on p7; p9 gives SOIC-8 NB CASE 751 dimensions. Ratings p2, operating common-mode range and supply current p3. Other devices in the PDF have different temperature grades; only LM393 0 to +70 °C is used here. No minimum supply-current guarantee is printed (minimum column is a dash). Names Inputs A/B and the polarity signs are taken directly from the p1 pin drawing."
   },
   {
    "lcsc": "C410926",
@@ -182,20 +182,20 @@
    "polarity": "N-channel MOSFET; p1 equivalent symbol shows body-diode A at S and K at D. This is not a two-terminal polarized package.",
    "ratings": {
     "drain_source_voltage": "100 V",
-    "gate_source_voltage": "\u00b120 V",
+    "gate_source_voltage": "±20 V",
     "continuous_drain_current_TC_25C_silicon_limit": "172 A",
     "continuous_drain_current_TC_25C_package_limit": "120 A",
     "continuous_drain_current_TC_100C_silicon_limit": "109 A",
     "pulsed_drain_current_TC_25C": "480 A",
     "power_dissipation_TC_25C": "227 W",
-    "operating_junction_and_storage_temperature": "-55...+150 \u00b0C",
+    "operating_junction_and_storage_temperature": "-55...+150 °C",
     "single_pulse_avalanche_energy": "256 mJ"
    },
    "mechanical": {
-    "TO263_height_A": "4.30\u20134.86 mm",
-    "body_dimension_D": "8.38\u20139.45 mm",
-    "body_dimension_E": "9.78\u201310.50 mm",
-    "overall_dimension_H": "14.61\u201315.88 mm",
+    "TO263_height_A": "4.30–4.86 mm",
+    "body_dimension_D": "8.38–9.45 mm",
+    "body_dimension_E": "9.78–10.50 mm",
+    "overall_dimension_H": "14.61–15.88 mm",
     "lead_pitch_e": "2.54 BSC. mm",
     "recommended_drain_land_width_min": "8.50 mm",
     "recommended_drain_land_length_min": "9.00 mm",
@@ -227,8 +227,8 @@
     "emitter_base_voltage": "6 V",
     "collector_current": "600 mA",
     "collector_power_dissipation": "300 mW",
-    "junction_temperature": "150 \u00b0C",
-    "storage_temperature": "-55~+150 \u00b0C"
+    "junction_temperature": "150 °C",
+    "storage_temperature": "-55~+150 °C"
    },
    "mechanical": {
     "body_dimensions": "UNKNOWN",
@@ -236,7 +236,7 @@
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "MMBT5551 gain class H is 200\u2013300 at VCE=5V, IC=10mA, matching the CSV range. Marking G1. This two-page PDF has no dimensioned package outline; dimensions have not been copied from the other SOT-23 datasheets. Junction rating is a maximum, not a printed operating-temperature range."
+   "notes": "MMBT5551 gain class H is 200–300 at VCE=5V, IC=10mA, matching the CSV range. Marking G1. This two-page PDF has no dimensioned package outline; dimensions have not been copied from the other SOT-23 datasheets. Junction rating is a maximum, not a printed operating-temperature range."
   },
   {
    "lcsc": "C20526",
@@ -258,19 +258,19 @@
     "emitter_base_voltage": "6 V",
     "collector_current": "200 mA",
     "collector_power_dissipation": "200 mW",
-    "operating_junction_and_storage_temperature_range": "-55~+150 \u00b0C"
+    "operating_junction_and_storage_temperature_range": "-55~+150 °C"
    },
    "mechanical": {
-    "body_length": "2.800\u20133.000 mm",
-    "body_width": "1.200\u20131.400 mm",
-    "overall_width": "2.250\u20132.550 mm",
-    "height": "0.900\u20131.150 mm",
+    "body_length": "2.800–3.000 mm",
+    "body_width": "1.200–1.400 mm",
+    "overall_width": "2.250–2.550 mm",
+    "height": "0.900–1.150 mm",
     "lead_pitch": "0.950 TYP mm",
-    "outer_lead_spacing": "1.800\u20132.000 mm"
+    "outer_lead_spacing": "1.800–2.000 mm"
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "Gain range 100\u2013300 is printed on p1 (VCE=1V, IC=10mA); sub-bins L=100\u2013200 and H=200\u2013300 are also shown. Device marking 1AM with additional code. Mechanical outline p3. Uses this PDF's 200 mW rating, not the 300 mW printed for some other SOT-23 parts."
+   "notes": "Gain range 100–300 is printed on p1 (VCE=1V, IC=10mA); sub-bins L=100–200 and H=200–300 are also shown. Device marking 1AM with additional code. Mechanical outline p3. Uses this PDF's 200 mW rating, not the 300 mW printed for some other SOT-23 parts."
   },
   {
    "lcsc": "C105432",
@@ -292,20 +292,20 @@
     "emitter_base_voltage": "-5 V",
     "collector_current_continuous": "-0.5 A",
     "collector_power_dissipation": "0.3 W",
-    "junction_temperature": "150 \u00b0C",
-    "storage_temperature": "-55-150 \u00b0C"
+    "junction_temperature": "150 °C",
+    "storage_temperature": "-55-150 °C"
    },
    "mechanical": {
-    "body_length": "2.800\u20133.000 mm",
-    "body_width": "1.200\u20131.400 mm",
-    "overall_width": "2.250\u20132.550 mm",
-    "height": "0.900\u20131.150 mm",
+    "body_length": "2.800–3.000 mm",
+    "body_width": "1.200–1.400 mm",
+    "overall_width": "2.250–2.550 mm",
+    "height": "0.900–1.150 mm",
     "lead_pitch": "0.950 TYP mm",
-    "outer_lead_spacing": "1.800\u20132.000 mm"
+    "outer_lead_spacing": "1.800–2.000 mm"
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "Gain bin L=120\u2013200 matches the CSV range; H=200\u2013350 and J=300\u2013400 are other gain bins, with no different pinout shown. Marking 2TY. Dimensions p3. Storage range is printed -55-150; it is not an operating-junction range."
+   "notes": "Gain bin L=120–200 matches the CSV range; H=200–350 and J=300–400 are other gain bins, with no different pinout shown. Marking 2TY. Dimensions p3. Storage range is printed -55-150; it is not an operating-junction range."
   },
   {
    "lcsc": "C8326",
@@ -327,8 +327,8 @@
     "emitter_base_voltage": "-5 V",
     "collector_current": "-0.6 A",
     "collector_power_dissipation": "0.3 W",
-    "junction_temperature": "150 \u00b0C",
-    "storage_temperature": "-55\uff5e+150 \u00b0C"
+    "junction_temperature": "150 °C",
+    "storage_temperature": "-55～+150 °C"
    },
    "mechanical": {
     "body_dimensions": "UNKNOWN",
@@ -336,7 +336,7 @@
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "Gain class H=200\u2013300 at VCE=-5V, IC=-10mA matches the CSV range. Marking 2L. The two-page PDF contains no dimensioned package outline; no dimensions are borrowed from other SOT-23 parts. Junction rating is a maximum, not a printed operating-temperature range."
+   "notes": "Gain class H=200–300 at VCE=-5V, IC=-10mA matches the CSV range. Marking 2L. The two-page PDF contains no dimensioned package outline; no dimensions are borrowed from other SOT-23 parts. Junction rating is a maximum, not a printed operating-temperature range."
   },
   {
    "lcsc": "C42371549",
@@ -357,14 +357,14 @@
     "peak_pulse_power_10_1000us": "1500 W",
     "power_on_infinite_heat_sink_TL_75C": "6.5 W",
     "peak_forward_surge_current_8_3ms_half_sine": "200 A",
-    "operating_junction_and_storage_temperature": "-55 to +150 \u00b0C"
+    "operating_junction_and_storage_temperature": "-55 to +150 °C"
    },
    "mechanical": {
-    "body_length_B": "6.60\u20137.11 mm",
-    "body_width_C": "5.59\u20136.22 mm",
-    "overall_length_G": "7.75\u20138.13 mm",
-    "height_D": "1.99\u20132.61 mm",
-    "terminal_width_A": "2.85\u20133.27 mm"
+    "body_length_B": "6.60–7.11 mm",
+    "body_width_C": "5.59–6.22 mm",
+    "overall_length_G": "7.75–8.13 mm",
+    "height_D": "1.99–2.61 mm",
+    "terminal_width_A": "2.85–3.27 mm"
    },
    "variants_warning": "SMCJ51CA in the same p3 row is bidirectional, has no cathode band, and uses marking BFZ. SMCJ51A is the unidirectional GFZ-marked part.",
    "confidence": "high",
@@ -387,19 +387,19 @@
     "maximum_average_forward_rectified_current": "2.0 A",
     "peak_forward_surge_current_8_3ms_half_sine": "50 A",
     "power_dissipation_absolute_max": "UNKNOWN",
-    "operating_junction_temperature_range": "-55 to +150 \u00b0C",
-    "storage_temperature_range": "-55 to +150 \u00b0C"
+    "operating_junction_temperature_range": "-55 to +150 °C",
+    "storage_temperature_range": "-55 to +150 °C"
    },
    "mechanical": {
-    "body_length": "3.80\u20134.50 mm",
-    "body_width": "2.30\u20132.80 mm",
-    "height": "1.85\u20132.45 mm",
-    "overall_length": "4.70\u20135.30 mm",
-    "terminal_width": "1.30\u20131.70 mm"
+    "body_length": "3.80–4.50 mm",
+    "body_width": "2.30–2.80 mm",
+    "height": "1.85–2.45 mm",
+    "overall_length": "4.70–5.30 mm",
+    "terminal_width": "1.30–1.70 mm"
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "The SS210 column is used, not SS22/SS23/SS24/SS25/SS26/SS28/SS2150/SS2200. Its operating junction range is -55 to +150 \u00b0C, unlike the -55 to +125 \u00b0C group at the left of the family table. No absolute power rating is printed. Mechanical dimensions are the millimetre values in parentheses on p1."
+   "notes": "The SS210 column is used, not SS22/SS23/SS24/SS25/SS26/SS28/SS2150/SS2200. Its operating junction range is -55 to +150 °C, unlike the -55 to +125 °C group at the left of the family table. No absolute power rating is printed. Mechanical dimensions are the millimetre values in parentheses on p1."
   },
   {
    "lcsc": "C2128",
@@ -409,8 +409,8 @@
    "source_page": 1,
    "evidence": "drawing",
    "pins": {},
-   "pin_layout": "Body-face perspective on p1: unbanded A is at the left/rear end (marked +); banded K is at the right/front end (marked \u2212). Two opposite end terminals, not numbered.",
-   "polarity": "Band at the end marked \u2212 identifies K. The opposite end marked + is A; this is corroborated by the adjacent diode symbol.",
+   "pin_layout": "Body-face perspective on p1: unbanded A is at the left/rear end (marked +); banded K is at the right/front end (marked −). Two opposite end terminals, not numbered.",
+   "polarity": "Band at the end marked − identifies K. The opposite end marked + is A; this is corroborated by the adjacent diode symbol.",
    "ratings": {
     "non_repetitive_peak_reverse_voltage": "100 V",
     "peak_repetitive_reverse_voltage": "100 V",
@@ -422,8 +422,8 @@
     "peak_forward_surge_current_t_1us": "2.0 A",
     "peak_forward_surge_current_t_1s": "1.0 A",
     "power_dissipation": "200 mW",
-    "junction_temperature": "150 \u00b0C",
-    "storage_temperature": "-55~+150 \u00b0C"
+    "junction_temperature": "150 °C",
+    "storage_temperature": "-55~+150 °C"
    },
    "mechanical": {
     "body_dimensions": "UNKNOWN",
@@ -431,7 +431,7 @@
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "PDF jointly covers BAV16WS/1N4148WS. Pin polarity is directly illustrated without terminal numbers. The two-page PDF has no dimensioned mechanical outline or solder-pad recommendation. Operating-junction range is UNKNOWN; only a 150 \u00b0C junction maximum is printed. Markings T6, T4 are listed without an unambiguous individual type-to-marking table."
+   "notes": "PDF jointly covers BAV16WS/1N4148WS. Pin polarity is directly illustrated without terminal numbers. The two-page PDF has no dimensioned mechanical outline or solder-pad recommendation. Operating-junction range is UNKNOWN; only a 150 °C junction maximum is printed. Markings T6, T4 are listed without an unambiguous individual type-to-marking table."
   },
   {
    "lcsc": "C2297",
@@ -444,22 +444,22 @@
     "1": "A",
     "2": "K"
    },
-   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/\u2212) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
-   "polarity": "Pin 1=+ (A), pin 2=\u2212 (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
+   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/−) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
+   "polarity": "Pin 1=+ (A), pin 2=− (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
    "ratings": {
     "backward_voltage_absolute_max": "5 V",
     "DC_forward_current_absolute_max": "30 mA",
     "peak_forward_current_duty_1_10_width_0_1ms": "60 mA",
     "power_dissipation_absolute_max": "100 mW",
-    "operating_temperature_range": "-40\u00b0C ~ +85\u00b0C",
-    "storage_temperature_range": "-40\u00b0C ~ +85\u00b0C",
+    "operating_temperature_range": "-40°C ~ +85°C",
+    "storage_temperature_range": "-40°C ~ +85°C",
     "junction_temperature_absolute_max": "UNKNOWN"
    },
    "mechanical": {
     "length": "2.0 mm",
     "width": "1.25 mm",
     "height": "0.85 mm",
-    "general_dimension_tolerance": "\u00b10.10 mm",
+    "general_dimension_tolerance": "±0.10 mm",
     "recommended_pad_width": "1.40 mm",
     "recommended_pad_length": "1.00 mm",
     "recommended_pad_inner_gap": "0.90 mm"
@@ -479,22 +479,22 @@
     "1": "A",
     "2": "K"
    },
-   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/\u2212) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
-   "polarity": "Pin 1=+ (A), pin 2=\u2212 (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
+   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/−) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
+   "polarity": "Pin 1=+ (A), pin 2=− (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
    "ratings": {
     "backward_voltage_absolute_max": "5 V",
     "DC_forward_current_absolute_max": "25 mA",
     "peak_forward_current_duty_1_10_width_0_1ms": "60 mA",
     "power_dissipation_absolute_max": "40 mW",
-    "operating_temperature_range": "-40\u00b0C ~ +85\u00b0C",
-    "storage_temperature_range": "-40\u00b0C ~ +85\u00b0C",
+    "operating_temperature_range": "-40°C ~ +85°C",
+    "storage_temperature_range": "-40°C ~ +85°C",
     "junction_temperature_absolute_max": "UNKNOWN"
    },
    "mechanical": {
     "length": "1.6 mm",
     "width": "0.8 mm",
     "height": "0.6 mm",
-    "general_dimension_tolerance": "\u00b10.10 mm",
+    "general_dimension_tolerance": "±0.10 mm",
     "recommended_pad_width": "0.60 mm",
     "recommended_pad_length": "0.70 mm",
     "recommended_pad_inner_gap": "0.70 mm"
@@ -514,22 +514,22 @@
     "1": "A",
     "2": "K"
    },
-   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/\u2212) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
-   "polarity": "Pin 1=+ (A), pin 2=\u2212 (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
+   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/−) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
+   "polarity": "Pin 1=+ (A), pin 2=− (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
    "ratings": {
     "backward_voltage_absolute_max": "5 V",
     "DC_forward_current_absolute_max": "30 mA",
     "peak_forward_current_duty_1_10_width_0_1ms": "60 mA",
     "power_dissipation_absolute_max": "100 mW",
-    "operating_temperature_range": "-40\u00b0C ~ +85\u00b0C",
-    "storage_temperature_range": "-40\u00b0C ~ +85\u00b0C",
+    "operating_temperature_range": "-40°C ~ +85°C",
+    "storage_temperature_range": "-40°C ~ +85°C",
     "junction_temperature_absolute_max": "UNKNOWN"
    },
    "mechanical": {
     "length": "1.6 mm",
     "width": "0.8 mm",
     "height": "0.6 mm",
-    "general_dimension_tolerance": "\u00b10.10 mm",
+    "general_dimension_tolerance": "±0.10 mm",
     "recommended_pad_width": "0.60 mm",
     "recommended_pad_length": "0.70 mm",
     "recommended_pad_inner_gap": "0.70 mm"
@@ -549,22 +549,22 @@
     "1": "A",
     "2": "K"
    },
-   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/\u2212) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
-   "polarity": "Pin 1=+ (A), pin 2=\u2212 (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
+   "pin_layout": "Top/light-emitting-face view as left drawing on p2: pin 2 (K/−) is at the top short end, pin 1 (A/+) at the bottom short end. Green mark is at the top-left corner. Underside drawing alongside shows a green triangular/arrow mark pointing toward pin 2.",
+   "polarity": "Pin 1=+ (A), pin 2=− (K), explicitly numbered in the p2 polarity symbol. The top-face green corner mark and underside arrow identify the cathode end.",
    "ratings": {
     "backward_voltage_absolute_max": "5 V",
     "DC_forward_current_absolute_max": "25 mA",
     "peak_forward_current_duty_1_10_width_0_1ms": "60 mA",
     "power_dissipation_absolute_max": "40 mW",
-    "operating_temperature_range": "-40\u00b0C ~ +85\u00b0C",
-    "storage_temperature_range": "-40\u00b0C ~ +85\u00b0C",
+    "operating_temperature_range": "-40°C ~ +85°C",
+    "storage_temperature_range": "-40°C ~ +85°C",
     "junction_temperature_absolute_max": "UNKNOWN"
    },
    "mechanical": {
     "length": "2.0 mm",
     "width": "1.25 mm",
     "height": "0.85 mm",
-    "general_dimension_tolerance": "\u00b10.10 mm",
+    "general_dimension_tolerance": "±0.10 mm",
     "recommended_pad_width": "1.40 mm",
     "recommended_pad_length": "1.00 mm",
     "recommended_pad_inner_gap": "0.90 mm"
@@ -592,20 +592,20 @@
     "power_rating_at_70C": "0.50 watt",
     "power_rating_at_125C": "0 watt",
     "maximum_current": "UNKNOWN",
-    "temperature_range": "-55 \u00b0C to +125 \u00b0C",
+    "temperature_range": "-55 °C to +125 °C",
     "nominal_resistance_code_103": "10,000 Ohms",
-    "resistance_tolerance": "\u00b110 %"
+    "resistance_tolerance": "±10 %"
    },
    "mechanical": {
     "common_body_width": "6.60 mm",
     "common_body_length": "6.99 mm",
     "overall_height_from_terminal_tip_common_view": "3.84 mm",
-    "lead_diameter_common_view": "0.46 \u00b10.03 mm",
-    "lead_length": "5.46 \u00b10.38 mm",
+    "lead_diameter_common_view": "0.46 ±0.03 mm",
+    "lead_length": "5.46 ±0.38 mm",
     "adjacent_lead_x_spacing": "2.54 mm",
     "outer_lead_y_to_wiper_y_offset": "2.54 mm",
     "body_bottom_to_outer_lead_row": "3.53 mm",
-    "general_dimension_tolerance": "\u00b10.25 mm"
+    "general_dimension_tolerance": "±0.25 mm"
    },
    "variants_warning": "3362W explicitly reverses the pin marking. Many other terminal styles are included; do not substitute 3362F/H/R/U/M/S/W/X/Z mechanical layouts for 3362P.",
    "confidence": "medium",
@@ -632,20 +632,20 @@
     "dielectric_withstand_50Hz_1min": "250V AC",
     "insulation_resistance_test_voltage": "DC 100V",
     "power_rating": "UNKNOWN",
-    "operating_temperature_range": "\u221220\u2103\uff5e70\u2103",
-    "storage_temperature_range": "-30\u2103\uff5e80\u2103"
+    "operating_temperature_range": "−20℃～70℃",
+    "storage_temperature_range": "-30℃～80℃"
    },
    "mechanical": {
-    "body_length": "8\u00b10.2 mm",
-    "body_width": "2.8\u00b10.1 mm",
-    "body_height": "1.4\u00b10.1 mm",
+    "body_length": "8±0.2 mm",
+    "body_width": "2.8±0.1 mm",
+    "body_height": "1.4±0.1 mm",
     "slider_travel_drawing": "1.6 mm",
-    "full_travel_specification": "1.6\u00b10.2 mm",
+    "full_travel_specification": "1.6±0.2 mm",
     "signal_pin_3_to_2_spacing": "1.5 mm",
     "signal_pin_2_to_1_spacing": "3 mm",
-    "locating_peg_diameter": "\u00d80.75\u00b10.1 mm",
+    "locating_peg_diameter": "Ø0.75±0.1 mm",
     "locating_peg_spacing": "3 mm",
-    "recommended_locator_hole_diameter": "\u00d80.85 mm",
+    "recommended_locator_hole_diameter": "Ø0.85 mm",
     "recommended_locator_hole_spacing": "3 mm",
     "recommended_signal_pad_width": "0.6 mm",
     "recommended_signal_pad_length": "1.3 mm",
@@ -666,7 +666,7 @@
    "evidence": "drawing",
    "pins": {},
    "pin_layout": "UNKNOWN for exact XT60PW-M. The supplied p2 drawing is explicitly XT60PW-M30.G.Y.T: end view shows two contacts vertically, upper end square and lower end with chamfered corners; no contact numbers are shown.",
-   "polarity": "UNKNOWN: the supplied variant drawing does not label +/\u2212 or number the contacts. Chamfered lower corners are visible in its end view, but neither contact can be assigned polarity from this PDF.",
+   "polarity": "UNKNOWN: the supplied variant drawing does not label +/− or number the contacts. Chamfered lower corners are visible in its end view, but neither contact can be assigned polarity from this PDF.",
    "ratings": {
     "rated_voltage_exact_XT60PW_M": "UNKNOWN",
     "rated_current_exact_XT60PW_M": "UNKNOWN",
@@ -674,18 +674,18 @@
     "operating_temperature_exact_XT60PW_M": "UNKNOWN",
     "PDF_variant_XT60PW_M30_G_Y_T_rated_voltage": "80V DC",
     "PDF_variant_XT60PW_M30_G_Y_T_rated_current_deltaT_at_most_65K": "35A",
-    "PDF_variant_XT60PW_M30_G_Y_T_operating_temperature": "-20\u00b0C to 120\u00b0C"
+    "PDF_variant_XT60PW_M30_G_Y_T_operating_temperature": "-20°C to 120°C"
    },
    "mechanical": {
     "recommended_PCB_contact_holes_exact_XT60PW_M": "UNKNOWN",
     "contact_pitch_exact_XT60PW_M": "UNKNOWN",
     "fixing_hole_dimensions_exact_XT60PW_M": "UNKNOWN",
-    "PDF_variant_contact_holes": "2\u00d7\u00d82.90 +0.10/0.00 mm",
-    "PDF_variant_contact_pitch": "7.20\u00b10.05 mm",
-    "PDF_variant_fixing_slots": "2\u00d71.90 +0.10/0.00 mm by 2\u00d70.80 +0.10/0.00 mm",
-    "PDF_variant_fixing_slot_spacing": "13.50\u00b10.05 mm",
-    "PDF_variant_contact_row_to_fixing_slot_row": "6.00\u00b10.05 mm",
-    "PDF_variant_body_dimensions": "18.20\u00b10.30 \u00d7 15.50\u00b10.30 \u00d7 8.40\u00b10.30 mm"
+    "PDF_variant_contact_holes": "2×Ø2.90 +0.10/0.00 mm",
+    "PDF_variant_contact_pitch": "7.20±0.05 mm",
+    "PDF_variant_fixing_slots": "2×1.90 +0.10/0.00 mm by 2×0.80 +0.10/0.00 mm",
+    "PDF_variant_fixing_slot_spacing": "13.50±0.05 mm",
+    "PDF_variant_contact_row_to_fixing_slot_row": "6.00±0.05 mm",
+    "PDF_variant_body_dimensions": "18.20±0.30 × 15.50±0.30 × 8.40±0.30 mm"
    },
    "variants_warning": "",
    "confidence": "low",
@@ -700,18 +700,18 @@
    "evidence": "drawing",
    "pins": {},
    "pin_layout": "Two unnumbered contacts shown vertically in the p2 end view, with asymmetric/keyed housing. PCB hole diagram shows two large contact holes below a row of two small fixing holes. The viewing direction and electrical contact numbers are UNKNOWN.",
-   "polarity": "UNKNOWN: no +/\u2212 or contact-number labels are visible in the supplied drawing. The keyed/asymmetric outline alone does not identify positive and negative contacts.",
+   "polarity": "UNKNOWN: no +/− or contact-number labels are visible in the supplied drawing. The keyed/asymmetric outline alone does not identify positive and negative contacts.",
    "ratings": {
     "rated_voltage": "DC 500V",
     "rated_current": "15A",
     "instantaneous_current": "30A",
     "power_rating": "UNKNOWN",
-    "temperature_range": "-20\u2103 to 120\u2103"
+    "temperature_range": "-20℃ to 120℃"
    },
    "mechanical": {
-    "recommended_PCB_contact_holes": "2\u2013\u00d81.7 mm",
+    "recommended_PCB_contact_holes": "2–Ø1.7 mm",
     "contact_hole_pitch": "5.00 mm",
-    "recommended_fixing_holes": "2\u2013\u00d81.0 mm",
+    "recommended_fixing_holes": "2–Ø1.0 mm",
     "fixing_hole_pitch": "11.00 mm",
     "contact_row_to_fixing_row": "5.00 mm",
     "overall_side_length": "14.90 mm",
@@ -733,20 +733,20 @@
    "evidence": "drawing",
    "pins": {},
    "pin_layout": "P2 end view: two unnumbered circular contacts vertically, upper end square and lower end chamfered; nominal contact centres 7.20 mm. The figure is not explicitly labelled mating-face or rear view; view direction is UNKNOWN.",
-   "polarity": "UNKNOWN: no +/\u2212 signs or numbered contact assignment are printed. The chamfered end identifies a housing orientation but does not establish contact polarity.",
+   "polarity": "UNKNOWN: no +/− signs or numbered contact assignment are printed. The chamfered end identifies a housing orientation but does not establish contact polarity.",
    "ratings": {
     "rated_voltage": "DC 500V",
     "rated_current": "30A",
     "instantaneous_current": "60A",
     "power_rating": "UNKNOWN",
-    "operating_temperature": "-20\u2103 to 120\u2103"
+    "operating_temperature": "-20℃ to 120℃"
    },
    "mechanical": {
     "body_length_in_section": "17.70 mm",
     "body_width_in_end_view": "8.10 mm",
     "body_height_in_end_view": "15.50 mm",
     "contact_pitch": "7.20 mm",
-    "contact_opening_diameter": "2\u2013\u00d84.30 mm",
+    "contact_opening_diameter": "2–Ø4.30 mm",
     "recommended_PCB_contact_hole_diameter": "UNKNOWN",
     "recommended_PCB_contact_hole_pitch": "UNKNOWN",
     "recommended_fixing_hole_diameter": "UNKNOWN",
@@ -754,7 +754,7 @@
    },
    "variants_warning": "",
    "confidence": "medium",
-   "notes": "Exact base model XT60PW-F is printed on p2. This PDF supplies a package end view and section but no recommended PCB mounting-hole diagram. 2\u2013\u00d84.30 is a sectioned contact opening and is NOT a recommended PCB drill. P1 is only a generic model-code legend. Numeric pin assignments, polarity, PCB drill sizes and fixing holes are not borrowed from XT60PW-M or XT30PW-F. Ratings are labelled rated/instantaneous rather than absolute maximum."
+   "notes": "Exact base model XT60PW-F is printed on p2. This PDF supplies a package end view and section but no recommended PCB mounting-hole diagram. 2–Ø4.30 is a sectioned contact opening and is NOT a recommended PCB drill. P1 is only a generic model-code legend. Numeric pin assignments, polarity, PCB drill sizes and fixing holes are not borrowed from XT60PW-M or XT30PW-F. Ratings are labelled rated/instantaneous rather than absolute maximum."
   },
   {
    "lcsc": "C492401",
@@ -768,29 +768,29 @@
     "2": "UNKNOWN"
    },
    "pin_layout": "Single row of two positions for the 02P variant. In the p1 top/end projection pin 1 is left and pin 2 is the next position to the right; the generic drawing shows a longer row. No distinct pin-1 key/chamfer is specified for the actual two-position header.",
-   "polarity": "UNKNOWN: the drawing assigns no +/\u2212 or signal functions. This is an unkeyed single-row pin header; the identical corner chamfers are not a polarity key.",
+   "polarity": "UNKNOWN: the drawing assigns no +/− or signal functions. This is an unkeyed single-row pin header; the identical corner chamfers are not a polarity key.",
    "ratings": {
     "current_rating": "3A",
     "working_voltage_rating": "UNKNOWN",
     "withstand_voltage_one_minute": "500V AC/minute",
     "power_rating": "UNKNOWN",
-    "temperature_range": "-40\u00b0C ~ +105\u00b0C"
+    "temperature_range": "-40°C ~ +105°C"
    },
    "mechanical": {
-    "pitch": "2.54\u00b10.05 mm",
-    "recommended_PCB_hole_diameter": "\u00d81.02 mm",
-    "pin_cross_section": "0.64\u00d70.64 mm",
-    "two_position_contact_span_A": "2.54\u00b10.25 mm",
-    "two_position_body_length_B": "5.08\u00b10.35 mm",
+    "pitch": "2.54±0.05 mm",
+    "recommended_PCB_hole_diameter": "Ø1.02 mm",
+    "pin_cross_section": "0.64×0.64 mm",
+    "two_position_contact_span_A": "2.54±0.25 mm",
+    "two_position_body_length_B": "5.08±0.35 mm",
     "body_width": "2.50 mm",
     "insulator_height": "2.50 mm",
-    "mating_pin_length": "6.1\u00b10.20 mm",
-    "PCB_tail_length": "3.0\u00b10.20 mm",
+    "mating_pin_length": "6.1±0.20 mm",
+    "PCB_tail_length": "3.0±0.20 mm",
     "fixing_holes": "UNKNOWN"
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "Use table row No. of PIN/ROW=02, not the ten-position example in the drawing. Ordering code PZ254V-11-XX supports 02\u201340 positions. Electrical functions of manufacturer pin numbers 1 and 2 are unspecified and left UNKNOWN. Withstand voltage 500V AC/minute is a dielectric test value, not a working-voltage rating. No fixing holes are shown."
+   "notes": "Use table row No. of PIN/ROW=02, not the ten-position example in the drawing. Ordering code PZ254V-11-XX supports 02–40 positions. Electrical functions of manufacturer pin numbers 1 and 2 are unspecified and left UNKNOWN. Withstand voltage 500V AC/minute is a dielectric test value, not a working-voltage rating. No fixing holes are shown."
   },
   {
    "lcsc": "C22396303",
@@ -801,7 +801,7 @@
    "evidence": "drawing",
    "pins": {},
    "pin_layout": "Radial package, two parallel unnumbered leads emerging from one edge. P1 face/side drawings show lead spacing F; p11 shows optional lead forms. Exact lead-form option for the unsuffixed CSV part is UNKNOWN.",
-   "polarity": "UNKNOWN: PDF assigns neither terminal numbers nor +/\u2212 polarity; the thermal link is illustrated as a fusible alloy joining the two leads, with no polarized terminal identification.",
+   "polarity": "UNKNOWN: PDF assigns neither terminal numbers nor +/− polarity; the thermal link is illustrated as a fusible alloy joining the two leads, with no polarized terminal identification.",
    "ratings": {
     "rated_voltage_option_1": "AC 250 V",
     "rated_current_at_AC_250V": "25 A",
@@ -811,27 +811,27 @@
     "rated_current_at_AC_400V": "25 A",
     "rated_voltage_option_4": "DC 120 V",
     "rated_current_at_DC_120V": "25 A",
-    "Tf_rated_functioning_temperature": "136 \u00b0C",
-    "fusing_temperature": "131 \u00b1 2 \u00b0C",
-    "Th_holding_temperature": "102 \u00b0C",
-    "Tm_maximum_temperature_limit": "200 \u00b0C",
+    "Tf_rated_functioning_temperature": "136 °C",
+    "fusing_temperature": "131 ± 2 °C",
+    "Th_holding_temperature": "102 °C",
+    "Tm_maximum_temperature_limit": "200 °C",
     "In_nominal_discharge_8_20us_15_times": "15 kA",
     "Imax_discharge_8_20us_1_time": "30 kA",
     "power_rating": "UNKNOWN",
     "operating_temperature_range": "UNKNOWN"
    },
    "mechanical": {
-    "body_length_L": "11.5 \u00b10.5 mm",
-    "overall_length_L1": "50.0 \u00b12.0 mm",
-    "body_width_W": "10.8 \u00b10.5 mm",
-    "body_thickness_T": "4.8 \u00b10.2 mm",
-    "lead_diameter_d": "1.60 \u00b10.05 mm",
-    "lead_pitch_F": "6.6 \u00b10.8 mm",
+    "body_length_L": "11.5 ±0.5 mm",
+    "overall_length_L1": "50.0 ±2.0 mm",
+    "body_width_W": "10.8 ±0.5 mm",
+    "body_thickness_T": "4.8 ±0.2 mm",
+    "lead_diameter_d": "1.60 ±0.05 mm",
+    "lead_pitch_F": "6.6 ±0.8 mm",
     "recommended_PCB_hole_diameter": "UNKNOWN"
    },
    "variants_warning": "",
    "confidence": "high",
-   "notes": "Q136 row on p2 is the source for all four voltage options and current/temperature ratings. Tf=136 \u00b0C is distinct from oil-bath fusing temperature 131 \u00b12 \u00b0C; Th and Tm are not an operating-temperature range (definitions p8). Agency approvals vary with voltage: AC250/300 have UL/cUL/PSE; AC400 has TUV/PSE/CCC; DC120 has TUV/CCC. Dimensions p1; p7 and p11 describe optional lead forms, which the CSV does not specify. The overview tables p12\u2013p15 also include other thermal-link families; their ratings are not substituted for Q136. Non-resettable, single-use device."
+   "notes": "Q136 row on p2 is the source for all four voltage options and current/temperature ratings. Tf=136 °C is distinct from oil-bath fusing temperature 131 ±2 °C; Th and Tm are not an operating-temperature range (definitions p8). Agency approvals vary with voltage: AC250/300 have UL/cUL/PSE; AC400 has TUV/PSE/CCC; DC120 has TUV/CCC. Dimensions p1; p7 and p11 describe optional lead forms, which the CSV does not specify. The overview tables p12–p15 also include other thermal-link families; their ratings are not substituted for Q136. Non-resettable, single-use device."
   },
   {
    "lcsc": "C2932744",
@@ -850,6 +850,129 @@
    },
    "confidence": "high",
    "note": "Added by the designer (Claude) during the rev E rebuild, not by the blind ledger session."
+  },
+  {
+   "lcsc": "C727006",
+   "mfr_part": "BZT52C15",
+   "package": "SOD-123",
+   "source_file": "datasheets/C727006.pdf",
+   "source_page": 1,
+   "evidence": "text",
+   "pins": {},
+   "pin_layout": "Two end terminals, not numbered.",
+   "polarity": "Cathode band (see datasheet).",
+   "ratings": {
+    "zener_voltage": "13.8-15.6 V at 5 mA",
+    "power": "500 mW"
+   },
+   "confidence": "high",
+   "note": "Added by the designer (Claude), not by the blind ledger session."
+  },
+  {
+   "lcsc": "C19077413",
+   "mfr_part": "BZT52C16",
+   "package": "SOD-123",
+   "source_file": "https://jlcpcb.com/partdetail/C19077413 (part page read 2026-11-11; datasheet not saved)",
+   "source_page": 1,
+   "evidence": "web page",
+   "pins": {},
+   "pin_layout": "Two end terminals, not numbered.",
+   "polarity": "Cathode band (see datasheet).",
+   "ratings": {
+    "zener_voltage": "15.2-16.8 V (16 V nominal)",
+    "power": "350 mW"
+   },
+   "confidence": "medium",
+   "note": "Added by the designer (Claude) for rev F, not by the blind ledger session. Maker listed as hongjiacheng. Cathode direction is checked against JLC's library footprint by check_cpl.py."
+  },
+  {
+   "lcsc": "C42371540",
+   "mfr_part": "SMCJ40A",
+   "package": "SMC(DO-214AB)",
+   "source_page": 2,
+   "evidence": "drawing",
+   "pins": {},
+   "pin_layout": "Package top view on p2: two opposite end terminals, cathode-band end at left in the drawing, unbanded end at right. Terminals are not numbered.",
+   "polarity": "SMCJ51A is unidirectional. The body band marks K; the opposite unbanded end is A. No terminal numbering is printed.",
+   "ratings": {
+    "reverse_stand_off_voltage_VRWM": "51 V",
+    "breakdown_voltage_VBR_min_at_IT_1mA": "56.7 V",
+    "breakdown_voltage_VBR_max_at_IT_1mA": "62.7 V",
+    "maximum_clamping_voltage_at_IPP": "82.4 V",
+    "peak_pulse_current_10_1000us": "18.2 A",
+    "peak_pulse_power_10_1000us": "1500 W",
+    "power_on_infinite_heat_sink_TL_75C": "6.5 W",
+    "peak_forward_surge_current_8_3ms_half_sine": "200 A",
+    "operating_junction_and_storage_temperature": "-55 to +150 °C"
+   },
+   "mechanical": {
+    "body_length_B": "6.60–7.11 mm",
+    "body_width_C": "5.59–6.22 mm",
+    "overall_length_G": "7.75–8.13 mm",
+    "height_D": "1.99–2.61 mm",
+    "terminal_width_A": "2.85–3.27 mm"
+   },
+   "variants_warning": "SMCJ51CA in the same p3 row is bidirectional, has no cathode band, and uses marking BFZ. SMCJ51A is the unidirectional GFZ-marked part.",
+   "confidence": "high",
+   "notes": "Polarity and dimensions p2; exact SMCJ51A row p3; family absolute maximum ratings and pulse conditions p1. Breakdown and clamping voltages are different specified quantities, not alternative DC working-voltage ratings. Continuous forward-current rating is UNKNOWN.",
+   "note": "Same hongjiacheng SMCJ series datasheet family as C42371549; entry copied by the designer (Claude), not the blind ledger. VBR 44.4-49.1 V, clamp 64.5 V at 23.3 A."
+  },
+  {
+   "lcsc": "C41375109",
+   "mfr_part": "BCP56-16",
+   "package": "SOT-223",
+   "source_file": "datasheets/C41375109.pdf",
+   "source_page": 1,
+   "evidence": "drawing",
+   "pins": {
+    "1": "B",
+    "2": "C",
+    "3": "E",
+    "4": "C"
+   },
+   "pin_layout": "Function diagram p1: pins 1 B, 2 C, 3 E along the lead row, tab 4 = C.",
+   "polarity": "NPN",
+   "ratings": {
+    "VCEO": "80 V",
+    "IC": "1 A",
+    "PC": "1.33 W",
+    "RthJA": "94 C/W",
+    "Tj": "150 C"
+   },
+   "confidence": "high",
+   "note": "Added by the designer (Claude), not by the blind ledger session."
+  },
+  {
+   "lcsc": "C99395",
+   "mfr_part": "UCC27517DBVR",
+   "package": "DBV 5-pin",
+   "source_file": "datasheets/C99395.pdf",
+   "source_page": 3,
+   "evidence": "pin table",
+   "pins": {
+    "1": "VDD",
+    "2": "GND",
+    "3": "IN+",
+    "4": "IN-",
+    "5": "OUT"
+   },
+   "confidence": "high",
+   "note": "Added by the designer (Claude), not by the blind ledger session."
+  },
+  {
+   "lcsc": "C8545",
+   "mfr_part": "2N7002",
+   "package": "SOT-23",
+   "source_file": "datasheets/C8545.pdf",
+   "source_page": 1,
+   "evidence": "drawing",
+   "pins": {
+    "1": "G",
+    "2": "S",
+    "3": "D"
+   },
+   "confidence": "high",
+   "note": "Added by the designer (Claude), not by the blind ledger session."
   }
  ]
 }

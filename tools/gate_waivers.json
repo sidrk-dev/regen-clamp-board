@@ -1,15 +1,11 @@
 {
   "reasons": {
-    "silk_edge_clearance": "connector outlines on J1-J5 overhang the board edge by design; JLC clips them",
     "footprint_filter": "RV1 uses JLC's 3362P footprint name",
     "footprint_type_mismatch": "SW1 mixes SMD pads and through-hole posts",
     "track_not_centered_on_via": "1.5 mm GND tracks feed the Q3/Q9 via arrays",
-    "silk_over_copper": "Only Q9's pin-1 silk dot on C13's pad; clipped by mask. A blanket type waiver once hid a real collision, so check_bodies.py now guards that."
+    "_rev_F": "No warning type is waived any more: the connector outlines are trimmed inside the edge and the MOSFET pin-1 dot is off the silkscreen."
   },
-  "violation_types": [
-    "silk_edge_clearance",
-    "silk_over_copper"
-  ],
+  "violation_types": [],
   "ignored_checks": [
     "single_global_label",
     "four_way_junction",

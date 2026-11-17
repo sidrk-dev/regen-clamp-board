@@ -87,9 +87,12 @@ Rev F started as a cost-down of rev E. Later rev F edits adjusted the top-layer 
 - **Hand-solder the six TO-263 MOSFETs** (Q1, Q2, Q3, Q7, Q8, Q9) and the 1206 capacitors (C1, C2, C6).
   The MOSFETs retain the corrected 3D model offset. The exposed tabs land on copper pours and need enough
   heat to wet the full contact area.
-- **Hand-solder the remaining 1206 resistor (R6), the SMC and SMA diodes (D1, D2, D4, D7), the two
-  SOD-123 Zeners (D11, D12), and the SOT-223 transistor (Q4).** The stencil layers retain the existing
-  paste openings. The schematic’s assembly field and the PCB placement exclusions drive the exports.
+- **R6, the SMC and SMA diodes (D1, D2, D4, D7), the two SOD-123 Zeners (D11, D12) and the SOT-223 transistor
+  (Q4) stay machine-placed.** An earlier commit on this branch moved them to hand soldering; only D11 carried a fee,
+  so the other seven added hand work for no saving, and the owner asked for them to go back on the machine.
+  The schematic's assembly field and the PCB placement exclusions drive the exports.
+- The three fiducials use KiCad's own `Fiducial:Fiducial_1mm_Mask2mm` again, which is what the schematic names; a
+  copy in `lib/jlc.pretty` had made DRC report a footprint mismatch.
 - `build-scripts/cost_down.py` is the record of these edits.
 
 Rev E, changes from rev D. Most of these were found by independent reviews:
@@ -450,14 +453,14 @@ Use the [rev F Gerbers](jlcpcb/regen_precharge_revF_gerbers.zip), [machine BOM](
 and [placement file](jlcpcb/CPL-JLCPCB.csv) for top-side Economic assembly. The rev F quote used
 two-layer FR-4, 1.6 mm, 1 oz outer copper, and HASL. Select Confirm Parts Placement.
 
-The factory places **68 components on 38 BOM lines**. The [hand-solder list](jlcpcb/HAND-SOLDER-parts.csv)
-covers **33 board components** plus the off-board thermal fuse and its spare. It includes all six MOSFETs,
-seven XT connectors, five 470 µF capacitors, four 1206 parts, six diodes, Q4, RV1, SW1, and two headers.
+The factory places **76 components on 44 BOM lines**. The [hand-solder list](jlcpcb/HAND-SOLDER-parts.csv)
+covers **25 board components** plus the off-board thermal fuse and its spare: the six MOSFETs, seven XT
+connectors, five 470 µF capacitors, the three 1 µF 100 V 1206 capacitors, RV1, SW1 and two headers.
 Quantities are per board.
 
-The prior rev F estimate included five Extended feeder charges. Moving D11 to hand soldering leaves four
-expected charges (U1, U4, and the two 0.1% resistor values), a reduction of about $3.07 at JLCPCB’s
-published Economic rate. Check the feeder classes and order total in the quote.
+Five Extended feeder charges are expected: U1, U4, D11 and the two 0.1 % resistor values, about $15 at
+JLCPCB's published Economic rate. Two assembled boards come to about $69 before shipping and tax. Check the
+feeder classes and order total in the quote.
 [JLCPCB’s Economic assembly pricing](https://jlcpcb.com/blog/reduce-pcb-assembly-cost-prototype)
 
 See the [factory assembly view](docs/regen_precharge_revF_factory.png), the [populated top
@@ -480,7 +483,8 @@ and the right contact is GND (−, pad 1).
 - `sim_soft_start.cir`: hot plug with SW1 off, then the soft start, at 36 V and 48 V.
 - `review_swarm.py`: runs every AI model on this computer against the design, then has other models check each finding. It keeps running on its own and waits out usage limits. Run `./review_swarm.py models`, then `./review_swarm.py start`. `review_swarm_test.py` tests it offline with a fake model runner.
 
-Run `tools/make_jlc.sh` from a shell with KiCad 10 on its path to regenerate the checked fabrication and
+Run `tools/check_all.sh --online` to repeat every check listed under Verification status, and
+`tools/make_jlc.sh` from a shell with KiCad 10 on its path to regenerate the checked fabrication and
 assembly files. The script checks that the placement export exactly matches the machine BOM before it writes
 the four files to `jlcpcb/`. The earlier rev F development logs and generator references below refer to
 the local development archive.
@@ -501,12 +505,9 @@ These checks show the design agrees with itself, its rules and its datasheets. T
 show it is right: several real faults on this board passed every one of them, and were
 found only by independent reviewers. Treat Konnect's "READY" as a prompt for review.
 
-The current copy passed KiCad ERC and DRC with zero violations, zero unconnected pads, and zero parity
-issues. All eight fabrication layers and both drill files matched the inherited rev F exports with
-timestamps removed. The 68 retained placement rows match the placement coordinates, rotations, and
-side in the earlier rev F file.
-
-Earlier rev F checks run with `build-scripts/check_all.sh --online`:
+Run on the files in this repository with `tools/check_all.sh --online` (17 Nov 2026). Every
+fabrication layer and both drill files match the earlier rev F exports apart from the designer credit on
+the front silkscreen.
 
 - `gate.py`: ERC and DRC at all severities with parity, zone refill and a rule canary. PASS with no
   waived warning types (rev E waived two silkscreen types). DRC: 0 violations, 0 unconnected, parity clean.
@@ -530,7 +531,7 @@ Earlier rev F checks run with `build-scripts/check_all.sh --online`:
   JLC's own parts library (JLCEDA/EasyEDA Official Library, https://easyeda.com, https://lceda.cn/) for that
   part number: rotation, origin, and cathode-to-cathode for diodes and LEDs. Its first run found U4 (SOT-23-5)
   and Q4 (SOT-223) both 180° out in the placement file. The prior export script corrected both and checked
-  every placement. The current file keeps U4’s correction and moves Q4 to hand soldering.
+  every placement. The export script keeps both corrections, and all 76 rows pass.
   For D11, whose library symbol only numbers its pins, the cathode is read from the symbol's drawing; for Q4, Q12 and U2,
   whose library land pattern differs by 0.4–0.5 mm, the orientation is accepted because every other rotation fits at
   least four times worse. The check still fails on a placement file with D11, Q12 and U2 turned.
@@ -636,8 +637,8 @@ first-order calculation, avalanche data not reviewed (the simulation shows no av
 
 Before ordering, a person still has to:
 
-- On the quote page choose 1 oz outer copper and Economic assembly, then check the four expected Extended fees.
-- Tick Confirm Parts Placement and compare the 68 positions in the preview with the machine BOM and factory view.
+- On the quote page choose 1 oz outer copper and Economic assembly, then check the five expected Extended fees.
+- Tick Confirm Parts Placement and compare the 76 positions in the preview with the machine BOM and factory view.
 - Look at your cables: the red wire must go to the contact marked + on each XT plug (the flat end of the housing). The
   board side is settled: pad 2 is that contact on the input and on every output.
 - For a paper fit check, print [the 1:1 fit sheet](docs/regen_precharge_revF_test_fit_1to1.pdf) at 100 % and
