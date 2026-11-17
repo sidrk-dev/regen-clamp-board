@@ -1,4 +1,4 @@
-* Regen clamp (rev D): 36 V PSU behind the ideal diode, 15 A regen pulse into the bus for 40 ms
+* Regen clamp (rev E): 36 V PSU behind the ideal diode, 15 A regen pulse into the bus for 40 ms
 .model DIDEAL D(Is=1e-12 N=0.05 Rs=0.005)
 .model DSS D(Is=1e-6 N=1.5 Rs=0.05 Cjo=100p)
 .model D4148 D(Is=2.5n N=1.75 Rs=0.6 Cjo=2p)
@@ -7,7 +7,7 @@
 .model SWI SW(Vt=0.5 Vh=0.1 Ron=2m Roff=1meg)
 .model NFET VDMOS(nchan Vto=3 Kp=60 Rd=2m Rs=1m Cgdmax=1.5n Cgdmin=60p Cgs=6n Cjo=1n Rb=5m)
 VPSU vin 0 36
-* ideal diode Q1||Q7 (behavioural LM74800): DGATE = A + 11 V while forward, pulled to A within 0.5 us of reverse
+* ideal diode Q1||Q7 (behavioural LM74800): DGATE = A + 11 V while forward, pulled to A about 2.6 us after reverse (TI: 0.5 us typ, so this is pessimistic)
 SID vin vout dg_on 0 SWI
 DBODY vin vout DSS
 BDG dgctl 0 V = V(vin)-V(vout) > -0.0045 ? 1 : 0
@@ -18,7 +18,7 @@ Cbulk vout 0 1880u IC=35.9
 Cmotor vout 0 600u IC=35.9
 * regen: motors push 15 A back onto the bus from 10 ms to 50 ms
 IREGEN 0 vout PWL(0 0 10m 0 10.1m 15 50m 15 50.1m 0)
-* 11.6 V rail (ideal, the CJ431/MMBT5551 stage is checked separately)
+* 11.6 V rail (ideal, the CJ431/BCP56 stage is checked separately)
 VREG vreg 0 11.6
 * sense network
 R10 vout sp 100k
@@ -39,8 +39,16 @@ SOA cmpout 0 cmpd 0 OCSW
 R17 vreg pu 4.7k
 RTH pu cmpout 0.01
 R27 cmpout 0 100k
-Q5 vreg cmpout vg QN
-Q6 0 cmpout vg QP
+* U4 UCC27517 gate driver, non-inverting (IN- grounded), supplied from VREG. Behavioural model from the TI datasheet:
+* input turns on above 2.2 V and off below 1.2 V (typ), about 5 ohm pull-up and 0.5 ohm pull-down, 230k input pull-down.
+* The 13 ns delay is left out (far below the 1 us step). C18 = 1 nF filters CMP_OUT.
+.model U4HI SW(Vt=1.7 Vh=0.5 Ron=5 Roff=100meg)
+.model U4LO SW(Vt=1.7 Vh=0.5 Ron=0.5 Roff=100meg)
+BU4N u4n 0 V = 3.4 - V(cmpout)
+SU4H vreg vg cmpout 0 U4HI
+SU4L vg 0 u4n 0 U4LO
+RU4IN cmpout 0 230k
+C18 cmpout 0 1n
 R18 vg gate 10
 R28 vg gate2 10
 R29 gate2 0 10k
@@ -53,7 +61,8 @@ LBR brl drn 1u
 D4 drn vout DSS
 * brake interlock (rev C): Q10 senses DGATE above VIN, Q11 holds CMP_OUT low while the ideal diode conducts
 R34 dgate ilke 47k
-Q10 ilkb vin ilke QP
+R41 vin ilkbase 10k
+Q10 ilkb ilkbase ilke QP
 R35 ilkb 0 100k
 Q11 cmpout ilkb 0 QN
 * thermal-loop-open indicator (rev D): Q12 (S8550) conducts only when J11 is open; R37 = 1M keeps CMP_OUT low.
@@ -77,7 +86,7 @@ run
 let vrise = v(vout) - v(vin)
 meas tran rise_max MAX vrise from=10m to=50m
 meas tran rise_min MIN vrise from=20m to=50m
-meas tran ipsu_rev MIN i(VPSU) from=10m to=50m
+meas tran ipsu_rev MAX i(VPSU) from=10m to=50m
 let ibr = (v(vout)-v(brl))/2
 meas tran ibr_max MAX ibr
 meas tran ibr_avg AVG ibr from=20m to=50m

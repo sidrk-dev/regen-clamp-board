@@ -1,4 +1,4 @@
-* Brake latch test (rev C). Delete the four interlock lines (R34, Q10, R35, Q11) to see the latch rev B could hit:
+* Brake latch test (rev E). Delete the five interlock lines (R34, R41, Q10, R35, Q11) to see the latch rev B could hit:
 * the PSU then keeps feeding about 24 A into the brake resistor after the regen pulse ends.
 * with interlock: 48 V supply, RV1 at minimum, worst-case 1% sense resistors (release below VIN)
 .model DSS D(Is=1e-6 N=1.5 Rs=0.05 Cjo=100p)
@@ -36,8 +36,16 @@ SOA cmpout 0 cmpd 0 OCSW
 R17 vreg pu 4.7k
 RTH pu cmpout 0.01
 R27 cmpout 0 100k
-Q5 vreg cmpout vg QN
-Q6 0 cmpout vg QP
+* U4 UCC27517 gate driver, non-inverting (IN- grounded), supplied from VREG. Behavioural model from the TI datasheet:
+* input turns on above 2.2 V and off below 1.2 V (typ), about 5 ohm pull-up and 0.5 ohm pull-down, 230k input pull-down.
+* The 13 ns delay is left out (far below the 1 us step). C18 = 1 nF filters CMP_OUT.
+.model U4HI SW(Vt=1.7 Vh=0.5 Ron=5 Roff=100meg)
+.model U4LO SW(Vt=1.7 Vh=0.5 Ron=0.5 Roff=100meg)
+BU4N u4n 0 V = 3.4 - V(cmpout)
+SU4H vreg vg cmpout 0 U4HI
+SU4L vg 0 u4n 0 U4LO
+RU4IN cmpout 0 230k
+C18 cmpout 0 1n
 R18 vg gate 10
 R28 vg gate2 10
 R29 gate2 0 10k
@@ -50,7 +58,8 @@ D4 drn vout DSS
 
 * brake interlock: Q10 (MMBT5401) senses DGATE above VIN, Q11 (MMBT3904) clamps CMP_OUT
 R34 dgate ilke 47k
-Q10 ilkb vin ilke QP
+R41 vin ilkbase 10k
+Q10 ilkb ilkbase ilke QP
 R35 ilkb 0 100k
 Q11 cmpout ilkb 0 QN
 

@@ -1,0 +1,183 @@
+* Post-layout regen event, rev F on 1 oz copper: the brake loop with the board's copper, package and wiring parasitics
+* Copper resistances come from review_tools/copper_check.py (35 um copper at 60 C, solved from the board file).
+* Pour inductances are estimated as (squares of copper) x u0 x 1.51 mm, the value for a sheet over the ground plane.
+* Assumed typical values, not measured: MOSFET package 1 nH drain + 5 nH source, capacitor 80 mohm + 15 nH each,
+* SS210 2 nH, 1 m supply lead (1 uH, 20 mohm), 1 m motor lead (0.7 uH, 15 mohm), brake resistor plus leads LBRK.
+.param VS=36 RBRK=2 LBRK=1u VTRIM=6.2
+* VTRIM is the voltage on TP9: the brake turns on at about 0.667 x TP9 - 0.14 V above the supply
+.param RVIN=0.64m LVIN=2.1n RMID=0.16m RVOUT=1.13m LVOUT=3.8n RGND=1.13m
+.param RVB=0.70m RDRN=0.41m RGB=0.67m LBP=3.7n
+* CRSS042N10N from its datasheet: 3.6 mohm at 10 V, Ciss 6772 pF, Coss 952 pF and Crss 33 pF at 50 V, Rg 2 ohm, Vth about 3 V
+.model NFET VDMOS(nchan Vto=3.2 Kp=120 Rd=1.6m Rs=1m Rg=2 Cgdmax=2.5n Cgdmin=33p Cgs=6.7n Cjo=7.3n M=0.5 Vj=0.8 Rb=4m Is=1e-10 N=1.1)
+* avalanche: the VDMOS model has no breakdown, so a 108 V diode stands across each brake MOSFET (rating 100 V, EAS 256 mJ)
+.model DAV D(Is=1e-14 BV=108 IBV=1m Rs=5m)
+.model DFB D(Is=1e-10 N=1.1 Rs=4m Cjo=1n)
+* SS210: 0.85 V at 2 A, 80 pF
+.model DSS D(Is=5e-9 N=1.5 Rs=0.04 Cjo=150p BV=100 IBV=1m)
+* SMCJ51A: 56.7 V minimum breakdown, 82.4 V at 18.2 A
+.model DTVS D(Is=1e-12 BV=58 IBV=1m Rs=1.3 Cjo=1n)
+.model QN NPN(Is=1e-14 Bf=150 Vaf=100 Cje=8p Cjc=4p Tf=0.3n)
+.model QP PNP(Is=1e-14 Bf=150 Vaf=100 Cje=10p Cjc=5p Tf=0.4n)
+.model SWI SW(Vt=0.5 Vh=0.1 Ron=1.8m Roff=1meg)
+.model OCSW SW(Vt=0.5 Ron=60 Roff=100meg)
+.model U4HI SW(Vt=1.7 Vh=0.5 Ron=5 Roff=100meg)
+.model U4LO SW(Vt=1.7 Vh=0.5 Ron=0.5 Roff=100meg)
+
+* supply, lead and XT60
+VPSU psu 0 {VS}
+RPSU psu p1 20m
+LCAB p1 j1 1u
+RJ1 j1 vin 0.5m
+C17 vin c17a 470u IC={VS}
+RC17 c17a c17b 80m
+LC17 c17b 0 15n
+C1 vin 0 1u IC={VS}
+D1 0 vin DTVS
+* input pour to Q1||Q7
+RVIN vin a1 {RVIN}
+LVIN a1 a {LVIN}
+* ideal diode Q1||Q7 (behavioural LM74800, as in sim_regen_clamp.cir): off when A-C goes below -4.5 mV
+SID a mid dg_on 0 SWI
+DB1 a mid DFB
+* (the 1 mV floors keep the RC filters out of denormal numbers, which stall the solver)
+BDG dgctl 0 V = V(a)-V(mid) > -0.0045 ? 1 : 1m
+RDGF dgctl dg_on 2.8k
+CDGF dg_on 0 1n IC=1
+BDGATE dgate 0 V = V(a) + 11*V(dg_on)
+* Q2||Q8 fully on, then the output pour. The ground-return copper is lumped into the output side.
+RQ2 mid vq {1.8m+RMID}
+RVO1 vq vq1 {0.35*RVOUT}
+LVO1 vq1 vcap {0.35*LVOUT}
+* four 470 uF bulk capacitors (lumped), C6, D2
+CBULK vcap cb1 1880u IC={VS-0.02}
+RCB cb1 cb2 20m
+LCB cb2 0 3.75n
+C6 vcap c6a 1u IC={VS-0.02}
+RC6 c6a 0 10m
+VTV 0 tv1 0
+D2 tv1 vcap DTVS
+RVO2 vcap vo2 {0.65*RVOUT+RGND}
+LVO2 vo2 vconn {0.65*LVOUT}
+* XT30, motor lead, motor-side capacitance and the regen current
+RJ2 vconn m1 0.7m
+RMC m1 m2 15m
+LMC m2 vmot 0.7u
+CMOT vmot cm1 600u IC={VS-0.02}
+RCM cm1 0 30m
+IREGEN 0 vmot PWL(0 0 1m 0 1.1m 15 16m 15 16.1m 0)
+
+* brake loop: bulk capacitors -> VOUT pour -> J5 -> resistor and leads -> J5 -> drain pour -> Q3||Q9 -> ground vias
+RVB1 vcap vb1 {RVB/2}
+LVB1 vb1 vbr {LBP/4}
+RVB2 vbr vb2 {RVB/2}
+LVB2 vb2 j5p {LBP/4}
+RBR j5p br1 {RBRK}
+LBR br1 j5n {LBRK}
+RDR j5n dr1 {RDRN}
+LDR dr1 drn {LBP/2}
+* freewheel diodes D4, D7 (SS210), drain pour back to the VOUT pour
+VD4 drn d4a 0
+LD4 d4a d4b 2n
+D4 d4b vbr DSS
+LD7 drn d7a 2n
+D7 d7a vbr DSS
+* Q3, Q9 with package inductance; both sources return through the via arrays
+LDQ3 drn d3 1n
+M3 d3 g3 s3 s3 NFET
+VAV3 s3 av3 0
+DAV3 av3 d3 DAV
+LSQ3 s3 sg 5n
+LDQ9 drn d9 1n
+M9 d9 g9 s9 s9 NFET
+DAV9 s9 d9 DAV
+LSQ9 s9 sg 5n
+RGB sg sg1 {RGB}
+LGB sg1 0 1n
+R18 vg g3 10
+R19 g3 0 10k
+R28 vg g9 10
+R29 g9 0 10k
+
+* control rail (ideal), sense network, LM393, UCC27517, interlock: as sim_regen_clamp.cir
+VREG vreg 0 11.6
+R10 vcap sp 100k
+R11 sp 0 20k
+R12 sp 0 220k
+R13 vg sp 510k
+R14 vin sn 100k
+R15 sn 0 20k
+R16 trim sn 150k
+VTRIM trimsrc 0 {VTRIM}
+RTRIM trimsrc trim 4k
+BCMPA cmpctl 0 V = V(sp) > V(sn) ? 1m : 1
+RCF cmpctl cmpd 1k
+CCF cmpd 0 300p IC=1
+SOA cmpout 0 cmpd 0 OCSW
+R17 vreg pu 4.7k
+RTH pu cmpout 0.01
+R27 cmpout 0 100k
+BU4N u4n 0 V = 3.4 - V(cmpout)
+SU4H vreg vg cmpout 0 U4HI
+SU4L vg 0 u4n 0 U4LO
+RU4IN cmpout 0 230k
+C18 cmpout 0 1n
+R34 dgate ilke 47k
+R41 vin ilkbase 10k
+Q10 ilkb ilkbase ilke QP
+R35 ilkb 0 100k
+Q11 cmpout ilkb 0 QN
+
+* absolute tolerances suited to a 20 A, 50 V circuit: at the defaults the solver stalls on numerical noise in the
+* nanohenry gate loop once the brake is idle
+.option method=gear reltol=2e-3 abstol=1e-8 vntol=1e-5 chgtol=1e-12
+.tran 20n 18m 0 100n uic
+.control
+set noaskquit
+foreach c 1 2 3 4 5
+  if $c = 2
+    alterparam LBRK=10u
+    reset
+  end
+  if $c = 3
+    alterparam VS=48
+    alterparam RBRK=2.5
+    reset
+  end
+  if $c = 4
+    * 48 V at the highest allowed brake setting, +5 V (TP9 = 7.7 V)
+    alterparam VTRIM=7.7
+    reset
+  end
+  if $c = 5
+    * 36 V at the top of the trimmer, +7.5 V (TP9 = 11.45 V), 2 ohm
+    alterparam VS=36
+    alterparam RBRK=2
+    alterparam VTRIM=11.45
+    reset
+  end
+  run
+  echo corner $c
+  let vrise = v(vcap)-v(vin)
+  meas tran rise_max MAX vrise from=1m to=16m
+  meas tran rise_min MIN vrise from=8m to=16m
+  let vds3 = v(d3)-v(s3)
+  meas tran vds_max MAX vds3 from=0.5m to=18m
+  meas tran vdrn_max MAX v(drn) from=0.5m to=18m
+  let vgs3 = v(g3)-v(s3)
+  meas tran vgs_max MAX vgs3 from=0.5m to=18m
+  meas tran vgs_min MIN vgs3 from=0.5m to=18m
+  meas tran vcap_max MAX v(vcap) from=0.5m to=18m
+  meas tran vmot_max MAX v(vmot) from=0.5m to=18m
+  meas tran vin_max MAX v(vin) from=0.5m to=18m
+  meas tran ipsu_rev MAX i(VPSU) from=1m to=16m
+  meas tran ibr_max MAX i(LBR)
+  meas tran ibr_avg AVG i(LBR) from=8m to=16m
+  meas tran id4_max MAX i(VD4)
+  meas tran iav_max MAX i(VAV3) from=0.5m to=18m
+  meas tran itvs_max MAX i(VTV) from=0.5m to=18m
+  meas tran icap_rms RMS i(LCB) from=8m to=16m
+  meas tran chop_period TRIG v(vg) VAL=6 RISE=4 TARG v(vg) VAL=6 RISE=5
+  meas tran t_off_edge TRIG vds3 VAL=4 RISE=4 TARG vds3 VAL=32 RISE=4
+end
+.endc
+.end
