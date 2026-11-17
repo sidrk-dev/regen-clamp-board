@@ -23,6 +23,19 @@ Design inspiration: the [ODrive Regen Clamp](https://docs.odriverobotics.com/v/l
 the [mjbots mjpower-ss](https://github.com/mjbots/power_dist/tree/main/hw/mjpower-ss)
 (a high-side FET ramped slowly to precharge the load, with an output on/off switch).
 
+
+## Board renders
+
+![Top-down view of rev F with the designer credit and quote printed above the bulk capacitors](docs/regen_precharge_revF_top.png)
+
+| Power input and brake connector | Motor outputs and brake connector |
+| --- | --- |
+| ![Rev F viewed from the power-input side near the brake connector](docs/regen_precharge_revF_3d.png) | ![Rev F viewed from the motor-output side near the brake connector](docs/renders/output-brake.png) |
+| **Power-input side, opposite corner** | **Motor-output side, opposite corner** |
+| ![Rev F viewed from the power-input side at the upper corner](docs/renders/input-upper.png) | ![Rev F viewed from the motor-output side at the upper corner](docs/renders/output-upper.png) |
+
+![Bottom of rev F with the voltage and brake setting legend](docs/renders/bottom.png)
+
 ## Revisions
 
 None of these has been ordered.

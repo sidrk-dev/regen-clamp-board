@@ -38234,6 +38234,28 @@
 			)
 		)
 	)
+	(gr_text "Designed by\nSiddharth Rajasekaran\nand Angelo Reyes"
+		(at 193 105.7 0)
+		(layer "F.SilkS")
+		(uuid "aa0716d1-356a-44be-bf2d-a324ad70c573")
+		(effects
+			(font
+				(size 1.18 1.18)
+				(thickness 0.2)
+			)
+		)
+	)
+	(gr_text "From the moment I understood\nthe weakness of my flesh, it\ndisgusted me. I craved the\nstrength and certainty of\nsteel. I aspired to the\npurity of the Blessed Machine"
+		(at 193 114.7 0)
+		(layer "F.SilkS")
+		(uuid "b358d3ce-c871-4b41-bfbe-cf0cb856f0fa")
+		(effects
+			(font
+				(size 0.98 0.98)
+				(thickness 0.16)
+			)
+		)
+	)
 	(gr_text "REGEN CLAMP + SOFT START  rev F\n24-48V 27A max, 1oz Cu, XT30 15A each, brake R >= Vin/20A\nSW1 OFF before plugging motors\nRV1 sets brake: VOUT-VIN = 0.667 x TP9 - 0.14V\n36V: 2R brake R.  48V: 2.5R, TP9 <= 7.7V, no moteus r4"
 		(at 135 112 0)
 		(layer "B.SilkS")
