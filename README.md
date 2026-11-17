@@ -449,8 +449,10 @@ published Economic rate. Check the feeder classes and order total in the quote.
 
 See the [factory assembly view](docs/regen_precharge_revF_factory.png), the [populated top
 view](docs/regen_precharge_revF_top.png), and the [angled 3D view](docs/regen_precharge_revF_3d.png).
-KiCad’s installed library lacks the horizontal XT connector models, so the populated views show their
-footprint outlines and pads.
+The populated views use the part-specific EasyEDA STEP models for [XT30PW-F](https://www.lcsc.com/product-detail/C2913282.html),
+[XT60PW-M30](https://www.lcsc.com/product-detail/C98732.html), and [XT60PW-F](https://www.lcsc.com/product-detail/C428722.html).
+The models are aligned to the contacts and locating holes. Regenerating the files after this update reproduced
+the same board fabrication and placement data.
 
 
 ## Files
@@ -623,10 +625,14 @@ Before ordering, a person still has to:
 - Tick Confirm Parts Placement and compare the 68 positions in the preview with the machine BOM and factory view.
 - Look at your cables: the red wire must go to the contact marked + on each XT plug (the flat end of the housing). The
   board side is settled: pad 2 is that contact on the input and on every output.
-- Optional, free: print [the 1:1 fit sheet](docs/regen_precharge_revF_test_fit_1to1.pdf) at 100 %
-  (the outline must measure 125 × 100 mm) and lay real XT30 and XT60 connectors on it. The hole patterns already match
-  the Amass drawings: 7.2 mm pitch, 2.9 mm holes and 0.8 × 1.9 mm slots 13.5 mm apart for the XT60; 5.0 mm pitch and
-  1.0 mm peg holes 11.0 mm apart, 5.0 mm in front of the pins, for the XT30 (pin holes 1.9 mm against the drawing's 1.7 mm).
+- For a paper fit check, print [the 1:1 fit sheet](docs/regen_precharge_revF_test_fit_1to1.pdf) at 100 % and
+  confirm the outline measures 125 × 100 mm. Compare the connectors with their holes. The XT30 contact pitch is 5.0 mm
+  and the locating holes are 11.0 mm apart, 5.0 mm in front of the contacts. The XT60 contact pitch is 7.2 mm and
+  the slots are 13.5 mm apart, 6.0 mm in front of the contacts.
+- Confirm the finished plated slots fit the actual J1 connector before releasing an assembled order. The board
+  specifies 0.80 × 1.90 mm slots at the low end of the Amass drawing’s 0.80–0.90 × 1.90–2.00 mm range.
+  The EasyEDA model shows projecting tab corners near the rounded slot ends. The drawing and model establish
+  the intended geometry, with a physical test fit still pending.
 - Use screws or washers under 11 mm across: a #8 pan head or SAE washer, not a USS washer.
 
 Settled since the last revision of this list, from datasheets and JLC's library, without a part in the hand: LED and

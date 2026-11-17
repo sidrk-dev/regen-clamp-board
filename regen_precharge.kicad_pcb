@@ -6590,15 +6590,15 @@
 			(uuid "1ff41042-278a-4f58-a8fd-5eb49cbcf3e1")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz 2.5 8.95 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 180)
 			)
 		)
 	)
@@ -13305,9 +13305,9 @@
 			(uuid "3f4fd90a-f582-400f-8380-81f27d125bbb")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT60PW-F_1x02_P7.20mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT60PW-F_1x02_P7.20mm_Horizontal_2.9mm.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz -3.6 6.8 0)
 			)
 			(scale
 				(xyz 1 1 1)
@@ -16673,15 +16673,15 @@
 			(uuid "472c82a5-da52-4bf3-80c2-e5493eca08ad")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz 2.5 8.95 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 180)
 			)
 		)
 	)
@@ -24018,15 +24018,15 @@
 			(uuid "02002211-0f1f-45f9-8b23-3943344cf8ec")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz 2.5 8.95 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 180)
 			)
 		)
 	)
@@ -30410,15 +30410,15 @@
 			(uuid "7be834da-bb47-4851-9d8e-3462764fdf15")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT60PW-M_1x02_P7.20mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT60PW-M30_1x02_P7.20mm_Horizontal.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz 3.6 7.1 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 -90)
 			)
 		)
 	)
@@ -30891,15 +30891,15 @@
 			(uuid "35b45baf-996d-4459-95d4-fec5ffe835a5")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz 2.5 8.95 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 180)
 			)
 		)
 	)
@@ -35490,15 +35490,15 @@
 			(uuid "37f05b8e-94b9-446b-8058-2d8ba52ad5aa")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal.step"
+		(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs.step"
 			(offset
-				(xyz 0 0 0)
+				(xyz 2.5 8.95 0)
 			)
 			(scale
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz 0 0 0)
+				(xyz 0 0 180)
 			)
 		)
 	)

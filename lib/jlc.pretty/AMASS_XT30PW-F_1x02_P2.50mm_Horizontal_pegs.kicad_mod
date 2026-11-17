@@ -436,15 +436,15 @@
 		(uuid "60c64046-8ee8-4357-a22f-a7727e1c0e4d")
 	)
 	(embedded_fonts no)
-	(model "${KICAD10_3DMODEL_DIR}/Connector_AMASS.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal.step"
+	(model "${KIPRJMOD}/lib/jlc.3dshapes/AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs.step"
 		(offset
-			(xyz 0 0 0)
+			(xyz 2.5 8.95 0)
 		)
 		(scale
 			(xyz 1 1 1)
 		)
 		(rotate
-			(xyz 0 0 0)
+			(xyz 0 0 180)
 		)
 	)
 )
