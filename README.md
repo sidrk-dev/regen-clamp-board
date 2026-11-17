@@ -26,7 +26,7 @@ the [mjbots mjpower-ss](https://github.com/mjbots/power_dist/tree/main/hw/mjpowe
 
 ## Board renders
 
-![Top-down view of rev F with the designer credit and quote printed above the bulk capacitors](docs/regen_precharge_revF_top.png)
+![Top-down view of rev F with the designer credit above the bulk capacitors and a penguin outline below them](docs/regen_precharge_revF_top.png)
 
 | Power input and brake connector | Motor outputs and brake connector |
 | --- | --- |

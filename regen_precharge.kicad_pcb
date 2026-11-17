@@ -38245,16 +38245,363 @@
 			)
 		)
 	)
-	(gr_text "From the moment I understood\nthe weakness of my flesh, it\ndisgusted me. I craved the\nstrength and certainty of\nsteel. I aspired to the\npurity of the Blessed Machine"
-		(at 193 114.7 0)
-		(layer "F.SilkS")
-		(uuid "b358d3ce-c871-4b41-bfbe-cf0cb856f0fa")
-		(effects
-			(font
-				(size 0.98 0.98)
-				(thickness 0.16)
-			)
+	(gr_curve
+		(pts
+			(xy 198.5700 163.1850)
+			(xy 201.0300 163.1850)
+			(xy 202.4076 165.2100)
+			(xy 202.4732 167.7840)
 		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ced02b07-385c-5102-b55d-81efcdda683a")
+	)
+	(gr_curve
+		(pts
+			(xy 202.4732 167.7840)
+			(xy 202.5224 168.8820)
+			(xy 202.7520 170.1150)
+			(xy 203.4736 171.0870)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9f07413a-7f04-57b4-b6cb-20c79a370ad5")
+	)
+	(gr_curve
+		(pts
+			(xy 203.4736 171.0870)
+			(xy 204.9250 172.9770)
+			(xy 205.9090 175.3800)
+			(xy 205.0398 176.1270)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "f348a0cb-f0aa-57b0-ac96-f6a4ff2e97c7")
+	)
+	(gr_curve
+		(pts
+			(xy 205.0398 176.1270)
+			(xy 204.5478 176.5320)
+			(xy 203.8918 175.7400)
+			(xy 203.3342 174.8850)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "837a33b8-f0f0-5c2b-a41c-a1ac02dc55ba")
+	)
+	(gr_curve
+		(pts
+			(xy 203.3342 174.8850)
+			(xy 203.3834 176.9280)
+			(xy 202.8012 178.4670)
+			(xy 202.0140 179.3040)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "59e4a227-2798-5497-919e-500e33e0c336")
+	)
+	(gr_curve
+		(pts
+			(xy 202.0140 179.3040)
+			(xy 203.3096 180.0600)
+			(xy 203.8016 181.1760)
+			(xy 202.6946 181.3470)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4d712ced-8c4d-54fa-aa94-ed6aaecfe106")
+	)
+	(gr_curve
+		(pts
+			(xy 202.6946 181.3470)
+			(xy 201.7434 181.5180)
+			(xy 200.1690 181.4370)
+			(xy 199.7180 180.4560)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a7e06333-ff0e-575a-b91a-af6449384478")
+	)
+	(gr_curve
+		(pts
+			(xy 199.7180 180.4560)
+			(xy 199.0046 180.6630)
+			(xy 198.1354 180.6630)
+			(xy 197.4220 180.4560)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5a7c6c95-4de8-5de4-8b8b-670fe1bf9ec6")
+	)
+	(gr_curve
+		(pts
+			(xy 197.4220 180.4560)
+			(xy 196.9710 181.4370)
+			(xy 195.3966 181.5180)
+			(xy 194.4454 181.3470)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c0a72fe6-17ee-5a35-bed0-f1905f3ec3c8")
+	)
+	(gr_curve
+		(pts
+			(xy 194.4454 181.3470)
+			(xy 193.3384 181.1760)
+			(xy 193.8304 180.0600)
+			(xy 195.1260 179.3040)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "fa526aea-7f9d-593b-824c-5aae60d8aca8")
+	)
+	(gr_curve
+		(pts
+			(xy 195.1260 179.3040)
+			(xy 194.3388 178.4670)
+			(xy 193.7566 176.9280)
+			(xy 193.8058 174.8850)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "81493966-87ac-5af0-ae26-1fef3288baa2")
+	)
+	(gr_curve
+		(pts
+			(xy 193.8058 174.8850)
+			(xy 193.2482 175.7400)
+			(xy 192.5922 176.5320)
+			(xy 192.1002 176.1270)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "beb65db1-9f98-53f1-91bd-a7e0f893bda1")
+	)
+	(gr_curve
+		(pts
+			(xy 192.1002 176.1270)
+			(xy 191.2310 175.3800)
+			(xy 192.2150 172.9770)
+			(xy 193.6664 171.0870)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "689a5a13-0268-5151-b3b9-be17e87601fe")
+	)
+	(gr_curve
+		(pts
+			(xy 193.6664 171.0870)
+			(xy 194.3880 170.1150)
+			(xy 194.6176 168.8820)
+			(xy 194.6668 167.7840)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6e54f1a1-cf21-50cc-81b4-161a37678ee0")
+	)
+	(gr_curve
+		(pts
+			(xy 194.6668 167.7840)
+			(xy 194.7324 165.2100)
+			(xy 196.1100 163.1850)
+			(xy 198.5700 163.1850)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9adcd324-c30b-5231-9005-c7ed1d0e5bc2")
+	)
+	(gr_curve
+		(pts
+			(xy 198.5700 167.2350)
+			(xy 196.5200 164.8950)
+			(xy 194.8636 168.0540)
+			(xy 195.9542 170.7360)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "41c1342e-04ab-5c74-a38d-af39eb2bfe7e")
+	)
+	(gr_curve
+		(pts
+			(xy 195.9542 170.7360)
+			(xy 195.0440 172.1670)
+			(xy 194.8718 174.8130)
+			(xy 195.4458 176.6400)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "dff9be90-9ffb-569c-a0c2-c9cc2a4eaaef")
+	)
+	(gr_curve
+		(pts
+			(xy 195.4458 176.6400)
+			(xy 195.8640 178.0440)
+			(xy 196.9710 179.1240)
+			(xy 198.5700 179.1240)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "232a8259-b15b-508e-a0d9-6f92f0c68b77")
+	)
+	(gr_curve
+		(pts
+			(xy 198.5700 179.1240)
+			(xy 200.1690 179.1240)
+			(xy 201.2760 178.0440)
+			(xy 201.6942 176.6400)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "11d018e3-577b-56db-a802-8a84a01b71a5")
+	)
+	(gr_curve
+		(pts
+			(xy 201.6942 176.6400)
+			(xy 202.2682 174.8130)
+			(xy 202.0960 172.1670)
+			(xy 201.1858 170.7360)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "8898cde8-81ab-5bd0-8156-aefdba73bb04")
+	)
+	(gr_curve
+		(pts
+			(xy 201.1858 170.7360)
+			(xy 202.2764 168.0540)
+			(xy 200.6200 164.8950)
+			(xy 198.5700 167.2350)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c2a67e8a-fc11-5f77-9f63-a6b4ac2dd285")
+	)
+	(gr_curve
+		(pts
+			(xy 197.6762 170.1420)
+			(xy 197.9632 169.6110)
+			(xy 199.1768 169.6110)
+			(xy 199.4638 170.1420)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4ebdca5b-d990-566e-ac88-a520934e940d")
+	)
+	(gr_curve
+		(pts
+			(xy 199.4638 170.1420)
+			(xy 199.2670 170.7450)
+			(xy 198.8488 171.2220)
+			(xy 198.5700 171.2760)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d882604b-966a-517e-a238-59c711f8026a")
+	)
+	(gr_curve
+		(pts
+			(xy 198.5700 171.2760)
+			(xy 198.2912 171.2220)
+			(xy 197.8730 170.7450)
+			(xy 197.6762 170.1420)
+		)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6a2b852f-bd97-54b3-a6e5-d9668b6794c5")
+	)
+	(gr_circle
+		(center 197.2006 168.8100)
+		(end 197.4384 168.8100)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "aac76944-ab4b-508d-b329-cf451e8aefd9")
+	)
+	(gr_circle
+		(center 199.9394 168.8100)
+		(end 200.1772 168.8100)
+		(stroke
+			(width 0.27)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "c08fcf40-c60c-5607-9230-539b208d3b2d")
 	)
 	(gr_text "REGEN CLAMP + SOFT START  rev F\n24-48V 27A max, 1oz Cu, XT30 15A each, brake R >= Vin/20A\nSW1 OFF before plugging motors\nRV1 sets brake: VOUT-VIN = 0.667 x TP9 - 0.14V\n36V: 2R brake R.  48V: 2.5R, TP9 <= 7.7V, no moteus r4"
 		(at 135 112 0)
