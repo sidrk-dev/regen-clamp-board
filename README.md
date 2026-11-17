@@ -452,7 +452,9 @@ view](docs/regen_precharge_revF_top.png), and the [angled 3D view](docs/regen_pr
 The populated views use the part-specific EasyEDA STEP models for [XT30PW-F](https://www.lcsc.com/product-detail/C2913282.html),
 [XT60PW-M30](https://www.lcsc.com/product-detail/C98732.html), and [XT60PW-F](https://www.lcsc.com/product-detail/C428722.html).
 The models are aligned to the contacts and locating holes. Regenerating the files after this update reproduced
-the same board fabrication and placement data.
+the same board fabrication and placement data. J1's mating face points out of the board's left edge.
+Looking straight into J1 from that edge with the PCB below the connector, the left contact is VIN (+, pad 2)
+and the right contact is GND (−, pad 1).
 
 
 ## Files
