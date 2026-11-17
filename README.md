@@ -26,7 +26,9 @@ the [mjbots mjpower-ss](https://github.com/mjbots/power_dist/tree/main/hw/mjpowe
 
 ## Board renders
 
-![Top-down view of rev F with the designer credit above the bulk capacitors and a penguin outline below them](docs/regen_precharge_revF_top.png)
+![Top-down view of rev F with Meowl by the power input and the lone penguin walking toward mountains below the bulk capacitors](docs/regen_precharge_revF_top.png)
+
+The front silkscreen features two original line drawings inspired by memes. The lone penguin scene is from [Werner Herzog’s *Encounters at the End of the World*](https://www.idfa.nl/en/film/577ecf78-ca4c-454c-a6fc-85e0056d7287/encounters-at-the-end-of-the-world/). [Meowl](https://knowyourmeme.com/photos/3139712-meowl) is the cat-faced owl perched on a branch.
 
 | Power input and brake connector | Motor outputs and brake connector |
 | --- | --- |
