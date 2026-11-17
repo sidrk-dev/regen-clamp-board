@@ -26,9 +26,7 @@ the [mjbots mjpower-ss](https://github.com/mjbots/power_dist/tree/main/hw/mjpowe
 
 ## Board renders
 
-![Top-down view of rev F with Meowl by the power input and the lone penguin walking toward mountains below the bulk capacitors](docs/regen_precharge_revF_top.png)
-
-The front silkscreen uses monochrome traces of the [original Meowl photo edit](https://knowyourmeme.com/photos/3139712-meowl) and the [penguin meme still](https://knowyourmeme.com/memes/penguin-walking-toward-mountain-nihilist-penguin) from *Encounters at the End of the World*. The penguin is enlarged so it remains visible at silkscreen scale.
+![Top-down view of rev F with the designer credit above the bulk capacitors](docs/regen_precharge_revF_top.png)
 
 | Power input and brake connector | Motor outputs and brake connector |
 | --- | --- |
