@@ -40,6 +40,11 @@ for c, p in parts.items():
     mt = re.search(r"([\d.]+)%", p["value"])
     if r and mt and f"±{mt[1]}%" not in d:
         print(f"FAIL {c} {p['refs']}: wanted ±{mt[1]}%, catalogue says {d[:80]}"); bad += 1
+    if r and set(p["refs"]) & {"R1", "R3", "R6", "R10", "R14", "R36", "R44"}:
+        min_v = 150 if set(p["refs"]) & {"R6", "R36"} else 75
+        rv_m = re.search(r"(?<![\d.])(\d+)V\b", d)
+        if not rv_m or int(rv_m.group(1)) < min_v:
+            print(f"FAIL {c} {p['refs']}: bus resistor needs >={min_v} V working rating, catalogue says {d[:80]}"); bad += 1
     m = re.match(r"([\d.]+)(uF|nF)", p["value"])
     if m and f"{m[1]}{m[2]}" not in d:
         print(f"FAIL {c} {p['refs']}: wanted {m[0]}, catalogue says {d[:80]}"); bad += 1

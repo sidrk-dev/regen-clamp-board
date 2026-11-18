@@ -2,7 +2,7 @@
 import json, os, subprocess, sys
 from collections import defaultdict
 
-PROJ = "/home/sid/Documents/code/im6014Development/.claude/worktrees/regen-clamp-review-f9d0d4/hardware/regen-precharge-board"
+PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCH = f"{PROJ}/regen_precharge.kicad_sch"
 
 R0603 = "Resistor_SMD:R_0603_1608Metric"

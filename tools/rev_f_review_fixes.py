@@ -53,7 +53,7 @@ for ref in FETS:
         if fld.GetName() == "Assembly":
             fld.SetText("")
 
-# 3. Thermal spokes on both pads of C7, C8, C15, C16, C17 and on J12.1
+# 3. Thermal spokes on C7, C8, C15, C16, C17, J12.1, hand-solder SMDs (C1, C2, C6, SW1), and small 0603/0805/SOD parts
 spoked = 0
 for ref in CAPS:
     f = b.FindFootprintByReference(ref)
@@ -67,11 +67,42 @@ for p in b.FindFootprintByReference("J12").Pads():
         spoked += 1
 assert spoked == 11, spoked
 
+SOLID_KEEP = {"Q1", "Q2", "Q3", "Q7", "Q8", "Q9", "D1", "D2", "D4", "D7", "Q4", "U1", "R19", "R23", "C11", "C18"}
+smd_spoked_refs = {}
+for f in b.GetFootprints():
+    ref = f.GetReference()
+    if ref in SOLID_KEEP or ref.startswith(("J", "TP", "H", "FID", "RV")) or ref in CAPS:
+        continue
+    fpname = str(f.GetFPID().GetLibItemName())
+    if ref in ("C1", "C2", "C6"):
+        smd_spoked_refs[ref] = (0.50, 0.30)
+    elif ref == "SW1" or any(k in fpname for k in ("0603", "0805", "SOD-123", "SOD-323")):
+        smd_spoked_refs[ref] = (0.35, 0.25)
+    else:
+        continue
+    for p in f.Pads():
+        if p.GetAttribute() == pcbnew.PAD_ATTRIB_SMD and p.GetNetCode() > 0:
+            p.SetLocalZoneConnection(pcbnew.ZONE_CONNECTION_THERMAL)
+
 # 4. Move C8 reference out from under D2
 c8_ref = b.FindFootprintByReference("C8").Reference()
 c8_ref.SetPosition(pcbnew.VECTOR2I(fm(177.2), fm(144.5)))
 
-# Refill zones and save PCB
+b.Save(board_path)
+pcb_txt = open(board_path).read()
+for ref, (sw, gp) in smd_spoked_refs.items():
+    k = pcb_txt.index(f'(property "Reference" "{ref}"')
+    start = pcb_txt.rindex("\n\t(footprint ", 0, k)
+    end = pcb_txt.index("\n\t)\n", k) + 4
+    blk = pcb_txt[start:end].replace(
+        "(zone_connect 1)",
+        f"(zone_connect 1)\n\t\t\t(thermal_bridge_width {sw})\n\t\t\t(thermal_gap {gp})",
+    )
+    pcb_txt = pcb_txt[:start] + blk + pcb_txt[end:]
+open(board_path, "w").write(pcb_txt)
+
+# Reload, refill zones, and save PCB
+b = pcbnew.LoadBoard(board_path)
 pcbnew.ZONE_FILLER(b).Fill(b.Zones())
 b.Save(board_path)
 

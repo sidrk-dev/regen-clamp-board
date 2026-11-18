@@ -77,8 +77,8 @@ Rev F started as a cost-down of rev E. Later rev F edits adjusted the top-layer 
     ground pour to 0.5 mm was tried first and rejected: it cut the ground of U4 and C19.
   - *The back legend ended 0.08 mm from the board edge*; it is moved 5 mm right. KiCad's DRC only reports
     silkscreen that crosses the edge, so `review_tools/silk_edge_check.py` now checks the margin.
-  - *48 V margin*: the limit at 48 V is now +5 V (TP9 at most 7.7 V) instead of +6 V, as the review recommends.
-  - `check_bom.py` now checks capacitor voltage ratings and the electrolytic's can size against the catalogue.
+  - *48 V margin*: the limit at 48 V is now +5 V (TP9 at most 7.7 V) instead of +6 V, as the review recommends (this also keeps `U3A`'s inputs below the `LM393` cold `VCC − 2.0 V` common-mode ceiling up to 55 V).
+  - `tools/review_tools/check_bom.py` now checks capacitor voltage ratings, electrolytic can dimensions, and `>= 75 V` (`>= 150 V` on `R6, R36`) working-voltage ratings on bus-connected resistors against the catalogue.
   - *0.1 % sense resistors*, added 16 Nov because the board will also run on 48 V: R10 and R14 are now 100 k 0.1 %
     (Yageo RT0603BRD07100KL, C122538) and R11 and R15 20 k 0.1 % (RT0603BRD0720KL, C723637), same 0603 footprint,
     75 V rated. The review puts the trip spread at 48 V at about 0.6 V with them, against 3.5 V with 1 % parts, so the
@@ -88,23 +88,25 @@ Rev F started as a cost-down of rev E. Later rev F edits adjusted the top-layer 
   `build-scripts/review_nov15.py` is the record of the board edits.
 - **SW1 is labelled OFF and ON at the two ends of its travel**, in place of one "ON/OFF" caption. The MSK12C02
   drawing shows the knob at the pin-3 end joining pins 3 and 2, and at the pin-1 end joining 2 and 1. Pin 1 is ground
-  and pin 2 is EN, so ON is the slider toward the bottom board edge. `check_parts.py` now fails if the labels are swapped.
-- **Connector polarity settled from the Amass drawings**, and checked by `check_parts.py`: pad 2 of J1 and of
+  and pin 2 is EN, so ON is the slider toward the bottom board edge. `tools/check_parts.py` now fails if the labels are swapped.
+- **Connector polarity settled from the Amass drawings**, and checked by `tools/check_parts.py`: pad 2 of J1 and of
   J2–J4, J6, J7 is the contact at the flat end of the housing, which is the + contact (see Verification status).
-- New simulations: `sim_post_layout.cir` and `sim_soft_start.cir` (see Verification status).
+- New simulations: `sim_post_layout.cir`, `sim_soft_start.cir`, and `tools/review_tools/full_board_spice_check.py` (see Verification status).
 - **The six TO-263 MOSFETs (`Q1, Q2, Q3, Q7, Q8, Q9`) stay on JLCPCB's SMT reflow line**, while the 1206 capacitors
-  (`C1, C2, C6`) remain hand-soldered (reflow them with hot air or a hot plate rather than a bare iron on the solid pours,
+  (`C1, C2, C6`) remain hand-soldered (reflow them with hot air or a hot plate rather than a point iron,
   to avoid ceramic thermal-shock cracks). The MOSFETs retain the corrected 3D model offset and front stencil paste openings.
 - **R6, the SMC and SMA diodes (D1, D2, D4, D7), the two SOD-123 Zeners (D11, D12) and the SOT-223 transistor
   (Q4) stay machine-placed.** An earlier commit on this branch moved them to hand soldering; only D11 carried a fee,
   so the other seven added hand work for no saving, and the owner asked for them to go back on the machine.
   The schematic's assembly field and the PCB placement exclusions drive the exports.
-- **From a follow-up review (17 Nov 2026):** `J1` and `J5` contact holes are centred in Amass's `2.90 +0.10/-0.00 mm`
+- **From a follow-up review (17–18 Nov 2026):** `J1` and `J5` contact holes are centred in Amass's `2.90 +0.10/-0.00 mm`
   and `0.80 +0.10/-0.00 × 1.90 +0.10/-0.00 mm` windows at **3.0 mm** with **0.9 × 2.0 mm** fixing slots (`1.5 × 2.6 mm`
-  pads, keeping the `0.30 mm` plated ring) so JLCPCB's `-0.08 mm` plating tolerance cannot finish undersize; both pads
-  of the five 470 µF bulk capacitors (`C7, C8, C15, C16, C17`) and `J12` pin 1 now use thermal spokes (`~0.06 mΩ` per pad)
-  for easier hand soldering; `C8`'s silkscreen label moved clear of `D2`'s body; and the schematic title block and notes
-  are updated to rev F, 27 A, four output bulk capacitors and D12 under 17 V (`tools/rev_f_review_fixes.py`).
+  pads, keeping the `0.30 mm` plated ring) so JLCPCB's `-0.08 mm` plating tolerance cannot finish undersize; thermal relief
+  spokes now protect the five 470 µF bulk capacitors (`C7, C8, C15, C16, C17`), `J12` pin 1, the hand-soldered SMDs
+  (`C1, C2, C6, SW1`), and 58 small `0603`/`0805`/`SOD` passives (preventing reflow tombstoning and `SW1` housing heat
+  damage while keeping MOSFET, power-diode, and XT connector pads solid); `C8`'s silkscreen label moved clear of `D2`'s
+  body; `tools/sch_layout.py` is bundled in `tools/`; `B.Paste` is included in the 11-file Gerber archive; and the schematic
+  title block and notes are updated to rev F, 27 A, four output bulk capacitors and D12 under 17 V (`tools/rev_f_review_fixes.py`).
 - The PCB and schematic both use the bundled 1 mm fiducial footprint so that a change in the installed KiCad library does not affect the release checks.
 - `build-scripts/cost_down.py` and `tools/rev_f_review_fixes.py` are the record of these edits.
 
@@ -134,8 +136,8 @@ Rev E, changes from rev D. Most of these were found by independent reviews:
 - **D11 (BZT52C12, 12 V) clamps HGATE to VOUT.** The 400 nF soft-start capacitor holds
   HGATE up when VOUT falls, and with no clamp HGATE minus OUT could pass U1's 15 V
   absolute maximum and the MOSFETs' 20 V gate limit: 18 V or more after long regen, far
-  more on a supply removal or output short. R5 limits the clamp current to under 50 mA.
-  Not modelled in the sim decks, so scope HGATE minus OUT at bring-up.
+  more on a supply removal or output short. R5 limits the peak clamp current to ~47–60 mA (`< 0.3 mJ`).
+  Scope HGATE minus OUT at bring-up.
 - **D12 (BZT52C15) clamps Q4's base.** If U2 or R7 opens, R6 would pull the rail up to the bus,
   past the LM393's 36 V and the brake MOSFETs' 20 V gate limit. Now the rail stays under about 15 V.
 - **Five XT30 outputs instead of three**, so the arm's seven motors split two or three per
@@ -344,7 +346,7 @@ change. Each resistor gets its own thermal fuse and its own thermal switch:
 
     J11: thermal switch A ── thermal switch B   (in series, so either one turns the brake off)
 
-Simulated in `sim_post_layout.cir` (36 V, +4 V trip, 0.5 µH per resistor's leads, 15 ms pulses):
+Simulated in `sim_post_layout.cir` (36 V, +4 V trip, 1 µH per resistor's leads / 0.5 µH combined, 15 ms pulses):
 
 | Returned current | One 2 Ω: bus peak | Two 2 Ω: bus peak | Two 2 Ω: brake peak / RMS |
 |---:|---:|---:|---:|
@@ -541,7 +543,8 @@ and the right contact is GND (−, pad 1).
 - `sim_brake_latch_48v.cir`: the worst-case latch test at 48 V (delete the interlock lines to reproduce the rev B latch).
 - `sim_post_layout.cir`: the regen event with the board's copper resistance, estimated inductance, a datasheet MOSFET model and wiring (five cases, including 48 V at +5 V and 36 V at +7.5 V), then a sweep of returned current from 5 to 27 A with one 2 Ω resistor and 22 and 27 A with two in parallel.
 - `sim_soft_start.cir`: hot plug with SW1 off, then the soft start, at 36 V and 48 V.
-- `review_swarm.py`: runs every AI model on this computer against the design, then has other models check each finding. It keeps running on its own and waits out usage limits. Run `./review_swarm.py models`, then `./review_swarm.py start`. `review_swarm_test.py` tests it offline with a fake model runner.
+- `tools/review_tools/full_board_spice_check.py`: 8-scenario full-board SPICE verification suite modelling `LM74800-Q1` (charge pump, `10.5 mV` linear `DGATE` servo, `-4.5 mV` fast reverse, `200 mV` recovery, `HGATE`, `OV`, `EN/UVLO`), the `CJ431 + BCP56-16 + D10 + D12` control rail, and `UCC27517` UVLO across cold startup, `27 A` turn-off, `OV`, slow regen zero-crossing, `48 V` latch, unplugged-`J1` backdrive, `VOUT` short, and `VIN` micro-short.
+- `tools/review_swarm.py`: runs every AI model on this computer against the design, then has other models check each finding. It keeps running on its own and waits out usage limits. Run `python3 tools/review_swarm.py models`, then `python3 tools/review_swarm.py start`. `tools/review_swarm_test.py` tests it offline with a fake model runner.
 
 Run `tools/check_all.sh --online` to repeat every check listed under Verification status, and
 `tools/make_jlc.sh` from a shell with KiCad 10 on its path to regenerate the checked fabrication and
@@ -552,8 +555,8 @@ the local development archive.
 
 ## Schematic
 
-`build-scripts/build_sch.py` draws the schematic from the part table, using the hand layout in
-`build-scripts/sch_layout.py`: eleven framed blocks with real wires, ground symbols on every
+`tools/build_sch.py` draws the schematic from the part table, using the hand layout in
+`tools/sch_layout.py`: eleven framed blocks with real wires, ground symbols on every
 ground pin, and global labels where a net leaves its block (and on every named net, so the board
 keeps its net names). Before writing anything, the layout is checked for wires that join two nets,
 pins left loose and wired nets with no name, and KiCad's own pin positions are compared with the
@@ -565,29 +568,30 @@ These checks show the design agrees with itself, its rules and its datasheets. T
 show it is right: several real faults on this board passed every one of them, and were
 found only by independent reviewers. Treat Konnect's "READY" as a prompt for review.
 
-Run on the files in this repository with `tools/check_all.sh --online` (17 Nov 2026). The regenerated
-exports include all 82 SMT placements on `F.Paste` and `CPL-JLCPCB.csv`, the enlarged XT60 holes/slots,
-thermal spokes on the 470 µF bulk capacitors and `J12` pin 1, and `C8`'s relocated silkscreen label.
+Run on the files in this repository with `tools/check_all.sh --online` (18 Nov 2026). The regenerated
+exports include all 82 SMT placements on `F.Paste` and `CPL-JLCPCB.csv`, `B.Paste` in the 11-file Gerber archive,
+the enlarged XT60 holes/slots, thermal spokes on the 470 µF bulk capacitors, `J12` pin 1, `C1, C2, C6, SW1` and
+58 small `0603`/`0805`/`SOD` footprints, and `C8`'s relocated silkscreen label.
 
-- `gate.py`: ERC and DRC at all severities with parity, zone refill and a rule canary. PASS with no
-  waived warning types (rev E waived two silkscreen types). DRC: 0 violations, 0 unconnected, parity clean.
-- `check_netlist.py`: 261 pins compared between generator table, schematic and board, 0 differences.
-- `check_parts.py`: 121 terminals against a datasheet pin ledger written blind by a separate
+- `tools/gate.py`: ERC and DRC at all severities with parity, zone refill and a rule canary. PASS with no
+  waived DRC violation types (rev E waived two silkscreen types). DRC: 0 violations, 0 unconnected, parity clean.
+- `tools/check_netlist.py`: 261 pins compared between generator table, schematic and board, 0 differences.
+- `tools/check_parts.py`: 121 terminals against a datasheet pin ledger written blind by a separate
   model, 0 failures, nothing left for a person. Rev F added two checks from the datasheet drawings: connector
   polarity (in the Amass face view, drawn with the board on the left, the upper contact is at the flat end of the
   housing, which is +; on the board that must be pad 2, for the XT60 input and all five XT30 outputs) and the SW1
   labels (ON at the pin-3 end). The four LEDs and six MOSFETs it used to leave open are settled by a second source,
-  recorded in `pin_intent.json`. These rest on reading the drawings, not on a part in the hand. It fails on the rev D backup (U2, RV1) and on a
+  recorded in `tools/pin_intent.json`. These rest on reading the drawings, not on a part in the hand. It fails on the rev D backup (U2, RV1) and on a
   deliberately swapped Q5, as it should. The D11, D12, Q4, Q13 and U4 entries were added by the designer, not blind;
   the U4, Q4, Q13 and D12 pinouts were re-read from the datasheets on 2026-11-09.
-- `check_bodies.py`: six MOSFET package envelopes against every other footprint, 0 collisions.
-- `screw_check.py`: no copper within 5.47 mm of any corner hole centre, both layers.
-- `check_bom.py`: 53 part numbers against JLC's catalogue (via jlcsearch), 0 value or package mismatches.
+- `tools/review_tools/check_bodies.py`: six MOSFET package envelopes against every other footprint, 0 collisions.
+- `tools/review_tools/screw_check.py`: no copper within 5.58 mm of any corner hole centre, both layers (`>= 5.5 mm` gate).
+- `tools/review_tools/check_bom.py`: 54 part numbers against JLC's catalogue (via jlcsearch), including capacitor voltages, can sizes, and `>= 75 V` / `150 V` working ratings on bus-connected resistors, 0 mismatches.
 - Konnect: ERC 0, DRC 0 errors, `validate_for_manufacturing` READY, 0 DFM findings, design review
   "LOOKS GOOD" with no findings at any severity (checked at the info level).
-- `review_tools/copper_check.py` (added 2026-11-11): the copper and heat calculation under Current handling.
+- `tools/review_tools/copper_check.py` (added 2026-11-11): the copper and heat calculation under Current handling.
 
-- `review_tools/check_cpl.py` (added 2026-11-09): every row of the placement file against the footprint in
+- `tools/review_tools/check_cpl.py` (added 2026-11-09): every row of the placement file against the footprint in
   JLC's own parts library (JLCEDA/EasyEDA Official Library, https://easyeda.com, https://lceda.cn/) for that
   part number: rotation, origin, and cathode-to-cathode for diodes and LEDs. Its first run found U4 (SOT-23-5)
   and Q4 (SOT-223) both 180° out in the placement file. The prior export script corrected both and checked
@@ -610,8 +614,8 @@ Simulated with ngspice:
   modelled ideal diode turns off, then none; the model turns off about 5 times slower than TI's
   typical figure, so a real board should be smaller still. LED went out at 0.392 s simulation time, about 0.342 s after regen ended. The decks use the 1880 µF on the output bus plus 600 µF for the motors. The
   interlock and thermal-loop indicator do not change any of these numbers.
-- Same run with J11 open: the brake stays off (CMP_OUT at most 0.4 V, below U4's 1.2 V turn-off level, gate below
-  1 V) and D9 carries 0.9 mA. With J11 closed D9 carries no current.
+- Same run with J11 open: the brake stays off (CMP_OUT at most 0.4 V, below U4's 1.2 V turn-off level, driver output VG at
+  0 V) and D9 carries 0.9 mA. With J11 closed D9 carries no current.
 - `sim_brake_latch_48v.cir`, 48 V, RV1 at minimum, sense resistors at their
   worst-case 1 % limits: without the interlock the brake stays latched and the
   PSU feeds 24 A into the resistor; with it the brake lets go and supply current
@@ -678,10 +682,21 @@ decks. They add what the ideal decks leave out, with every value either extracte
   linear mode: 12 W peak and 1.6 J at 36 V, 16–22 W and 2.9 J at 48 V, 22 W and 3.9 J at 48 V with a load drawing
   0.5 A during the ramp. That is about a tenth of the datasheet's DC safe operating area at 48 V (4.8 A at 25 °C case).
 
-Not done: no SPICE model of the LM74800 itself (the decks use a behavioural ideal diode and a datasheet current
-source for HGATE), the inductances are estimates and not a field-solver extraction, the thermal figures are a
-first-order calculation, avalanche data not reviewed (the simulation shows no avalanche), no creepage review at
-48 V, and no board has been built or tested. Have an experienced person review the power stage before ordering.
+- `tools/review_tools/full_board_spice_check.py` (added 2026-11-18): 8-scenario full-board datasheet-macromodel suite
+  covering `LM74800-Q1` (`1.3 mA` min-corner hysteretic `CAP` charge pump, `10.5 mV` linear `DGATE` servo + `12.3 µA`
+  regulation sink + `-4.5 mV` fast reverse pull-down + both `200 mV` strict comparator recovery and linear recovery,
+  `55 µA`/`260 mA` `HGATE`, `OV` cutoff at `57.2 V` and recovery, `EN/UVLO`), the `CJ431 + BCP56-16 + D10 + D12`
+  control rail, and `UCC27517` (`4.2 V` UVLO). Verifies cold `48 V` startup + `27 A` load-disconnect turn-off (`VIN`
+  peaks at `49.5 V` with `C17`), slow regen zero-crossing (`0 A` reverse current into the PSU), `48 V` worst-case latch
+  release, unplugged-`J1` `8 A` backdrive (`VOUT` clamped at `16.0 V`, `J1` male pins isolated at `1.3 mV`), `48 V`
+  `VOUT` dead-short (`Q4` reverse `V_EB` clamped to `0.70 V` by `D10`, `HGATE − VOUT` clamped to `10.8 V` by `D11`), and
+  `1 µs` `VIN` micro-short.
+
+Not done: TI's official PSpice model (`SLVMDB8`) is Cadence-encrypted, so `full_board_spice_check.py` uses a datasheet
+macromodel rather than TI's internal transistor netlist; the inductances are estimates and not a field-solver extraction;
+the thermal figures are a first-order calculation; avalanche data are not reviewed (the simulation shows no avalanche);
+no formal creepage review at 48 V; and no board has been built or tested. Have an experienced person review the power
+stage before ordering.
 
 ## Decisions (2026-11-07)
 
@@ -700,6 +715,11 @@ Before ordering, a person still has to:
 
 - On the quote page choose 1 oz outer copper and Economic assembly, then check the six expected Extended fees.
 - Tick Confirm Parts Placement and compare the 82 positions in the preview with the machine BOM and factory view.
+  Do **not** approve `50 V`-rated `0603` substitutes for the bus-connected resistors `R1, R3, R10, R14, R44` (the
+  specified BOM parts `C22935`, `C25803` and `C122538` are rated `75 V`).
+- In the JLCPCB assembly notes, state that hand-soldered `SW1` and `C1, C2, C6` intentionally omit `F.Paste` openings,
+  and ask JLCPCB's SMT engineers to apply their standard IPC-7525 window-pane stencil segmentation to the six `TO-263`
+  drain tabs (`Q1, Q2, Q3, Q7, Q8, Q9`) and `U1`'s floating thermal pad to minimize reflow voiding and solder pooling.
 - Look at your cables: the red wire must go to the contact marked + on each XT plug (the flat end of the housing). The
   board side is settled: pad 2 is that contact on the input and on every output.
 - For a paper fit check, print [the 1:1 fit sheet](docs/regen_precharge_revF_test_fit_1to1.pdf) at 100 % and
@@ -720,7 +740,7 @@ diode orientation, MOSFET pin order, connector polarity on the board, and SW1's 
 
 This sequence is a proposed test. Don't start it until the open decisions above are settled.
 
-1. Inspect the board (solder C1, C2 and C6 with hot air or a hot plate rather than a point iron). Check Q1–Q12, D1–D12 and the LEDs against the silkscreen. Before
+1. Inspect the board (solder C1, C2 and C6 with hot air or a hot plate rather than a point iron, and keep iron dwell brief on SW1). Check U1–U4, Q1–Q4, Q7–Q13, D1–D12 and the LEDs against the silkscreen. Before
    connecting anything, unpowered, use a meter to find which contact of each XT connector
    reaches pad 2 and which reaches pad 1, then compare with your mating cables. The board
    expects pad 2 positive, which should be the contact at the flat end of each housing, marked +.
@@ -737,8 +757,10 @@ This sequence is a proposed test. Don't start it until the open decisions above 
    (THERM OPEN) also lights, because J11 is open. TP20 sits near 0.6 V.
 4. SW1 off, fit a jumper on J11 (or the thermal switch), SW1 on. Green lights,
    yellow stays off, and TP12 stays at 0 V.
-5. Check the control rail and the clamps before braking: TP5 (VREG) reads 11.4–11.8 V; on a scope,
-   HGATE minus VOUT (TP7 − TP3) stays under 12.7 V, including when you switch SW1 off with the bus charged.
+5. Check the control rail and the clamps before braking (avoid shorting TP5 to GND, as R26 is unfused): TP5 (VREG) reads
+   11.4–11.8 V DC, and on an AC-coupled scope (`>= 20 MHz` bandwidth) shows no `0.4–2 MHz` CJ431 oscillation; HGATE
+   minus VOUT (TP7 − TP3) sits near 11 V while on, drops cleanly to 0 V when you switch SW1 off, and stays below 15 V
+   (`D11` clamp) during fast output discharge.
 6. Set TP9 to about 6.2 V with RV1 (+4 V trip). Clockwise should raise TP9. If it lowers TP9,
    stop: RV1 isn't wired as intended.
 7. Fit the brake resistor with its thermal fuse in series. This step stores real energy: about 20 A (40 V across 2 Ω) comes from

@@ -58,9 +58,12 @@ else
   echo "skipped: run with --online"
 fi
 
-step "ngspice decks (ideal circuit, latch test, post-layout with parasitics, hot plug and soft start)"
+step "ngspice decks (ideal circuit, latch test, post-layout with parasitics, hot plug and soft start, full-board IC macromodels)"
 ( cd "$OUT" && for c in sim_regen_clamp sim_brake_latch_48v sim_post_layout sim_soft_start; do echo "-- $c"; ngspice -b "$P/$c.cir" > "$OUT/$c.log" 2>&1; grep -E "^corner|^[a-z_0-9]+ += " "$OUT/$c.log" | cut -c1-70; done )
 grep -q "aborted\|too small" "$OUT"/sim_*.log && { echo "SIMULATION ABORTED"; fail=1; }
+echo "-- full_board_spice_check.py"
+python3 -I "$T/full_board_spice_check.py" | tee "$OUT/full_board_spice.txt"
+grep -q "^PASS" "$OUT/full_board_spice.txt" || { echo "FULL-BOARD SPICE FAILED"; fail=1; }
 
 echo
 if [ $fail -eq 0 ]; then echo "ALL FAIL-CLOSED CHECKS PASSED. A person still has to do the items in the README's ordering list."; else echo "CHECKS FAILED"; fi

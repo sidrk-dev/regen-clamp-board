@@ -91,10 +91,8 @@ with (stage / "CPL-JLCPCB.csv").open("w", newline="") as output:
     for row in positions:
         ref = row["Ref"]
         _, footprint, _ = machine[ref]
-        rotation = float(row["Rot"])
         offset = 270 if footprint.startswith("SOIC-8") else offsets.get(footprint, 0)
-        if offset:
-            rotation = (rotation + offset) % 360
+        rotation = (float(row["Rot"]) + offset) % 360
         x = float(row["PosX"])
         y = float(row["PosY"])
         writer.writerow([ref, f"{x:.4f}mm", f"{y:.4f}mm", f"{rotation:g}", "Top"])
@@ -103,7 +101,7 @@ print(f"{len(machine)} machine placements on {sum(1 for _ in groups(machine))} B
 print(f"{len(hand)} hand-solder placements")
 PY
 
-kicad-cli pcb export gerbers --layers F.Cu,B.Cu,F.Mask,B.Mask,F.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts \
+kicad-cli pcb export gerbers --layers F.Cu,B.Cu,F.Mask,B.Mask,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts \
     --subtract-soldermask --check-zones -o "$stage/gerbers/" regen_precharge.kicad_pcb
 # The front stencil must contain exactly the machine-populated references.
 python3 -I - "$stage" <<'PYCODE'
