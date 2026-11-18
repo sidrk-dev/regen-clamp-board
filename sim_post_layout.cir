@@ -3,7 +3,7 @@
 * Pour inductances are estimated as (squares of copper) x u0 x 1.51 mm, the value for a sheet over the ground plane.
 * Assumed typical values, not measured: MOSFET package 1 nH drain + 5 nH source, capacitor 80 mohm + 15 nH each,
 * SS210 2 nH, 1 m supply lead (1 uH, 20 mohm), 1 m motor lead (0.7 uH, 15 mohm), brake resistor plus leads LBRK.
-.param VS=36 RBRK=2 LBRK=1u VTRIM=6.2
+.param VS=36 RBRK=2 LBRK=1u VTRIM=6.2 IRET=15
 * VTRIM is the voltage on TP9: the brake turns on at about 0.667 x TP9 - 0.14 V above the supply
 .param RVIN=0.64m LVIN=2.1n RMID=0.16m RVOUT=1.13m LVOUT=3.8n RGND=1.13m
 .param RVB=0.70m RDRN=0.41m RGB=0.67m LBP=3.7n
@@ -64,7 +64,7 @@ RMC m1 m2 15m
 LMC m2 vmot 0.7u
 CMOT vmot cm1 600u IC={VS-0.02}
 RCM cm1 0 30m
-IREGEN 0 vmot PWL(0 0 1m 0 1.1m 15 16m 15 16.1m 0)
+IREGEN 0 vmot PWL(0 0 1m 0 1.1m {IRET} 16m {IRET} 16.1m 0)
 
 * brake loop: bulk capacitors -> VOUT pour -> J5 -> resistor and leads -> J5 -> drain pour -> Q3||Q9 -> ground vias
 RVB1 vcap vb1 {RVB/2}
@@ -178,6 +178,20 @@ foreach c 1 2 3 4 5
   meas tran icap_rms RMS i(LCB) from=8m to=16m
   meas tran chop_period TRIG v(vg) VAL=6 RISE=4 TARG v(vg) VAL=6 RISE=5
   meas tran t_off_edge TRIG vds3 VAL=4 RISE=4 TARG vds3 VAL=32 RISE=4
+end
+* Shared 36 V arm and gripper bus: identical harness for each 15 ms pulse.
+alterparam VS=36
+alterparam RBRK=2
+alterparam LBRK=1u
+alterparam VTRIM=6.2
+foreach amps 5 10 15 18 20 22 27
+  alterparam IRET=$amps
+  reset
+  run
+  echo returned_A $amps
+  meas tran motor_peak MAX v(vmot) from=1m to=18m
+  meas tran brake_peak MAX i(LBR) from=1m to=18m
+  meas tran cap_rms RMS i(LCB) from=8m to=16m
 end
 .endc
 .end

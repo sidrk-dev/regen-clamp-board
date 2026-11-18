@@ -64,7 +64,10 @@ foreach c 1 2 3 4
   let p8 = (v(mid)-v(vout))*i(VQ8)
   let iin = i(VQ2)+i(VQ8)
   let vgs = v(hgate)-v(vout)
-  * hot plug, SW1 off
+  let j1_current = -i(VPSU)
+  let output_fraction = v(vout)/v(psu)
+  * hot plug, SW1 off: input connector current includes C17 before the switch
+  meas tran plug_j1_max MAX j1_current from=0 to=20m
   meas tran plug_vin_max MAX v(vin) from=0 to=20m
   meas tran plug_iq_max MAX iin from=0 to=20m
   meas tran plug_vgs_max MAX vgs from=0 to=20m
@@ -76,8 +79,8 @@ foreach c 1 2 3 4
   meas tran p_q2_max MAX p2 from=20m to=1.6
   meas tran e_q2 INTEG p2 from=20m to=1.6
   meas tran e_q8 INTEG p8 from=20m to=1.6
-  meas tran t_10 WHEN v(vout)=3.6 RISE=1
-  meas tran t_90 WHEN v(vout)=32.4 RISE=1
+  meas tran t_10 WHEN output_fraction=0.1 RISE=1
+  meas tran t_90 WHEN output_fraction=0.9 RISE=1
   meas tran vout_end FIND v(vout) AT=1.6
   meas tran vgs_end FIND vgs AT=1.6
   meas tran vgs_max MAX vgs

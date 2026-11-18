@@ -105,6 +105,24 @@ PY
 
 kicad-cli pcb export gerbers --layers F.Cu,B.Cu,F.Mask,B.Mask,F.Paste,F.Silkscreen,B.Silkscreen,Edge.Cuts \
     --subtract-soldermask --check-zones -o "$stage/gerbers/" regen_precharge.kicad_pcb
+# The front stencil must contain exactly the machine-populated references.
+python3 -I - "$stage" <<'PYCODE'
+import csv
+import re
+import sys
+from pathlib import Path
+
+stage = Path(sys.argv[1])
+with (stage / "CPL-JLCPCB.csv").open(newline="") as source:
+    machine = {row["Designator"] for row in csv.DictReader(source)}
+paste = (stage / "gerbers/regen_precharge-F_Paste.gtp").read_text()
+stencilled = set(re.findall(r"^%TO\.C,([^*]+)\*%$", paste, re.MULTILINE))
+if stencilled != machine:
+    raise SystemExit(
+        f"Front paste does not match machine placements. Missing: {sorted(machine - stencilled)}. "
+        f"Unexpected: {sorted(stencilled - machine)}."
+    )
+PYCODE
 kicad-cli pcb export drill --format excellon --excellon-separate-th \
     -o "$stage/gerbers/" regen_precharge.kicad_pcb
 (cd "$stage/gerbers" && zip -q ../regen_precharge_revF_gerbers.zip *.g?? *.drl)

@@ -1,8 +1,6 @@
 # Regen clamp + soft-start board (rev F)
 
-**Prototype.** The board has not been built or measured. KiCad ERC and DRC pass on this copy. Complete the
-hands-on checks under [Decisions](#decisions-2026-11-07) before ordering. The control rail and braking figures
-below are design targets.
+**Prototype for bench evaluation.** The 36 V, 2 Ω design crosses the moteus r4’s 44 V absolute maximum in a simulated 22 A braking event. Qualify the arm’s returned current, resistor duty and connector fit before releasing a populated order for robot use. The [engineering review and first-prototype budget](docs/arm-manufacturing-review.md) include the test results, assembly files checked, and release criteria.
 
 A 125 × 100 mm two-layer board that sits between a bench supply and the arm.
 The supply plugs into an XT60 in the middle of the left edge; five XT30
@@ -48,7 +46,7 @@ Rev F started as a cost-down of rev E. Later rev F edits adjusted the top-layer 
   against 1.5 mΩ and 1.1 W in 2 oz; the hottest spot, a MOSFET tab, is calculated at about 65 K above ambient in
   still air against 46 K. The layout still meets JLC's 2 oz rules, so the same Gerbers can be ordered in 2 oz
   if you want that margin back.
-- **SW1 is hand-soldered**, which drops one extended-part fee ($3.07). Its pads still get paste, so they arrive tinned.
+- **SW1 is hand-soldered**, which drops one extended-part fee ($3.07). The front stencil now omits its pads and the other hand-solder positions.
 - **D12 is a BZT52C16** (C19077413, 15.2–16.8 V) instead of a BZT52C15, same SOD-123 footprint. JLC's catalogue data
   lists it as a Preferred part, with no loading fee on Economic assembly; JLC's part page only says Extended, so check the
   fee on the order page. The fault limit on the control rail rises from about 15 V to under 17 V, still below the
@@ -218,7 +216,7 @@ At +5 V the same stack gives 54.8 V. The supply itself must stay under the 57 V 
 trimmed above about 52 V is too high. These figures are calculated and simulated, not measured.
 
 The board passes current, it doesn't make it: running 30 A needs a supply that
-can deliver 30 A. The 27 A bench supply limits the whole arm to 27 A.
+can deliver 30 A. The 27 A bench supply limits the current it supplies. Motors can collectively return more current than the brake can absorb during deceleration or backdriving.
 
 ## Setting the brake threshold
 
