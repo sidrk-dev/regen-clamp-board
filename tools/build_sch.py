@@ -11,7 +11,7 @@ C0805 = "Capacitor_SMD:C_0805_2012Metric"
 C1206 = "Capacitor_SMD:C_1206_3216Metric"
 SOT23 = "Package_TO_SOT_SMD:SOT-23"
 FET = "jlc:TO-263-3_L10.2-W10.7-P5.08-LS16.2-TL"
-XT30 = "Connector_AMASS:AMASS_XT30PW-F_1x02_P2.50mm_Horizontal"
+XT30 = "jlc:AMASS_XT30PW-F_1x02_P2.50mm_Horizontal_pegs"
 
 # ref, lib_id, value, footprint, LCSC, x, y, rotation, {pin: net}, extra fields
 P = []
@@ -21,42 +21,58 @@ def part(ref, lib, val, fp, lcsc, x, y, pins, rot=0, unit=1, note=""):
 # ---- Block 1: input, ideal diode + soft-start (LM74800) ----
 part("J1", "Connector_Generic:Conn_01x02", "XT60PW-M (from PSU)", "jlc:AMASS_XT60PW-M30_1x02_P7.20mm_Horizontal", "C98732", 25, 55, {"1": "GND", "2": "VIN"}, note="Hand-solder")
 part("D1", "Device:D_Zener", "SMCJ51A TVS", "Diode_SMD:D_SMC", "C42371549", 45, 60, {"1": "VIN", "2": "GND"}, rot=90)
-part("C1", "Device:C", "1uF 100V", C1206, "C13832", 60, 60, {"1": "VIN", "2": "GND"})
+part("C1", "Device:C", "1uF 100V", C1206, "C13832", 60, 60, {"1": "VIN", "2": "GND"}, note="Hand-solder")
 # C17: holds the input up when Q2/Q8 turn off under load; only C1 (1 uF) was there, and the supply lead inductance could pass U1's 70 V.
-part("C17", "Device:C_Polarized", "470uF 63V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C165665", 75, 60, {"1": "VIN", "2": "GND"}, note="Hand-solder")
-part("Q1", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 95, 40, {"1": "DG1", "2": "MID", "3": "VIN"}, rot=90)
-part("Q2", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 150, 40, {"1": "HG2", "2": "MID", "3": "VOUT"}, rot=90)
+part("C17", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 75, 60, {"1": "VIN", "2": "GND"}, note="Hand-solder")
+part("Q1", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 95, 40, {"1": "DG1", "2": "MID", "3": "VIN"}, rot=90, note="Hand-solder")
+part("Q2", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 150, 40, {"1": "HG2", "2": "MID", "3": "VOUT"}, rot=90, note="Hand-solder")
 part("U1", "jlc:LM74800QDRRRQ1", "LM74800QDRRRQ1", "jlc:WSON-12_L3.0-W3.0-P0.50-TL-EP-2", "C3215600", 120, 85,
      {"1": "DGATE", "2": "VIN", "3": "VIN", "4": "OV_TOP", "5": "OV", "6": "EN", "7": "GND", "8": "HGATE", "9": "VOUT", "10": "MID", "11": "CAP", "12": "MID"})
-part("C2", "Device:C", "1uF 100V", C1206, "C13832", 160, 80, {"1": "MID", "2": "GND"})
-part("C3", "Device:C", "470nF 25V", C0603, "C1623", 175, 80, {"1": "CAP", "2": "MID"})  # TI: VCAP >= 10 x (Ciss Q1 + Ciss Q2), four 6.77 nF MOSFETs here
+part("C2", "Device:C", "1uF 100V", C1206, "C13832", 160, 80, {"1": "MID", "2": "GND"}, note="Hand-solder")
+part("C3", "Device:C", "1uF 50V", C0603, "C15849", 175, 80, {"1": "CAP", "2": "MID"})  # TI: VCAP >= 10 x (Ciss Q1 + Ciss Q2) = 271 nF here, after DC-bias loss at 13 V
 part("R1", "Device:R", "1M", R0603, "C22935", 70, 95, {"1": "VIN", "2": "EN"})
 part("R2", "Device:R", "100k", R0603, "C25803", 70, 115, {"1": "EN", "2": "GND"})
-part("SW1", "jlc:MSK12C02", "MSK12C02 (OUTPUT ON/OFF)", "jlc:SW-TH_MSK12C02", "C431540", 85, 125, {"1": "GND", "2": "EN"})
+part("SW1", "jlc:MSK12C02", "MSK12C02 (OUTPUT ON/OFF)", "jlc:SW-TH_MSK12C02", "C431540", 85, 125, {"1": "GND", "2": "EN"}, note="Hand-solder")
 part("R3", "Device:R", "100k", R0603, "C25803", 95, 140, {"1": "OV_TOP", "2": "OV"})
-part("R4", "Device:R", "2.2k", R0603, "C4190", 110, 140, {"1": "OV", "2": "GND"})
+part("R4", "Device:R", "2.2k", R0603, "C4190", 110, 140, {"1": "OV", "2": "GND"})  # OV trip about 57 V so 48 V supplies work
 part("R5", "Device:R", "1k", R0603, "C21190", 160, 105, {"1": "HGATE", "2": "CDVDT"})
 # D11: the 400 nF on CDVDT holds HGATE up when VOUT falls fast; HGATE-OUT is 15 V absolute maximum. R5 limits the current to under 50 mA.
+# Rev E review additions:
+# R40 limits current into U3 pin 6 if the rail collapses while C12 still holds the stretch voltage (LM393 input max = supply).
+part("R40", "Device:R", "100k", R0603, "C25803", 580, 100, {"1": "STRETCH", "2": "STRETCH_IN"})
+# R41: with a reversed supply and D1 open, nothing else limits current through Q10's base-collector and Q11's base-emitter.
+part("R41", "Device:R", "10k", R0603, "C25804", 580, 130, {"1": "VIN", "2": "ILK_BASE"})
+# C18 filters noise picked up by the off-board J11 thermal-switch wires on CMP_OUT (4.7 us with R17).
+part("C18", "Device:C", "1nF 50V", C0603, "C1588", 600, 100, {"1": "CMP_OUT", "2": "GND"})
+# C19 is a local supply for the Q5/Q6 gate driver, which pulls about 100 mA peaks from VREG.
+part("C19", "Device:C", "1uF 50V", C0603, "C15849", 600, 130, {"1": "VREG", "2": "GND"})
 part("D11", "Device:D_Zener", "BZT52C12", "Diode_SMD:D_SOD-123", "C2932744", 190, 105, {"1": "HGATE", "2": "VOUT"}, rot=90)
 part("C4", "Device:C", "100nF 100V", C0805, "C28233", 160, 125, {"1": "CDVDT", "2": "GND"})
 part("C5", "Device:C", "100nF 100V", C0805, "C28233", 175, 125, {"1": "CDVDT", "2": "GND"})
 
 # ---- Block 2: output bus ----
-part("C6", "Device:C", "1uF 100V", C1206, "C13832", 205, 60, {"1": "VOUT", "2": "GND"})
-part("C7", "Device:C_Polarized", "470uF 63V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C165665", 220, 60, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
-part("C8", "Device:C_Polarized", "470uF 63V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C165665", 235, 60, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
+part("C6", "Device:C", "1uF 100V", C1206, "C13832", 205, 60, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
+# Bulk capacitors are 100 V (Ymin LKML, 12.5 x 30 mm, same 5 mm footprint), above the TVS clamp
+part("C7", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 220, 60, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
+part("C8", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 235, 60, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
 part("D2", "Device:D_Zener", "SMCJ51A TVS", "Diode_SMD:D_SMC", "C42371549", 250, 60, {"1": "VOUT", "2": "GND"}, rot=90)
-part("J2", "Connector_Generic:Conn_01x02", "XT30PW-F (out 1: arm bus)", XT30, "C2913282", 280, 40, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
-part("J3", "Connector_Generic:Conn_01x02", "XT30PW-F (out 2: gripper)", XT30, "C2913282", 280, 65, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
-part("J4", "Connector_Generic:Conn_01x02", "XT30PW-F (out 3: spare)", XT30, "C2913282", 280, 90, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
+part("J2", "Connector_Generic:Conn_01x02", "XT30PW-F (out 1: arm)", XT30, "C2913282", 280, 40, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
+part("J3", "Connector_Generic:Conn_01x02", "XT30PW-F (out 2: arm)", XT30, "C2913282", 280, 65, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
+part("J4", "Connector_Generic:Conn_01x02", "XT30PW-F (out 3: arm)", XT30, "C2913282", 280, 90, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
+part("J6", "Connector_Generic:Conn_01x02", "XT30PW-F (out 4: gripper)", XT30, "C2913282", 320, 40, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
+part("J7", "Connector_Generic:Conn_01x02", "XT30PW-F (out 5: spare)", XT30, "C2913282", 320, 65, {"1": "GND", "2": "VOUT"}, note="Hand-solder")
 
 # ---- Block 3: 11.6 V control rail ----
 part("R6", "Device:R", "10k 1206", "Resistor_SMD:R_1206_3216Metric", "C17902", 30, 185, {"1": "VOUT", "2": "REF_K"})
 # CJ431 SOT-23 is pin 1 REF, pin 2 K, pin 3 A (JCET datasheet p. 1), which is the TL432 pin order, not the TL431's.
 part("U2", "Reference_Voltage:TL432DBZ", "CJ431", SOT23, "C3113", 45, 215, {"1": "REF_FB", "2": "REF_K", "3": "GND"})
+# D12 keeps the rail under 17 V if U2 or R7 opens (Q4 would otherwise follow R6 up to the bus): LM393 is 36 V max, U4 and the gates 20 V.
+# Rev F: BZT52C16 (16.8 V max), listed as a Preferred part, replaces BZT52C15 to drop one extended-part fee.
+part("D12", "Device:D_Zener", "BZT52C16", "Diode_SMD:D_SOD-123", "C19077413", 25, 235, {"1": "REF_K", "2": "GND"}, rot=90)
 part("R7", "Device:R", "39k", R0603, "C23153", 65, 200, {"1": "REF_K", "2": "REF_FB"})
 part("R8", "Device:R", "10k", R0603, "C25804", 65, 230, {"1": "REF_FB", "2": "GND"})
-part("Q4", "Transistor_BJT:MMBT3904", "MMBT5551", SOT23, "C2145", 85, 180, {"1": "REF_K", "2": "VREG", "3": "RAIL_C"})
+# Q4 is a BCP56-16 in SOT-223 (94 C/W, 1.33 W): the MMBT5551 in SOT-23 (416 C/W) ran too hot once braking loads the rail
+part("Q4", "Transistor_BJT:BCP56", "BCP56-16", "Package_TO_SOT_SMD:SOT-223", "C41375109", 85, 180, {"1": "REF_K", "2": "RAIL_C", "3": "VREG", "4": "RAIL_C"})
 # D10 stops Q4's emitter-base junction breaking down when VOUT collapses while C9 still holds the rail up (BVebo is 6 V).
 part("D10", "Device:D", "1N4148WS", "Diode_SMD:D_SOD-323", "C2128", 68, 172, {"1": "REF_K", "2": "VREG"})
 part("R26", "Device:R", "470R", R0603, "C23179", 110, 172, {"1": "VOUT", "2": "RAIL_C"}, rot=90)
@@ -66,27 +82,35 @@ part("R9", "Device:R", "10k", R0603, "C25804", 125, 195, {"1": "VREG", "2": "LED
 part("D3", "Device:LED", "GREEN (output live)", "LED_SMD:LED_0805_2012Metric", "C2297", 125, 225, {"1": "GND", "2": "LEDG_A"}, rot=90)
 
 # ---- Block 4: brake comparator, gate driver, brake FET ----
-part("R10", "Device:R", "100k", R0603, "C25803", 150, 165, {"1": "VOUT", "2": "SENSE_P"})
-part("R11", "Device:R", "20k", R0603, "C4184", 150, 195, {"1": "SENSE_P", "2": "GND"})
+part("R10", "Device:R", "100k 0.1%", R0603, "C122538", 150, 165, {"1": "VOUT", "2": "SENSE_P"})
+part("R11", "Device:R", "20k 0.1%", R0603, "C723637", 150, 195, {"1": "SENSE_P", "2": "GND"})
 part("R12", "Device:R", "220k", R0603, "C22961", 162, 195, {"1": "SENSE_P", "2": "GND"})
 part("R13", "Device:R", "510k (hysteresis)", R0603, "C23192", 190, 160, {"1": "VG", "2": "SENSE_P"}, rot=90)
-part("R14", "Device:R", "100k", R0603, "C25803", 150, 225, {"1": "VIN", "2": "SENSE_N"})
-part("R15", "Device:R", "20k", R0603, "C4184", 150, 255, {"1": "SENSE_N", "2": "GND"})
+part("R14", "Device:R", "100k 0.1%", R0603, "C122538", 150, 225, {"1": "VIN", "2": "SENSE_N"})
+part("R15", "Device:R", "20k 0.1%", R0603, "C723637", 150, 255, {"1": "SENSE_N", "2": "GND"})
 part("R16", "Device:R", "150k (offset)", R0603, "C22807", 165, 240, {"1": "TRIM", "2": "SENSE_N"}, rot=90)
 part("RV1", "Device:R_Potentiometer", "10k trim: brake threshold", "jlc:RES-ADJ-TH_3362P", "C58159", 120, 245, {"1": "TRIM_LO", "2": "TRIM", "3": "VREG"}, note="Hand-solder")  # 3362P: pin 3 is the clockwise end, so clockwise raises the threshold
 part("R25", "Device:R", "6.8k", R0603, "C23212", 135, 260, {"1": "TRIM_LO", "2": "GND"})
 part("U3", "Comparator:LM393", "LM393", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "C7955", 195, 205, {"1": "CMP_OUT", "2": "SENSE_N", "3": "SENSE_P"}, unit=1)
-part("U3", "Comparator:LM393", "LM393", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "C7955", 345, 220, {"5": "LED_REF", "6": "STRETCH", "7": "LEDR_K"}, unit=2)
+part("U3", "Comparator:LM393", "LM393", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "C7955", 345, 220, {"5": "LED_REF", "6": "STRETCH_IN", "7": "LEDR_K"}, unit=2)
 part("U3", "Comparator:LM393", "LM393", "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm", "C7955", 195, 255, {"8": "VREG", "4": "GND"}, unit=3)
 part("C11", "Device:C", "100nF", C0603, "C14663", 210, 255, {"1": "VREG", "2": "GND"})
 part("R17", "Device:R", "4.7k", R0603, "C23162", 220, 180, {"1": "VREG", "2": "PU_TH"})
-part("Q5", "Transistor_BJT:MMBT3904", "MMBT3904", SOT23, "C20526", 235, 195, {"1": "CMP_OUT", "2": "VG", "3": "VREG"})
-part("Q6", "Transistor_BJT:MMBT3906", "S8550", SOT23, "C105432", 235, 220, {"1": "CMP_OUT", "2": "VG", "3": "GND"})
+# U4 replaces the Q5/Q6 BJT totem pole: 4 A each way, so the brake switches in tens of ns instead of about 0.5 us,
+# and the LM393 no longer sinks Q6's base current. Input high above 2.4 V, low below 1.0 V (TI datasheet).
+part("U4", "jlc:UCC27517DBV", "UCC27517", "Package_TO_SOT_SMD:SOT-23-5", "C99395", 235, 195, {"1": "VREG", "2": "GND", "3": "CMP_OUT", "4": "GND", "5": "VG"})
+# Telemetry for a microcontroller: J12 pin 1 GND, pin 2 BUS_ADC (VOUT x 0.053, 3.3 V at 62 V), pin 3 BRK_FLAG (open drain, low while braking)
+part("R44", "Device:R", "100k", R0603, "C25803", 640, 100, {"1": "VOUT", "2": "BUS_ADC"})
+part("R45", "Device:R", "5.6k", R0603, "C23189", 640, 130, {"1": "BUS_ADC", "2": "GND"})
+part("C20", "Device:C", "100nF", C0603, "C14663", 660, 130, {"1": "BUS_ADC", "2": "GND"})
+part("R42", "Device:R", "1k", R0603, "C21190", 660, 100, {"1": "VG", "2": "FLAG_G"})
+part("Q13", "Transistor_FET:2N7002", "2N7002", SOT23, "C8545", 680, 100, {"1": "FLAG_G", "2": "GND", "3": "BRK_FLAG"})
+part("J12", "Connector_Generic:Conn_01x03", "MCU: GND / BUS_ADC / BRK_FLAG", "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical", "C2937625", 700, 100, {"1": "GND", "2": "BUS_ADC", "3": "BRK_FLAG"}, note="Hand-solder")
 part("R18", "Device:R", "10R", R0603, "C22859", 255, 205, {"1": "VG", "2": "BRK_GATE"}, rot=90)
 part("R19", "Device:R", "10k", R0603, "C25804", 270, 225, {"1": "BRK_GATE", "2": "GND"})
-part("Q3", "jlc:CRSS042N10N", "CRSS042N10N (brake)", FET, "C410926", 285, 200, {"1": "BRK_GATE", "2": "BRK_DRAIN", "3": "GND"})
+part("Q3", "jlc:CRSS042N10N", "CRSS042N10N (brake)", FET, "C410926", 285, 200, {"1": "BRK_GATE", "2": "BRK_DRAIN", "3": "GND"}, note="Hand-solder")
 part("D4", "Device:D_Schottky", "SS210", "Diode_SMD:D_SMA", "C14996", 300, 170, {"1": "VOUT", "2": "BRK_DRAIN"}, rot=90)
-part("J5", "Connector_Generic:Conn_01x02", "XT60PW-F (brake resistor, 2 ohm 200 W)", "jlc:AMASS_XT60PW-F_1x02_P7.20mm_Horizontal_2.9mm", "C428722", 340, 170, {"1": "BRK_DRAIN", "2": "VOUT"}, note="Hand-solder")
+part("J5", "Connector_Generic:Conn_01x02", "XT60PW-F (brake resistor: 2 ohm 200 W at 36 V)", "jlc:AMASS_XT60PW-F_1x02_P7.20mm_Horizontal_2.9mm", "C428722", 340, 170, {"1": "BRK_DRAIN", "2": "VOUT"}, note="Hand-solder")
 
 # ---- Block 5: brake LED pulse stretcher ----
 part("D5", "Device:D", "1N4148WS", "Diode_SMD:D_SOD-323", "C2128", 300, 230, {"1": "STR_D", "2": "VG"}, rot=180)
@@ -99,15 +123,15 @@ part("R24", "Device:R", "4.7k", R0603, "C23162", 395, 200, {"1": "VREG", "2": "L
 part("D6", "Device:LED", "RED (regen brake active)", "LED_SMD:LED_0603_1608Metric", "C2286", 395, 230, {"1": "LEDR_K", "2": "LEDR_A"}, rot=90)
 
 # ---- Block 6: 30 A / 60 A peak additions ----
-part("Q7", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 440, 40, {"1": "DG7", "2": "MID", "3": "VIN"}, rot=90)
-part("Q8", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 480, 40, {"1": "HG8", "2": "MID", "3": "VOUT"}, rot=90)
+part("Q7", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 440, 40, {"1": "DG7", "2": "MID", "3": "VIN"}, rot=90, note="Hand-solder")
+part("Q8", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 480, 40, {"1": "HG8", "2": "MID", "3": "VOUT"}, rot=90, note="Hand-solder")
 part("C13", "Device:C", "100nF 100V", C0805, "C28233", 440, 75, {"1": "CDVDT", "2": "GND"})
 part("C14", "Device:C", "100nF 100V", C0805, "C28233", 455, 75, {"1": "CDVDT", "2": "GND"})
-part("C15", "Device:C_Polarized", "470uF 63V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C165665", 475, 75, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
-part("C16", "Device:C_Polarized", "470uF 63V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C165665", 490, 75, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
+part("C15", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 475, 75, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
+part("C16", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 490, 75, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
 part("R28", "Device:R", "10R", R0603, "C22859", 440, 165, {"1": "VG", "2": "BRK_GATE2"}, rot=90)
 part("R29", "Device:R", "10k", R0603, "C25804", 455, 185, {"1": "BRK_GATE2", "2": "GND"})
-part("Q9", "jlc:CRSS042N10N", "CRSS042N10N (brake 2)", FET, "C410926", 475, 165, {"1": "BRK_GATE2", "2": "BRK_DRAIN", "3": "GND"})
+part("Q9", "jlc:CRSS042N10N", "CRSS042N10N (brake 2)", FET, "C410926", 475, 165, {"1": "BRK_GATE2", "2": "BRK_DRAIN", "3": "GND"}, note="Hand-solder")
 part("D7", "Device:D_Schottky", "SS210", "Diode_SMD:D_SMA", "C14996", 495, 140, {"1": "VOUT", "2": "BRK_DRAIN"}, rot=90)
 part("J11", "Connector_Generic:Conn_01x02", "Brake resistor thermal switch (NC) or jumper", "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical", "C492401", 450, 225, {"1": "PU_TH", "2": "CMP_OUT"}, note="Hand-solder")
 part("R27", "Device:R", "100k", R0603, "C25803", 470, 235, {"1": "CMP_OUT", "2": "GND"})
@@ -121,7 +145,7 @@ part("R33", "Device:R", "10R", R0603, "C22859", 497, 30, {"1": "HG8", "2": "HGAT
 # ---- Block 8 (rev C): brake interlock. While the ideal diode conducts (DGATE > VIN) Q11 holds CMP_OUT low,
 # so the brake can never pull the bus below the supply and draw supply current, whatever the resistor tolerances.
 part("R34", "Device:R", "47k", R0603, "C25819", 515, 160, {"1": "DGATE", "2": "ILK_E"}, rot=90)
-part("Q10", "Transistor_BJT:MMBT3906", "MMBT5401", SOT23, "C8326", 530, 175, {"1": "VIN", "2": "ILK_E", "3": "ILK_B"})
+part("Q10", "Transistor_BJT:MMBT3906", "MMBT5401", SOT23, "C8326", 530, 175, {"1": "ILK_BASE", "2": "ILK_E", "3": "ILK_B"})
 part("R35", "Device:R", "100k", R0603, "C25803", 530, 205, {"1": "ILK_B", "2": "GND"})
 part("Q11", "Transistor_BJT:MMBT3904", "MMBT3904", SOT23, "C20526", 548, 195, {"1": "ILK_B", "2": "GND", "3": "CMP_OUT"})
 
@@ -136,27 +160,26 @@ part("R37", "Device:R", "1M", R0603, "C22935", 485, 260, {"1": "CMP_OUT", "2": "
 part("R38", "Device:R", "2.2k", R0603, "C4190", 515, 262, {"1": "THC", "2": "LEDT_A"}, rot=90)
 part("D9", "Device:LED", "YELLOW (thermal loop open)", "LED_SMD:LED_0805_2012Metric", "C2296", 515, 280, {"1": "GND", "2": "LEDT_A"}, rot=90)
 
-HOLES = [("H1", 25, 270), ("H2", 37, 270), ("H3", 49, 270), ("H4", 61, 270)]  # #8-32 clearance (4.5 mm)
+HOLES = ["H1", "H2", "H3", "H4"]  # #8-32 clearance (4.5 mm)
 TPS = [("TP1", "VIN"), ("TP2", "MID"), ("TP3", "VOUT"), ("TP4", "BRK_DRAIN"), ("TP5", "VREG"), ("TP6", "DGATE"),
        ("TP7", "HGATE"), ("TP8", "EN"), ("TP9", "TRIM"), ("TP10", "SENSE_P"), ("TP11", "SENSE_N"), ("TP12", "CMP_OUT"),
        ("TP13", "BRK_GATE"), ("TP14", "STRETCH"), ("TP15", "GND"), ("TP16", "GND"), ("TP17", "GND"),
        ("TP18", "OV"), ("TP19", "CDVDT"), ("TP20", "ILK_B"), ("TP21", "BRK_GATE2"), ("TP22", "PU_TH"),
        ("TP23", "VG"), ("TP24", "GND"), ("TP25", "GND")]
-FLAGS = [("VIN", 45, 40), ("GND", 60, 75), ("MID", 175, 65), ("VREG", 100, 185), ("VOUT", 205, 40)]
-TEXT = [
-    ("POWER PATH: LM74800 ideal diode (Q1||Q7 block regen into the PSU) + soft-start (Q2||Q8, CdVdT = C4,C5,C13,C14)", 20, 20),
-    ("OUTPUT BUS: bulk caps, TVS backstop, 3 x XT30 outputs (each sized for the full 25 A supply)", 200, 20),
-    ("30 A CONT / 60 A PEAK: paralleled MOSFETs, 2nd brake FET, thermal cut-off", 430, 20),
-    ("J11: normally-closed thermal switch on the brake resistors opens -> brake disabled", 430, 210),
-    ("11.6 V CONTROL RAIL (CJ431 + MMBT5551 follower)", 20, 160),
-    ("REGEN CLAMP: brake ON at VOUT - VIN = 0.667 x V(TRIM) - 0.14 V (RV1 sets 3.0 to 7.6 V), OFF 2 V lower", 140, 150),
-    ("LED STRETCHER: red LED stays on >= 0.3 s after any brake pulse", 295, 150),
-    ("TEST POINTS (bare pads, not assembled)", 80, 268),
-    ("GATE RESISTORS R30-R33: one per paralleled FET (stops parasitic oscillation in linear soft start)", 20, 30),
-    ("BRAKE INTERLOCK (Q10, Q11): brake held off while the ideal diode conducts", 505, 150),
-    ("DEBUG LEDS: D8 white = supply present, D9 yellow = J11 thermal loop open (brake disabled)", 430, 240),
-    ("SW1 OFF disconnects the output: plug motors with SW1 OFF. Supply 15-48 V.", 20, 145),
-]
+FLAG_NETS = ["VIN", "GND", "MID", "VREG", "VOUT"]
+RAILS = {"VIN", "VOUT", "VREG", "MID"}
+
+# ---- layout: hand-placed blocks with real wires (sch_layout.py), checked for shorts before anything is written
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sch_layout as S
+FIDS = ["FID1", "FID2", "FID3"]
+FLAGS = [f"#FLG0{i+1}" for i in range(len(FLAG_NETS))]
+parts = [dict(c) for c in P]
+parts += [dict(ref=t, lib="Connector:TestPoint", unit=1, pins={"1": net}) for t, net in TPS]
+parts += [dict(ref=f, lib="power:PWR_FLAG", unit=1, pins={"1": net}) for f, net in zip(FLAGS, FLAG_NETS)]
+L = S.build(parts, [t for t, _ in TPS], HOLES, FIDS, FLAGS)
+auto, junctions = S.finish(L, parts)
+assert not auto, f"pins the hand layout left loose: {auto}"
 
 def client():
     p = subprocess.Popen([os.path.expanduser("~/.local/opt/konnect-dl/konnect")], stdin=subprocess.PIPE,
@@ -188,39 +211,79 @@ def client():
 call = client()
 call("register_symbol_library", library_path=f"{PROJ}/lib/jlc.kicad_sym", nickname="jlc", project=PROJ, scope="project")
 call("register_footprint_library", library_path=f"{PROJ}/lib/jlc.pretty", nickname="jlc", project=PROJ, scope="project")
-call("set_schematic_page", schematic=SCH, size="A2")
-for t, x, y in TEXT:
-    call("add_schematic_text", schematic=SCH, text=t, x=x, y=y, bold=True)
+call("set_schematic_page", schematic=SCH, size="A1")
+for title, note, (x0, y0, x1, y1) in S.BLOCKS:
+    call("add_schematic_text", schematic=SCH, text=title, x=x0 + 2, y=y0 + 5, bold=True)
+    if note:
+        words, line, lines = note.split(), "", []
+        per = int((x1 - x0) / 1.6)
+        for w in words:
+            if len(line) + len(w) + 1 > per: lines.append(line); line = w
+            else: line = (line + " " + w).strip()
+        lines.append(line)
+        for i, l in enumerate(lines):
+            call("add_schematic_text", schematic=SCH, text=l, x=x0 + 2, y=y0 + 10 + 3.2 * i)
 for c in P:
-    call("add_schematic_component", schematic=SCH, lib_id=c["lib"], x=c["x"], y=c["y"], rotation=c["rot"], unit=c["unit"],
+    x, y, rot = L.pos[(c["ref"], c["unit"])]
+    call("add_schematic_component", schematic=SCH, lib_id=c["lib"], x=x, y=y, rotation=rot, unit=c["unit"],
          reference=c["ref"], value=c["val"], footprint=c["fp"])
-for ref, x, y in HOLES:
+for ref in HOLES:
+    x, y, _ = L.pos[(ref, 1)]
     call("add_schematic_component", schematic=SCH, lib_id="Mechanical:MountingHole", x=x, y=y, reference=ref,
          value="#8-32", footprint="MountingHole:MountingHole_4.5mm")
-for i, ref in enumerate(("FID1", "FID2", "FID3")):
-    call("add_schematic_component", schematic=SCH, lib_id="Mechanical:Fiducial", x=73 + 12 * i, y=270, reference=ref,
+for ref in FIDS:
+    x, y, _ = L.pos[(ref, 1)]
+    call("add_schematic_component", schematic=SCH, lib_id="Mechanical:Fiducial", x=x, y=y, reference=ref,
          value="Fiducial", footprint="Fiducial:Fiducial_1mm_Mask2mm")
-for i, (ref, net) in enumerate(TPS):
+for ref, net in TPS:
+    x, y, _ = L.pos[(ref, 1)]
     fp = "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm" if net == "GND" else "TestPoint:TestPoint_Pad_D1.5mm"
-    call("add_schematic_component", schematic=SCH, lib_id="Connector:TestPoint", x=80 + 12 * i, y=280, reference=ref,
-         value=net, footprint=fp)
-    P.append(dict(ref=ref, pins={"1": net}))
-for i, (net, x, y) in enumerate(FLAGS):
-    call("add_schematic_component", schematic=SCH, lib_id="power:PWR_FLAG", x=x, y=y, reference=f"#FLG0{i+1}")
-    P.append(dict(ref=f"#FLG0{i+1}", pins={"1": net}))
-nets = defaultdict(list)
-for c in P:
-    for pin, net in c["pins"].items():
-        nets[net].append({"reference": c["ref"], "pin_number": pin})
-for net, pins in nets.items():
+    call("add_schematic_component", schematic=SCH, lib_id="Connector:TestPoint", x=x, y=y, reference=ref, value=net, footprint=fp)
+for ref in FLAGS:
+    x, y, _ = L.pos[(ref, 1)]
+    call("add_schematic_component", schematic=SCH, lib_id="power:PWR_FLAG", x=x, y=y, reference=ref)
+
+# KiCad's own pin positions must match the layout's, or the wires miss their pins
+refs = sorted({c["ref"] for c in parts})
+locs = {}
+for i in range(0, len(refs), 40):
+    d = json.loads(call("batch_get_schematic_pin_locations", schematic=SCH, references=refs[i:i + 40]))
+    for comp in d["components"]:
+        for u in comp.get("units") or [{"unit": 1, "pins": comp["pins"]}]:
+            for pin in u["pins"]:
+                locs[(comp["reference"], str(pin["number"]))] = (round(pin["x"], 2), round(pin["y"], 2))
+miss = [(k, locs.get(k), L.geo(*k)[0]) for c in parts for k in [(c["ref"], n) for n in c["pins"]] if locs.get(k) != L.geo(*k)[0]]
+assert not miss, f"pin positions differ from sch_geo.json: {miss[:8]}"
+
+call("batch_add_wire", schematic=SCH, wires=[{"x1": a[0], "y1": a[1], "x2": b[0], "y2": b[1]} for a, b in L.wires])
+for x, y, rot in L.gnds:
+    call("add_power_symbol", schematic=SCH, power_net="GND", x=x, y=y, rotation=rot)
+for net, x, y, rot in L.labels:
+    call("add_schematic_net_label", schematic=SCH, net=net, x=x, y=y, label_type="global_label", rotation=rot)
+by_net = defaultdict(list)
+for ref, n in L.pin_labels:
+    by_net[L.net_of[(ref, n)]].append({"reference": ref, "pin_number": n})
+for net, pins in by_net.items():
     call("batch_connect_to_net", schematic=SCH, net_name=net, pins=pins, stub_length=2.54, label_type="global_label")
+call("batch_add_junction", schematic=SCH, positions=[{"x": x, "y": y} for x, y in junctions])
 edits, seen = [], set()
 for c in P:
-    if "lcsc" not in c or c["ref"] in seen: continue
+    if c["ref"] in seen: continue
     seen.add(c["ref"])
     fields = {"LCSC": c["lcsc"]}
     if c["note"]: fields["Assembly"] = c["note"]
     edits.append({"reference": c["ref"], "fields": fields})
 call("batch_edit_schematic_components", schematic=SCH, edits=edits, create_missing=True)
-call("batch_add_no_connect", schematic=SCH, positions=[{"x": 87.63, "y": 118.11}, {"x": 95.25, "y": 125.73}, {"x": 133.35, "y": 77.47}])
-print("placed", len(seen), "parts on", len(nets), "nets")
+used = {(c["ref"], n) for c in parts for n in c["pins"]}
+nc = [{"x": x, "y": y} for (ref, n), (x, y) in locs.items() if (ref, n) not in used and not ref.startswith("#")]
+if nc:
+    call("batch_add_no_connect", schematic=SCH, positions=nc)
+# dashed frame round each block
+import uuid
+s = open(SCH).read().rstrip()
+assert s.endswith(")")
+frames = "".join(f'''\t(rectangle\n\t\t(start {x0} {y0})\n\t\t(end {x1} {y1})\n\t\t(stroke\n\t\t\t(width 0.3)\n\t\t\t(type dash)\n\t\t)\n\t\t(fill\n\t\t\t(type none)\n\t\t)\n\t\t(uuid "{uuid.uuid4()}")\n\t)\n'''
+                 for _, _, (x0, y0, x1, y1) in S.BLOCKS)
+open(SCH, "w").write(S.place_fields(s[:-1] + frames + ")\n"))
+print("placed", len(seen), "parts;", len(L.wires), "wires,", len(L.labels) + len(L.pin_labels), "labels,", len(L.gnds),
+      "ground symbols,", len(junctions), "junctions,", len(nc), "no-connects")

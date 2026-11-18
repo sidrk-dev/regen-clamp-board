@@ -35,7 +35,7 @@
     "IN1+": "SENSE_P",
     "GND": "GND",
     "IN2+": "LED_REF",
-    "IN2-": "STRETCH",
+    "IN2-": "STRETCH_IN",
     "OUT2": "LEDR_K",
     "VCC": "VREG"
    }
@@ -89,33 +89,17 @@
    }
   },
   "Q4": {
-   "lcsc": "C2145",
+   "lcsc": "C41375109",
    "funcs": {
     "B": "REF_K",
-    "E": "VREG",
-    "C": "RAIL_C"
-   }
-  },
-  "Q5": {
-   "lcsc": "C20526",
-   "funcs": {
-    "B": "CMP_OUT",
-    "E": "VG",
-    "C": "VREG"
-   }
-  },
-  "Q6": {
-   "lcsc": "C105432",
-   "funcs": {
-    "B": "CMP_OUT",
-    "E": "VG",
-    "C": "GND"
+    "C": "RAIL_C",
+    "E": "VREG"
    }
   },
   "Q10": {
    "lcsc": "C8326",
    "funcs": {
-    "B": "VIN",
+    "B": "ILK_BASE",
     "E": "ILK_E",
     "C": "ILK_B"
    }
@@ -142,6 +126,24 @@
     "END_CW": "VREG",
     "WIPER": "TRIM",
     "END_CCW": "TRIM_LO"
+   }
+  },
+  "U4": {
+   "lcsc": "C99395",
+   "funcs": {
+    "VDD": "VREG",
+    "GND": "GND",
+    "IN+": "CMP_OUT",
+    "IN-": "GND",
+    "OUT": "VG"
+   }
+  },
+  "Q13": {
+   "lcsc": "C8545",
+   "funcs": {
+    "G": "FLAG_G",
+    "S": "GND",
+    "D": "BRK_FLAG"
    }
   }
  },
@@ -201,6 +203,11 @@
    "lcsc": "C2932744",
    "K": "HGATE",
    "A": "VOUT"
+  },
+  "D12": {
+   "lcsc": "C19077413",
+   "K": "REF_K",
+   "A": "GND"
   }
  },
  "polarized_pads": {
@@ -250,7 +257,7 @@
    ]
   },
   "C7": {
-   "lcsc": "C165665",
+   "lcsc": "C443159",
    "plus": [
     "1",
     "VOUT"
@@ -261,7 +268,7 @@
    ]
   },
   "C8": {
-   "lcsc": "C165665",
+   "lcsc": "C443159",
    "plus": [
     "1",
     "VOUT"
@@ -272,7 +279,7 @@
    ]
   },
   "C15": {
-   "lcsc": "C165665",
+   "lcsc": "C443159",
    "plus": [
     "1",
     "VOUT"
@@ -283,7 +290,7 @@
    ]
   },
   "C16": {
-   "lcsc": "C165665",
+   "lcsc": "C443159",
    "plus": [
     "1",
     "VOUT"
@@ -294,13 +301,35 @@
    ]
   },
   "C17": {
-   "lcsc": "C165665",
+   "lcsc": "C443159",
    "plus": [
     "1",
     "VIN"
    ],
    "minus": [
     "2",
+    "GND"
+   ]
+  },
+  "J6": {
+   "lcsc": "C2913282",
+   "plus": [
+    "2",
+    "VOUT"
+   ],
+   "minus": [
+    "1",
+    "GND"
+   ]
+  },
+  "J7": {
+   "lcsc": "C2913282",
+   "plus": [
+    "2",
+    "VOUT"
+   ],
+   "minus": [
+    "1",
     "GND"
    ]
   }
@@ -310,12 +339,27 @@
    "lcsc": "C431540",
    "COM": "EN",
    "THROW_GND": "GND",
-   "THROW_OPEN": null
+   "THROW_OPEN": null,
+   "on_end": "3",
+   "evidence": "MSK12C02 drawing, top view and circuit diagram: knob drawn at the pin-3 end with the contact joining 3 and 2; dashed at the pin-1 end (1.6 mm travel)"
   }
  },
  "unpolarized_not_checked": [
   "J5 (brake resistor, either way round)",
   "J11 (2-pin thermal loop)",
   "resistors and non-polarized capacitors"
- ]
+ ],
+ "settled": {
+  "_note": "Added 2026-11-11 by the designer (Claude). Each entry names the second source that settles an item the datasheet ledger alone left open.",
+  "D3": "cathode matched to cathode against JLC's library footprint for this part number by check_cpl.py (library pad names A/K or +/-)",
+  "D6": "cathode matched to cathode against JLC's library footprint for this part number by check_cpl.py (library pad names A/K or +/-)",
+  "D8": "cathode matched to cathode against JLC's library footprint for this part number by check_cpl.py (library pad names A/K or +/-)",
+  "D9": "cathode matched to cathode against JLC's library footprint for this part number by check_cpl.py (library pad names A/K or +/-)",
+  "Q1": "G left, S right against the datasheet's package photo (checked above), and JLC's library symbol for C410926 names pads 1, 2, 3 as G, D, S (check_cpl.py)",
+  "Q2": "G left, S right against the datasheet's package photo (checked above), and JLC's library symbol for C410926 names pads 1, 2, 3 as G, D, S (check_cpl.py)",
+  "Q3": "G left, S right against the datasheet's package photo (checked above), and JLC's library symbol for C410926 names pads 1, 2, 3 as G, D, S (check_cpl.py)",
+  "Q7": "G left, S right against the datasheet's package photo (checked above), and JLC's library symbol for C410926 names pads 1, 2, 3 as G, D, S (check_cpl.py)",
+  "Q8": "G left, S right against the datasheet's package photo (checked above), and JLC's library symbol for C410926 names pads 1, 2, 3 as G, D, S (check_cpl.py)",
+  "Q9": "G left, S right against the datasheet's package photo (checked above), and JLC's library symbol for C410926 names pads 1, 2, 3 as G, D, S (check_cpl.py)"
+ }
 }
