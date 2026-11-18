@@ -193,5 +193,18 @@ foreach amps 5 10 15 18 20 22 27
   meas tran brake_peak MAX i(LBR) from=1m to=18m
   meas tran cap_rms RMS i(LCB) from=8m to=16m
 end
+* Two 2 ohm resistors in parallel on J5, each with its own leads: 1 ohm, 0.5 uH
+alterparam RBRK=1
+alterparam LBRK=0.5u
+foreach amps 22 27
+  alterparam IRET=$amps
+  reset
+  run
+  echo parallel_returned_A $amps
+  meas tran motor_peak MAX v(vmot) from=1m to=18m
+  meas tran brake_peak MAX i(LBR) from=1m to=18m
+  meas tran brake_rms RMS i(LBR) from=8m to=16m
+  meas tran cap_rms RMS i(LCB) from=8m to=16m
+end
 .endc
 .end

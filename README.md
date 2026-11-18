@@ -1,6 +1,16 @@
 # Regen clamp + soft-start board (rev F)
 
-**Prototype for bench evaluation.** The 36 V, 2 Ω design crosses the moteus r4’s 44 V absolute maximum in a simulated 22 A braking event. Qualify the arm’s returned current, resistor duty and connector fit before releasing a populated order for robot use. The [engineering review and first-prototype budget](docs/arm-manufacturing-review.md) include the test results, assembly files checked, and release criteria.
+**Prototype for bench evaluation.** The board has not been built or measured. KiCad ERC and DRC pass on this copy,
+and the control rail and braking figures below are design targets from calculation and simulation.
+
+**Brake capacity.** The brake can absorb at most (supply + trip) ÷ R. With one 2 Ω resistor at 36 V and a +4 V trip
+that is 20 A of current returned by the motors, net of what the other joints draw. Above that the bus keeps
+rising: in simulation a 22 A, 15 ms return reaches 44.2 V, past the moteus r4's 44 V absolute maximum, and 27 A
+reaches 53.8 V. Either limit the arm's deceleration and backdriving so the net returned current stays under
+about 18 A at 36 V, or fit two resistors in parallel (see [Two brake resistors](#two-brake-resistors-in-parallel)).
+Measure the returned current, resistor duty and connector fit before fast or backdriven operation. The
+[engineering review](docs/arm-manufacturing-review.md) has the sweep, the assembly files checked and the
+release gates.
 
 A 125 × 100 mm two-layer board that sits between a bench supply and the arm.
 The supply plugs into an XT60 in the middle of the left edge; five XT30
@@ -193,8 +203,8 @@ and [moteus electrical limits](https://mjbots.github.io/moteus/reference/hardwar
 | Mounting | 4 × #8-32, corners, 115 × 90 mm hole spacing. No copper within 5.5 mm of each hole centre on either layer, so the screw head or washer must be under 11 mm across |
 | Ambient | U3 is rated 0–70 °C. Q4 (SOT-223, 94 °C/W) runs about 20 °C above ambient at 48 V idle and about 30 °C during braking |
 | Brake threshold | Set with RV1: brake turns on at 3.0 to 7.5 V above the supply and off about 2.3 V lower |
-| Brake | Two paralleled MOSFETs into one external resistor on an XT60. Peak brake current = (supply + trip) ÷ R; keep it at or below 25 A |
-| Brake resistor | Pick by supply so the brake can absorb the arm's regen: it sinks at most (supply + trip) ÷ R, which must stay under 25 A. 1.5 Ω at 24 V (19 A at +5 V), 2 Ω at 36 V (20.5 A at +5 V), 2.5 Ω at 48 V (22 A at +7.5 V); all 200 W. A larger resistor brakes less: 2.5 Ω at 36 V sinks only 16 A, and regen above that keeps climbing |
+| Brake | Two paralleled MOSFETs into one external resistor on an XT60, or two resistors in parallel. Peak brake current = (supply + trip) ÷ R; keep it at or below 25 A per resistor and fuse |
+| Brake resistor | Pick by supply so the brake can absorb the arm's regen: it sinks at most (supply + trip) ÷ R, which must stay under 25 A. 1.5 Ω at 24 V (19 A at +5 V), 2 Ω at 36 V (20.5 A at +5 V), 2.5 Ω at 48 V (22 A at +7.5 V); all 200 W. A larger resistor brakes less: 2.5 Ω at 36 V sinks only 16 A, and regen above that keeps climbing. For more than about 20 A at 36 V, fit [two resistors in parallel](#two-brake-resistors-in-parallel) |
 | Resistor over-temperature | J11: a normally-closed thermal switch on the resistor disables the brake when it opens. Fit a jumper if unused. |
 | Last-resort protection | One Q136 thermal fuse clamped to the resistor, wired in one resistor lead (see Brake resistor wiring). Required: a shorted brake MOSFET can't be stopped any other way |
 | Soft start | 0.26 s from 0 to 36 V; ≈0.26 A into the 1880 µF on the output (C7, C8, C15, C16; C17 is on the supply side of the switch and charges straight from the supply), plus about 0.14 A per extra 1000 µF the arm adds (≈0.55 A into 4000 µF: 0.355–0.833 A including HGATE current and ±10 % capacitor tolerance, before DC bias) |
@@ -249,7 +259,7 @@ unverified. A low trim setting is not a general safety guarantee.
 | J7 | XT30PW-F | Right edge, 5th | Output 5: spare |
 | J5 | XT60PW-F | Bottom edge | Brake resistor (either way round) |
 | J11 | 2-pin header | Middle | Normally-closed thermal switch (e.g. KSD9700, 70–90 °C) on the brake resistor, or a jumper. Twist its two wires together and keep them away from the brake resistor leads |
-| J12 | 3-pin header | Bottom left | For a microcontroller: pin 1 GND, pin 2 BUS_ADC (VOUT × 0.053 through 100 k / 5.6 k, filtered by 100 nF), pin 3 BRK_FLAG (2N7002 open drain, low while braking; pull it up on the microcontroller side) |
+| J12 | 3-pin header | Bottom left | For a microcontroller: pin 1 GND, pin 2 BUS_ADC (VOUT × 0.053 through 100 k / 5.6 k, filtered by 100 nF), pin 3 BRK_FLAG (2N7002 open drain, low while braking; pull it up on the microcontroller side). BUS_ADC passes 3.3 V only if VOUT goes above 62 V, which happens only in a fault: at the TVS's 82 V clamp it would be 4.4 V from a 5.3 kΩ source, about 0.15 mA into the microcontroller's clamp diode. Check the microcontroller's injection-current limit |
 | SW1 | slide switch | Left edge | Output on/off. ON is the slider toward the bottom board edge, as labelled. Plug or unplug loads only with SW1 off. The slider faces off the left board edge, with its tip about 0.3 mm inside the edge, so you can slide it with a fingertip from the side. |
 | RV1 | 3362P trimmer | Bottom left | Brake threshold |
 
@@ -317,6 +327,41 @@ fuse is left intact.
 - If it opens, the brake is gone and the next regen event will overvolt the bus.
   Stop, find out why, and test Q3/Q9 before fitting a new one (see below).
 
+## Two brake resistors in parallel
+
+One 2 Ω resistor at 36 V absorbs at most about 20 A of returned current. If the arm can return more, fit two
+identical resistors in parallel on J5: two 2 Ω at 36 V (1 Ω), or two 2.5 Ω at 48 V (1.25 Ω). The board needs no
+change. Each resistor gets its own thermal fuse and its own thermal switch:
+
+    J5 pin 2 (VOUT) ──┬── Q136 fuse A ── resistor A ──┬── J5 pin 1 (BRK_DRAIN)
+                      └── Q136 fuse B ── resistor B ──┘
+
+    J11: thermal switch A ── thermal switch B   (in series, so either one turns the brake off)
+
+Simulated in `sim_post_layout.cir` (36 V, +4 V trip, 0.5 µH per resistor's leads, 15 ms pulses):
+
+| Returned current | One 2 Ω: bus peak | Two 2 Ω: bus peak | Two 2 Ω: brake peak / RMS |
+|---:|---:|---:|---:|
+| 15 A | 40.2 V | 40.2 V | 39 A / 24 A |
+| 22 A | 44.2 V | 40.3 V | 39 A / 29 A |
+| 27 A | 53.8 V | 40.4 V | 39 A / 32 A |
+| 35 A | — | 40.5 V | 39 A / 37 A |
+
+The brake MOSFETs peak at 45.8 V at 36 V and 59.1 V at 48 V, the same as with one resistor, with no avalanche.
+They are rated 120 A. Each fuse carries about 20 A, inside its 25 A rating. At 48 V the bus still peaks at
+53.4 V, so the gripper rule doesn't change: no moteus r4 at 48 V.
+
+What it costs:
+
+- A second resistor, fuse and thermal switch. The pair can take 400 W on average, twice as much as one.
+- J5 (XT60, 30 A continuous) carries 24–37 A RMS while braking hard. Short braking events are fine; it is not
+  rated for continuous braking at that level, and the resistors aren't either.
+- The four output capacitors carry about twice the ripple, roughly 3.5 A RMS per capacitor while the brake
+  chops, against a rating of about 1.7 A. Short stops are fine; a long slow loaded descent heats them. Measure the
+  capacitor cases during your longest descent and keep them under 85 °C.
+- If one fuse opens, the brake falls back to one resistor's 20 A. Check both fuses with a meter after any
+  overheat.
+
 ## LEDs
 
 | LED | Colour | Label | On means |
@@ -371,9 +416,15 @@ sits by the input, TP24 by the outputs, the others in the control area.
 
 ## Current handling
 
-- Power flows on top-layer pours; the bottom layer is mostly ground plane. It also carries about 300 mm of thin
-  track: the VOUT feed to the control rail (96 mm), a VIN sense feed (49 mm), VG (27 mm) and the DGATE tap (13 mm).
-  None of them blocks the output or brake return paths; the gate nets to the six MOSFETs stay on the top layer.
+- Power flows on top-layer pours; the bottom layer is mostly ground plane. It also carries about 380 mm of thin
+  signal track, measured from the board file: the VOUT feed to the control rail (115 mm), VREG (58 mm), a VIN sense
+  feed (49 mm), VG (31 mm), CMP_OUT (24 mm), PU_TH (21 mm), LEDR_K (20 mm), the DGATE tap (13 mm), OV (12 mm) and
+  about 40 mm of short links. None of them blocks the output or brake return paths; the gate nets to the six
+  MOSFETs stay on the top layer.
+- Bus-voltage pads are at least 0.5 mm from ground copper (IPC-2221B, uncoated terminations, 51–100 V). Tracks
+  under solder mask are held only to the 0.2 mm board rule: the closest is a CDVDT track 0.195 mm from C13's
+  ground pad, and CDVDT reaches about 59 V at 48 V. IPC-2221B allows 0.13 mm for coated conductors at that
+  voltage, and CDVDT sits behind 1 kΩ, so leakage there would only slow the soft start. Keep the board clean and dry.
 - Copper resistance, heat and current density from `review_tools/copper_check.py`: every pour, pad and track of
   each power net is rasterised from the board file on a 0.2 mm grid (both layers, joined at plated holes and vias)
   and solved as a resistive sheet. 1 oz copper at 60 °C, 27 A through the board with the two farthest outputs
@@ -456,7 +507,12 @@ connectors, five 470 µF capacitors, the three 1 µF 100 V 1206 capacitors, RV1,
 Quantities are per board.
 
 Five Extended feeder charges are expected: U1, U4, D11 and the two 0.1 % resistor values, $15.35 at
-JLCPCB's published Economic rate. With five bare boards, two factory assemblies and one lean hand kit, the estimate is $58.43–$64.69 before external hardware, freight and tax. Check the three assumed Preferred codes and U1 inspection fee at checkout.
+JLCPCB's published Economic rate. Five bare boards with two factory assemblies and hand parts for **both**
+boards (one for the 36 V supply, one for the 48 V supply) come to about $69 before shipping and tax. Hand parts for
+only one board, leaving out the spare output J7 and header J12, bring it to $58.43–$64.69 (the
+[engineering review](docs/arm-manufacturing-review.md) has the breakdown). Check the three assumed Preferred
+codes and any U1 X-ray inspection fee at checkout. The brake resistors, thermal fuses, heat sink, cables and
+mating connectors are extra.
 [JLCPCB’s Economic assembly pricing](https://jlcpcb.com/blog/reduce-pcb-assembly-cost-prototype)
 
 See the [factory assembly view](docs/regen_precharge_revF_factory.png), the [populated top
@@ -475,7 +531,7 @@ and the right contact is GND (−, pad 1).
 - `lib/`: JLCPCB symbols, footprints and 3D models (LM74800, CRSS042N10N, MSK12C02, 3362P) imported with easyeda2kicad.
 - `sim_regen_clamp.cir`: ngspice deck for the brake comparator, the two-MOSFET brake, the interlock, the thermal-loop indicator and the LED stretcher, with a behavioural model of the ideal diode.
 - `sim_brake_latch_48v.cir`: the worst-case latch test at 48 V (delete the interlock lines to reproduce the rev B latch).
-- `sim_post_layout.cir`: the regen event with the board's copper resistance, estimated inductance, a datasheet MOSFET model and wiring (five cases, including 48 V at +5 V and 36 V at +7.5 V).
+- `sim_post_layout.cir`: the regen event with the board's copper resistance, estimated inductance, a datasheet MOSFET model and wiring (five cases, including 48 V at +5 V and 36 V at +7.5 V), then a sweep of returned current from 5 to 27 A with one 2 Ω resistor and 22 and 27 A with two in parallel.
 - `sim_soft_start.cir`: hot plug with SW1 off, then the soft start, at 36 V and 48 V.
 - `review_swarm.py`: runs every AI model on this computer against the design, then has other models check each finding. It keeps running on its own and waits out usage limits. Run `./review_swarm.py models`, then `./review_swarm.py start`. `review_swarm_test.py` tests it offline with a fake model runner.
 

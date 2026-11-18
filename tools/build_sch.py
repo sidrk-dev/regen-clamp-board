@@ -234,7 +234,7 @@ for ref in HOLES:
 for ref in FIDS:
     x, y, _ = L.pos[(ref, 1)]
     call("add_schematic_component", schematic=SCH, lib_id="Mechanical:Fiducial", x=x, y=y, reference=ref,
-         value="Fiducial", footprint="Fiducial:Fiducial_1mm_Mask2mm")
+         value="Fiducial", footprint="jlc:Fiducial_1mm_Mask2mm")
 for ref, net in TPS:
     x, y, _ = L.pos[(ref, 1)]
     fp = "TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm" if net == "GND" else "TestPoint:TestPoint_Pad_D1.5mm"
