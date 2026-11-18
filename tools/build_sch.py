@@ -24,8 +24,8 @@ part("D1", "Device:D_Zener", "SMCJ51A TVS", "Diode_SMD:D_SMC", "C42371549", 45, 
 part("C1", "Device:C", "1uF 100V", C1206, "C13832", 60, 60, {"1": "VIN", "2": "GND"}, note="Hand-solder")
 # C17: holds the input up when Q2/Q8 turn off under load; only C1 (1 uF) was there, and the supply lead inductance could pass U1's 70 V.
 part("C17", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 75, 60, {"1": "VIN", "2": "GND"}, note="Hand-solder")
-part("Q1", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 95, 40, {"1": "DG1", "2": "MID", "3": "VIN"}, rot=90, note="Hand-solder")
-part("Q2", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 150, 40, {"1": "HG2", "2": "MID", "3": "VOUT"}, rot=90, note="Hand-solder")
+part("Q1", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 95, 40, {"1": "DG1", "2": "MID", "3": "VIN"}, rot=90)
+part("Q2", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 150, 40, {"1": "HG2", "2": "MID", "3": "VOUT"}, rot=90)
 part("U1", "jlc:LM74800QDRRRQ1", "LM74800QDRRRQ1", "jlc:WSON-12_L3.0-W3.0-P0.50-TL-EP-2", "C3215600", 120, 85,
      {"1": "DGATE", "2": "VIN", "3": "VIN", "4": "OV_TOP", "5": "OV", "6": "EN", "7": "GND", "8": "HGATE", "9": "VOUT", "10": "MID", "11": "CAP", "12": "MID"})
 part("C2", "Device:C", "1uF 100V", C1206, "C13832", 160, 80, {"1": "MID", "2": "GND"}, note="Hand-solder")
@@ -108,7 +108,7 @@ part("Q13", "Transistor_FET:2N7002", "2N7002", SOT23, "C8545", 680, 100, {"1": "
 part("J12", "Connector_Generic:Conn_01x03", "MCU: GND / BUS_ADC / BRK_FLAG", "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical", "C2937625", 700, 100, {"1": "GND", "2": "BUS_ADC", "3": "BRK_FLAG"}, note="Hand-solder")
 part("R18", "Device:R", "10R", R0603, "C22859", 255, 205, {"1": "VG", "2": "BRK_GATE"}, rot=90)
 part("R19", "Device:R", "10k", R0603, "C25804", 270, 225, {"1": "BRK_GATE", "2": "GND"})
-part("Q3", "jlc:CRSS042N10N", "CRSS042N10N (brake)", FET, "C410926", 285, 200, {"1": "BRK_GATE", "2": "BRK_DRAIN", "3": "GND"}, note="Hand-solder")
+part("Q3", "jlc:CRSS042N10N", "CRSS042N10N (brake)", FET, "C410926", 285, 200, {"1": "BRK_GATE", "2": "BRK_DRAIN", "3": "GND"})
 part("D4", "Device:D_Schottky", "SS210", "Diode_SMD:D_SMA", "C14996", 300, 170, {"1": "VOUT", "2": "BRK_DRAIN"}, rot=90)
 part("J5", "Connector_Generic:Conn_01x02", "XT60PW-F (brake resistor: 2 ohm 200 W at 36 V)", "jlc:AMASS_XT60PW-F_1x02_P7.20mm_Horizontal_2.9mm", "C428722", 340, 170, {"1": "BRK_DRAIN", "2": "VOUT"}, note="Hand-solder")
 
@@ -123,15 +123,15 @@ part("R24", "Device:R", "4.7k", R0603, "C23162", 395, 200, {"1": "VREG", "2": "L
 part("D6", "Device:LED", "RED (regen brake active)", "LED_SMD:LED_0603_1608Metric", "C2286", 395, 230, {"1": "LEDR_K", "2": "LEDR_A"}, rot=90)
 
 # ---- Block 6: 30 A / 60 A peak additions ----
-part("Q7", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 440, 40, {"1": "DG7", "2": "MID", "3": "VIN"}, rot=90, note="Hand-solder")
-part("Q8", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 480, 40, {"1": "HG8", "2": "MID", "3": "VOUT"}, rot=90, note="Hand-solder")
+part("Q7", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 440, 40, {"1": "DG7", "2": "MID", "3": "VIN"}, rot=90)
+part("Q8", "jlc:CRSS042N10N", "CRSS042N10N", FET, "C410926", 480, 40, {"1": "HG8", "2": "MID", "3": "VOUT"}, rot=90)
 part("C13", "Device:C", "100nF 100V", C0805, "C28233", 440, 75, {"1": "CDVDT", "2": "GND"})
 part("C14", "Device:C", "100nF 100V", C0805, "C28233", 455, 75, {"1": "CDVDT", "2": "GND"})
 part("C15", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 475, 75, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
 part("C16", "Device:C_Polarized", "470uF 100V", "Capacitor_THT:CP_Radial_D12.5mm_P5.00mm", "C443159", 490, 75, {"1": "VOUT", "2": "GND"}, note="Hand-solder")
 part("R28", "Device:R", "10R", R0603, "C22859", 440, 165, {"1": "VG", "2": "BRK_GATE2"}, rot=90)
 part("R29", "Device:R", "10k", R0603, "C25804", 455, 185, {"1": "BRK_GATE2", "2": "GND"})
-part("Q9", "jlc:CRSS042N10N", "CRSS042N10N (brake 2)", FET, "C410926", 475, 165, {"1": "BRK_GATE2", "2": "BRK_DRAIN", "3": "GND"}, note="Hand-solder")
+part("Q9", "jlc:CRSS042N10N", "CRSS042N10N (brake 2)", FET, "C410926", 475, 165, {"1": "BRK_GATE2", "2": "BRK_DRAIN", "3": "GND"})
 part("D7", "Device:D_Schottky", "SS210", "Diode_SMD:D_SMA", "C14996", 495, 140, {"1": "VOUT", "2": "BRK_DRAIN"}, rot=90)
 part("J11", "Connector_Generic:Conn_01x02", "Brake resistor thermal switch (NC) or jumper", "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical", "C492401", 450, 225, {"1": "PU_TH", "2": "CMP_OUT"}, note="Hand-solder")
 part("R27", "Device:R", "100k", R0603, "C25803", 470, 235, {"1": "CMP_OUT", "2": "GND"})

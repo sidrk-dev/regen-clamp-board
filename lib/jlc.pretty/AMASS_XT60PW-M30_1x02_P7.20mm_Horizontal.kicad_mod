@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "XT60PW-M horizontal PCB connector. Holes follow the Amass XT60PW-M30.G.Y.T drawing served for LCSC C98732: contacts 2.9 mm, fixing slots 0.8 x 1.9 mm")
+	(descr "XT60PW-M horizontal PCB connector. Holes centred in the Amass XT60PW-M30.G.Y.T window served for LCSC C98732: contacts 3.0 mm, fixing slots 0.9 x 2.0 mm")
 	(tags "RC Connector XT60")
 	(property "Reference" "REF**"
 		(at 3.6 -17.5 0)
@@ -254,16 +254,16 @@
 	)
 	(pad "" thru_hole rect
 		(at -3.15 -6)
-		(size 1.4 2.5)
-		(drill oval 0.8 1.9)
+		(size 1.5 2.6)
+		(drill oval 0.9 2)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(uuid "d30c4d79-5484-43e1-857a-b7233d99f712")
 	)
 	(pad "" thru_hole rect
 		(at 10.35 -6)
-		(size 1.4 2.5)
-		(drill oval 0.8 1.9)
+		(size 1.5 2.6)
+		(drill oval 0.9 2)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(uuid "2f5f1cd1-ffbe-4b9e-b123-e6460e2712cd")
@@ -271,7 +271,7 @@
 	(pad "1" thru_hole roundrect
 		(at 0 0)
 		(size 4.3 4.3)
-		(drill 2.9)
+		(drill 3)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(roundrect_rratio 0.25)
@@ -280,7 +280,7 @@
 	(pad "2" thru_hole circle
 		(at 7.2 0)
 		(size 4.3 4.3)
-		(drill 2.9)
+		(drill 3)
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(uuid "164f2915-1aa4-4448-8769-f7421a7f5fe6")

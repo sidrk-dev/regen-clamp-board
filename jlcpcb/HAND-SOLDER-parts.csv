@@ -6,7 +6,6 @@ Qty,Designator,Part,LCSC Part #
 1,J5,XT60PW-F (brake resistor: 2 ohm 200 W at 36 V),C428722
 1,J11,Brake resistor thermal switch (NC) or jumper,C492401
 1,J12,MCU: GND / BUS_ADC / BRK_FLAG,C2937625
-6,"Q1,Q2,Q3,Q7,Q8,Q9",CRSS042N10N,C410926
 1,RV1,10k trim: brake threshold,C58159
 1,SW1,MSK12C02 (OUTPUT ON/OFF),C431540
 2,"off-board, in brake resistor lead (1 + spare)","Q136 thermal fuse, 136 C, 25 A, DC 120 V",C22396303

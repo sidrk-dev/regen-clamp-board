@@ -92,15 +92,21 @@ Rev F started as a cost-down of rev E. Later rev F edits adjusted the top-layer 
 - **Connector polarity settled from the Amass drawings**, and checked by `check_parts.py`: pad 2 of J1 and of
   J2–J4, J6, J7 is the contact at the flat end of the housing, which is the + contact (see Verification status).
 - New simulations: `sim_post_layout.cir` and `sim_soft_start.cir` (see Verification status).
-- **Hand-solder the six TO-263 MOSFETs** (Q1, Q2, Q3, Q7, Q8, Q9) and the 1206 capacitors (C1, C2, C6).
-  The MOSFETs retain the corrected 3D model offset. The exposed tabs land on copper pours and need enough
-  heat to wet the full contact area.
+- **The six TO-263 MOSFETs (`Q1, Q2, Q3, Q7, Q8, Q9`) stay on JLCPCB's SMT reflow line**, while the 1206 capacitors
+  (`C1, C2, C6`) remain hand-soldered (reflow them with hot air or a hot plate rather than a bare iron on the solid pours,
+  to avoid ceramic thermal-shock cracks). The MOSFETs retain the corrected 3D model offset and front stencil paste openings.
 - **R6, the SMC and SMA diodes (D1, D2, D4, D7), the two SOD-123 Zeners (D11, D12) and the SOT-223 transistor
   (Q4) stay machine-placed.** An earlier commit on this branch moved them to hand soldering; only D11 carried a fee,
   so the other seven added hand work for no saving, and the owner asked for them to go back on the machine.
   The schematic's assembly field and the PCB placement exclusions drive the exports.
+- **From a follow-up review (17 Nov 2026):** `J1` and `J5` contact holes are centred in Amass's `2.90 +0.10/-0.00 mm`
+  and `0.80 +0.10/-0.00 × 1.90 +0.10/-0.00 mm` windows at **3.0 mm** with **0.9 × 2.0 mm** fixing slots (`1.5 × 2.6 mm`
+  pads, keeping the `0.30 mm` plated ring) so JLCPCB's `-0.08 mm` plating tolerance cannot finish undersize; both pads
+  of the five 470 µF bulk capacitors (`C7, C8, C15, C16, C17`) and `J12` pin 1 now use thermal spokes (`~0.06 mΩ` per pad)
+  for easier hand soldering; `C8`'s silkscreen label moved clear of `D2`'s body; and the schematic title block and notes
+  are updated to rev F, 27 A, four output bulk capacitors and D12 under 17 V (`tools/rev_f_review_fixes.py`).
 - The PCB and schematic both use the bundled 1 mm fiducial footprint so that a change in the installed KiCad library does not affect the release checks.
-- `build-scripts/cost_down.py` is the record of these edits.
+- `build-scripts/cost_down.py` and `tools/rev_f_review_fixes.py` are the record of these edits.
 
 Rev E, changes from rev D. Most of these were found by independent reviews:
 
@@ -357,8 +363,9 @@ What it costs:
 - J5 (XT60, 30 A continuous) carries 24–37 A RMS while braking hard. Short braking events are fine; it is not
   rated for continuous braking at that level, and the resistors aren't either.
 - The four output capacitors carry about twice the ripple, roughly 3.5 A RMS per capacitor while the brake
-  chops, against a rating of about 1.7 A. Short stops are fine; a long slow loaded descent heats them. Measure the
-  capacitor cases during your longest descent and keep them under 85 °C.
+  chops, against an estimated rating of about 1.3 A at ~1 kHz (frequency-derated from the 1.69 A figure at 100 kHz).
+  Short stops are fine; a long slow loaded descent heats them. Measure the capacitor cases during your longest descent
+  and keep them under 85 °C.
 - If one fuse opens, the brake falls back to one resistor's 20 A. Check both fuses with a meter after any
   overheat.
 
@@ -434,17 +441,17 @@ sits by the input, TP24 by the outputs, the others in the control area.
   |---|---|---|---|
   | VIN (XT60 → Q1/Q7) | 0.64 | 0.47 W | 3.9 |
   | MID (between the MOSFET pairs) | 0.16 | 0.12 W | 1.7 |
-  | VOUT (Q2/Q8 → outputs 4 and 5) | 1.13 | 0.83 W | 3.9 |
+  | VOUT (Q2/Q8 → outputs 4 and 5) | 1.15 | 0.84 W | 4.0 |
   | Ground return, both layers (outputs → XT60) | 1.18 | 0.86 W | 3.8 |
   | Brake: VOUT (outputs → brake XT60), 20 A | 0.70 | pulses only | 2.9 |
   | Brake drain (XT60 → Q3/Q9), 20 A | 0.41 | pulses only | 4.7 |
   | Brake ground (Q3/Q9 → outputs), 20 A | 0.69 | pulses only | 2.3 |
 
-  The through path totals 3.11 mΩ and 2.27 W. The peaks are at the pad necks and are 4 A/mm in either copper
+  The through path totals 3.13 mΩ and 2.28 W. The peaks are at the pad necks and are 4 A/mm in either copper
   weight; in 1 oz that is about 110 A/mm² over a millimetre or two.
 - The same script then spreads that heat, plus 4.9 W for the four series MOSFETs (13.5 A each at 6.7 mΩ, the
   4.2 mΩ maximum × 1.6 for a hot die), through the board: copper where each layer has it, FR-4 elsewhere,
-  10 W/m²K off each face. Result at 27 A continuous: hottest point 65 K above ambient (Q1's tab), board average
+  10 W/m²K off each face. Result at 27 A continuous: hottest point 66 K above ambient (Q1's tab), board average
   29 K. Until the tabs have been measured, treat 20 A continuous (about 36 K) as the working limit. In 2 oz: 46 K and 24 K. Heating goes with current squared: about 36 K at the hot spot at 20 A, 80 K at 30 A.
 - This is a first-order calculation. It leaves out airflow, the connectors and capacitors as heat sinks, contact
   resistance and wiring, and it has not been compared with a measurement. Measure the MOSFET tabs with a
@@ -455,7 +462,9 @@ sits by the input, TP24 by the outputs, the others in the control area.
   Equal sharing is especially unproven during linear soft start. At 15 A per
   MOSFET, 4.2 mΩ gives 0.95 W at the specified cold gate drive; hot losses rise.
 - Each brake MOSFET's source has six vias (0.8 mm pad, 0.4 mm drill) into the ground plane.
-  Connector and bulk-capacitor pads connect solidly, with no thermal spokes, so they need a hot iron.
+  Connector and MOSFET pads connect solidly, with no thermal spokes, so the XT connectors need a hot iron; the
+  five 470 µF bulk capacitors and J12 pin 1 use 1.0 mm thermal spokes for easier hand soldering, and the three
+  1206 100 V MLCCs (C1, C2, C6) should be soldered with hot air or a hot plate to avoid flex-cracking.
 
 ## How it works
 
@@ -501,15 +510,15 @@ Use the [rev F Gerbers](jlcpcb/regen_precharge_revF_gerbers.zip), [machine BOM](
 and [placement file](jlcpcb/CPL-JLCPCB.csv) for top-side Economic assembly. The rev F quote used
 two-layer FR-4, 1.6 mm, 1 oz outer copper, and HASL. Select Confirm Parts Placement.
 
-The factory places **76 components on 44 BOM lines**. The [hand-solder list](jlcpcb/HAND-SOLDER-parts.csv)
-covers **25 board components** plus the off-board thermal fuse and its spare: the six MOSFETs, seven XT
+The factory places **82 components on 45 BOM lines** (including the six TO-263 MOSFETs). The [hand-solder list](jlcpcb/HAND-SOLDER-parts.csv)
+covers **19 board components** plus the off-board thermal fuse and its spare: seven XT
 connectors, five 470 µF capacitors, the three 1 µF 100 V 1206 capacitors, RV1, SW1 and two headers.
 Quantities are per board.
 
-Five Extended feeder charges are expected: U1, U4, D11 and the two 0.1 % resistor values, $15.35 at
+Six Extended feeder charges are expected: U1, U4, the CRSS042N10N MOSFETs, D11 and the two 0.1 % resistor values, $18.42 at
 JLCPCB's published Economic rate. Five bare boards with two factory assemblies and hand parts for **both**
-boards (one for the 36 V supply, one for the 48 V supply) come to about $69 before shipping and tax. Hand parts for
-only one board, leaving out the spare output J7 and header J12, bring it to $58.43–$64.69 (the
+boards (one for the 36 V supply, one for the 48 V supply) come to about $71–$77 before shipping and tax. Hand parts for
+only one board, leaving out the spare output J7 and header J12, bring it to $65.38–$71.65 (the
 [engineering review](docs/arm-manufacturing-review.md) has the breakdown). Check the three assumed Preferred
 codes and any U1 X-ray inspection fee at checkout. The brake resistors, thermal fuses, heat sink, cables and
 mating connectors are extra.
@@ -519,8 +528,7 @@ See the [factory assembly view](docs/regen_precharge_revF_factory.png), the [pop
 view](docs/regen_precharge_revF_top.png), and the [angled 3D view](docs/regen_precharge_revF_3d.png).
 The populated views use the part-specific EasyEDA STEP models for [XT30PW-F](https://www.lcsc.com/product-detail/C2913282.html),
 [XT60PW-M30](https://www.lcsc.com/product-detail/C98732.html), and [XT60PW-F](https://www.lcsc.com/product-detail/C428722.html).
-The models are aligned to the contacts and locating holes. Regenerating the files after this update reproduced
-the same board fabrication and placement data. J1's mating face points out of the board's left edge.
+The models are aligned to the contacts and locating holes. J1's mating face points out of the board's left edge.
 Looking straight into J1 from that edge with the PCB below the connector, the left contact is VIN (+, pad 2)
 and the right contact is GND (−, pad 1).
 
@@ -557,9 +565,9 @@ These checks show the design agrees with itself, its rules and its datasheets. T
 show it is right: several real faults on this board passed every one of them, and were
 found only by independent reviewers. Treat Konnect's "READY" as a prompt for review.
 
-Run on the files in this repository with `tools/check_all.sh --online` (17 Nov 2026). Every
-fabrication layer and both drill files match the earlier rev F exports apart from the designer credit on
-the front silkscreen.
+Run on the files in this repository with `tools/check_all.sh --online` (17 Nov 2026). The regenerated
+exports include all 82 SMT placements on `F.Paste` and `CPL-JLCPCB.csv`, the enlarged XT60 holes/slots,
+thermal spokes on the 470 µF bulk capacitors and `J12` pin 1, and `C8`'s relocated silkscreen label.
 
 - `gate.py`: ERC and DRC at all severities with parity, zone refill and a rule canary. PASS with no
   waived warning types (rev E waived two silkscreen types). DRC: 0 violations, 0 unconnected, parity clean.
@@ -583,7 +591,7 @@ the front silkscreen.
   JLC's own parts library (JLCEDA/EasyEDA Official Library, https://easyeda.com, https://lceda.cn/) for that
   part number: rotation, origin, and cathode-to-cathode for diodes and LEDs. Its first run found U4 (SOT-23-5)
   and Q4 (SOT-223) both 180° out in the placement file. The prior export script corrected both and checked
-  every placement. The export script keeps both corrections, and all 76 rows pass.
+  every placement. The export script keeps both corrections, and all 82 rows pass.
   For D11, whose library symbol only numbers its pins, the cathode is read from the symbol's drawing; for Q4, Q12 and U2,
   whose library land pattern differs by 0.4–0.5 mm, the orientation is accepted because every other rotation fits at
   least four times worse. The check still fails on a placement file with D11, Q12 and U2 turned.
@@ -625,7 +633,8 @@ Calculated, not simulated:
   electronics drawing current during the ramp. The chart shows no linear-mode derating.
 - Bus capacitor ripple during sustained braking: about sqrt(I_regen × (I_brake − I_regen)),
   so 7.9 A rms at 3 A regen and 24 A brake current, or about 2.0 A per capacitor at roughly
-  1 kHz (0.7–0.9 kHz in the post-layout simulation). That's over the 1.69 A rating at 100 kHz. Ripple limits are thermal, so this
+  1 kHz (0.7–0.9 kHz in the post-layout simulation). That's over the 1.69 A rating at 100 kHz
+  (estimated ~1.3 A after typical low-ESR electrolytic derating to ~1 kHz). Ripple limits are thermal, so this
   matters for sustained braking, not bursts of a few seconds.
 
 The sim decks model U4 as a behavioural driver (datasheet input thresholds and output resistance, no UVLO or delay) with C18 and R41, on an ideal 11.6 V rail; they leave out D10, D11, D12, R40 and C19, and their behavioural ideal diode can hide
@@ -660,7 +669,7 @@ decks. They add what the ideal decks leave out, with every value either extracte
   0 and 11.6 V. The input stays within 0.11 V of the supply. The thresholds match the formula, so the board's copper
   does not disturb the sense network. A repeat of the first turn-off with a 10 ns maximum step gave 45.3 V, and the
   whole run repeated with looser solver tolerances moved the peaks by under 1 %. The capacitor ripple confirms the
-  hand calculation above: sustained braking, not short bursts, would overheat the bulk capacitors (1.69 A rating).
+  hand calculation above: sustained braking, not short bursts, would overheat the bulk capacitors (~1.3 A estimated at ~1 kHz, 1.69 A at 100 kHz).
 - `sim_soft_start.cir`: the supply lead is plugged in with SW1 off and everything discharged, then SW1 closes.
   HGATE is the datasheet's 55 µA source (75 µA maximum) into R5 and the 400 nF ramp capacitor, with D11; the two
   soft-start MOSFETs are given thresholds 0.4 V apart. Hot plug: VIN peaks at 37.0 V on a 36 V supply and 49.3 V on
@@ -689,18 +698,19 @@ first-order calculation, avalanche data not reviewed (the simulation shows no av
 
 Before ordering, a person still has to:
 
-- On the quote page choose 1 oz outer copper and Economic assembly, then check the five expected Extended fees.
-- Tick Confirm Parts Placement and compare the 76 positions in the preview with the machine BOM and factory view.
+- On the quote page choose 1 oz outer copper and Economic assembly, then check the six expected Extended fees.
+- Tick Confirm Parts Placement and compare the 82 positions in the preview with the machine BOM and factory view.
 - Look at your cables: the red wire must go to the contact marked + on each XT plug (the flat end of the housing). The
   board side is settled: pad 2 is that contact on the input and on every output.
 - For a paper fit check, print [the 1:1 fit sheet](docs/regen_precharge_revF_test_fit_1to1.pdf) at 100 % and
   confirm the outline measures 125 × 100 mm. Compare the connectors with their holes. The XT30 contact pitch is 5.0 mm
   and the locating holes are 11.0 mm apart, 5.0 mm in front of the contacts. The XT60 contact pitch is 7.2 mm and
   the slots are 13.5 mm apart, 6.0 mm in front of the contacts.
-- Confirm the finished plated slots fit the actual J1 connector before releasing an assembled order. The board
-  specifies 0.80 × 1.90 mm slots at the low end of the Amass drawing’s 0.80–0.90 × 1.90–2.00 mm range.
-  The EasyEDA model shows projecting tab corners near the rounded slot ends. The drawing and model establish
-  the intended geometry, with a physical test fit still pending.
+- Confirm the finished plated slots fit the actual J1 and J5 connectors on the first article. The board specifies
+  3.00 mm contact holes and 0.90 × 2.00 mm locating slots (1.50 × 2.60 mm pads), at the upper end of the Amass
+  drawing’s 2.90–3.00 mm and 0.80–0.90 × 1.90–2.00 mm windows so JLCPCB’s −0.08 mm hole/slot tolerance stays above
+  the drawing minimums (≥ 2.92 mm and ≥ 0.82 × 1.92 mm). The EasyEDA model shows projecting tab corners near the
+  rounded slot ends; a physical test fit is still pending.
 - Use screws or washers under 11 mm across: a #8 pan head or SAE washer, not a USS washer.
 
 Settled since the last revision of this list, from datasheets and JLC's library, without a part in the hand: LED and
@@ -710,14 +720,15 @@ diode orientation, MOSFET pin order, connector polarity on the board, and SW1's 
 
 This sequence is a proposed test. Don't start it until the open decisions above are settled.
 
-1. Inspect the board. Check Q1–Q12, D1–D12 and the LEDs against the silkscreen. Before
+1. Inspect the board (solder C1, C2 and C6 with hot air or a hot plate rather than a point iron). Check Q1–Q12, D1–D12 and the LEDs against the silkscreen. Before
    connecting anything, unpowered, use a meter to find which contact of each XT connector
    reaches pad 2 and which reaches pad 1, then compare with your mating cables. The board
    expects pad 2 positive, which should be the contact at the flat end of each housing, marked +.
    A mismatch reverses the motor supply.
 2. Leave J11 open for now. SW1 off, J1 only. A reversed supply forward-biases D1, so the
    supply goes into current limit at about 1 V and the board stays dark: stop and rewire if so.
-   The LM74800's reverse protection doesn't help here, because D1 conducts first. Set a 0.5 A current limit and raise
+   The LM74800's reverse protection doesn't help here, because D1 conducts first (and a 27 A constant-current supply
+   behind a 30 A fuse will not clear the fuse, cooking D1 if you skip the low-current check). Set a 0.5 A current limit and raise
    the supply in steps (5, 12, 15, 24, then 36 V), checking the current at each
    step. Only white (SUPPLY) lights. TP1 = supply, TP3 ≈ 0 V. Stop on anything
    you did not predict.
