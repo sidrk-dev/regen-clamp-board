@@ -8,4 +8,9 @@ Qty,Designator,Part,LCSC Part #
 1,J12,MCU: GND / BUS_ADC / BRK_FLAG,C2937625
 1,RV1,10k trim: brake threshold,C58159
 1,SW1,MSK12C02 (OUTPUT ON/OFF),C431540
-2,"off-board, in brake resistor lead (1 + spare)","Q136 thermal fuse, 136 C, 25 A, DC 120 V",C22396303
+4,"off-board, in brake resistor leads (2 for parallel resistors + 2 spares)","Q136 thermal fuse, 136 C, 25 A, DC 120 V",C22396303
+5,off-board cable plug (mates with J1 PSU input + spares),Amass XT60H-F (Female cable plug),C30170202
+5,off-board cable plug (mates with J5 brake resistor lead + spares),Amass XT60H-M (Male cable plug),C5334533
+15,off-board cable plug (mates with J2-J4/J6/J7 outputs + spares),Amass XT30U-M (Male cable plug),C99101
+15,off-board cable plug (for motor/splitter harnesses + spares),Amass XT30U-F (Female cable plug),C99102
+20,"off-board (J11 bring-up jumper cap, MOQ 20)",2.54 mm 1x2 jumper shunt cap,C100114

@@ -517,7 +517,7 @@ sits by the input, TP24 by the outputs, the others in the control area.
 | [`jlcpcb/regen_precharge_revF_gerbers.zip`](jlcpcb/regen_precharge_revF_gerbers.zip) | JLCPCB quote page → **Add Gerber file** (11 files: 2 copper layers, top/bottom mask, paste & silkscreen, outline, PTH & NPTH drills) |
 | [`jlcpcb/BOM-JLCPCB.csv`](jlcpcb/BOM-JLCPCB.csv) | JLCPCB PCB Assembly → **Add BOM File** (45 lines, 82 SMT components) |
 | [`jlcpcb/CPL-JLCPCB.csv`](jlcpcb/CPL-JLCPCB.csv) | JLCPCB PCB Assembly → **Add CPL File** (82 top-side placements) |
-| [`jlcpcb/HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv) | Separate LCSC/DigiKey/Mouser cart — **do not upload to JLCPCB PCBA** (19 hand-solder board parts per board + 2 off-board `Q136` thermal fuses) |
+| [`jlcpcb/HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv) | Separate **LCSC** cart — **do not upload to JLCPCB PCBA** (19 hand-solder board parts per board, `4× Q136` thermal fuses for two parallel brake resistors + 2 spares, mating Amass `XT60H` / `XT30U` male & female cable plugs, and `2.54 mm` `J11` jumper caps) |
 
 ### Exact JLCPCB settings
 
@@ -551,11 +551,27 @@ sits by the input, TP24 by the outputs, the others in the control area.
    - **`Q4` (`SOT-223`)**, **`Q10–Q13` (`SOT-23`)**, and **all 12 diodes/LEDs** (`D1, D2, D4, D7, D5, D10, D11, D12, D3, D6, D8, D9`): cathode bar/dot matches silkscreen.
 5. Paste this into the **Assembly Order Remark** box at checkout:
    > `Hand-soldered SW1 and C1, C2, C6 intentionally omit F.Paste openings. Please apply standard IPC-7525 window-pane stencil segmentation to the six TO-263 drain tabs (Q1, Q2, Q3, Q7, Q8, Q9) and U1's floating thermal pad to minimize reflow voiding and solder pooling.`
-6. Order the remaining **19 hand-solder board parts** per board (seven XT connectors, five `470 µF` capacitors, three `1 µF 100 V` `1206` capacitors, `RV1`, `SW1`, `J11`, `J12`) plus the off-board `Q136` thermal fuses from [`jlcpcb/HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv) on LCSC (quantities in that CSV are per board, except the `Q136` fuse line which is 1 + 1 spare).
+6. Order the **LCSC hand-solder & cable-connector cart** from [`jlcpcb/HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv):
+   - **19 board-mounted parts** (quantities listed are **per board** — double those first 9 lines if finishing both assembled boards): seven XT board jacks, five `470 µF` capacitors, three `1 µF 100 V` `1206` capacitors, `RV1`, `SW1`, `J11`, and `J12`.
+   - **Off-board LCSC items already included in that CSV:** `4×` **SETfuse `Q136`** (`C22396303` — 2 for two parallel brake resistors + 2 spares; order `6–8×` if running two parallel resistors on *both* boards), mating **Amass cable plugs** (`5× XT60H-F` `C30170202` for `J1`, `5× XT60H-M` `C5334533` for `J5`, `15× XT30U-M` `C99101` for `J2–J7` outputs, `15× XT30U-F` `C99102` for motor/splitter harnesses), and `20×` `2.54 mm` jumper caps (`C100114`, MOQ 20) for `J11` bring-up.
+
+### External parts for two brake resistors in parallel (DigiKey / Mouser / Amazon)
+
+LCSC does not stock `200 W` chassis-mount brake resistors or `75–85 °C` `KSD9700` NC thermal switches, so order these separately (see [Two brake resistors in parallel](#two-brake-resistors-in-parallel) for wiring — **each resistor gets its own `Q136` fuse in series in its branch, and the two thermal switches wire in series on `J11`**):
+
+| Item | Spec / Example Part | Qty (per board, 2-resistor parallel) | Notes |
+|---|---|---|---|
+| **Brake resistors** | **`2 Ω 200 W`** aluminum-housed wirewound (e.g., TE `HSC2002R0J` or `RX24 200W 2Ω`) at **36 V**; use **`2.5 Ω 200 W`** at **48 V** | `2×` (or `1×` for `≤ 20 A` single-resistor mode) | Two `2 Ω` in parallel (`1 Ω`) absorb up to `~35 A` returned at 36 V while holding the bus at `40.2–40.5 V` (`< 44 V` `moteus r4` limit) |
+| **Thermal switches (`J11`)** | **`KSD9700` Normally Closed (NC), `75 °C` or `80 °C`** (`70–90 °C`, metal w/ sleeve or plastic) | `2×` (+ spares) | Clamp one flat to each resistor case with thermal paste; wire both **in series** on `J11` (LCSC only stocks `50/65 °C` units) |
+| **Heatsink & mounting** | Aluminum heatsink / thick aluminum plate + thermal paste + mounting screws | `1×` plate/sink big enough for both resistors | Mount on a non-flammable surface on the bench (not on the arm) |
+| **Main PSU fuse + holder** | **`30 A` fuse rated `≥ 60 V DC`** (e.g., Littelfuse `58 V`/`80 V` MIDI-HV/MEGA or `10×38 mm` DC fuse) | `1×` (+ spares) | Install in `J1` positive lead; **do not use standard `32 V` automotive fuses** |
+| **Silicone wire & crimps** | `12 AWG` red/black (PSU & `J5` brake leads), `14–16 AWG` (`XT30` outputs), `22–24 AWG` twisted pair (`J11`/`J12`), crimp splices + high-temp silicone/Kapton sleeves | As needed | Crimp `Q136` fuse leads cleanly and insulate (they carry full bus voltage); keep `J5` leads short & twisted |
+| **Header & mounting hardware** | `2-pin` & `3-pin` `2.54 mm` Dupont female housings/crimps (`J11`, `J12`); `#8-32` pan-head screws + standoffs + **SAE** washers (`< 11 mm` OD) | `1` set | Do **not** use oversized USS washers on corner holes `H1–H4` |
+| **Bench bring-up bleed resistor** | `100 Ω 25 W` power resistor | `1×` (total for bench) | Optional — used temporarily across the bench PSU in Bring-up Step 7 if your supply cannot sink current |
 
 ### Estimated cost
 
-Five bare boards with two factory assemblies and hand parts for **both** boards (one for the 36 V supply, one for the 48 V supply) come to about **$71–$77** before shipping and tax. Hand parts for only one board, leaving out the spare output `J7` and optional header `J12`, bring it to **$65.38–$71.65** (the [engineering review](docs/arm-manufacturing-review.md) has the exact line-by-line breakdown). The external brake resistors (`2 Ω 200 W` at 36 V, `2.5 Ω` at 48 V), normally-closed `KSD9700` thermal switch, heat sink, input 30 A fuse/holder, cables, and mating XT connectors are extra.
+Five bare boards with two factory assemblies and on-board hand parts for **both** boards (one for the 36 V supply, one for the 48 V supply, plus `2× Q136` fuses) come to about **$71–$77** before shipping and tax; adding the extra `2× Q136` fuses (`~$1.40`) and the full pack of mating Amass `XT60H`/`XT30U` cable connectors + jumper caps in [`HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv) adds roughly **$12–$15** on LCSC. Hand parts for only one board, leaving out the spare output `J7` and optional header `J12`, bring the core PCB + board-parts total to **$65.38–$71.65** (the [engineering review](docs/arm-manufacturing-review.md) has the exact line-by-line breakdown). The external brake resistors, `KSD9700` thermal switches, heat sink, input 30 A DC fuse/holder, and wire are extra.
 [JLCPCB’s Economic assembly pricing](https://jlcpcb.com/blog/reduce-pcb-assembly-cost-prototype)
 
 See the [factory assembly view](docs/regen_precharge_revF_factory.png), the [populated top

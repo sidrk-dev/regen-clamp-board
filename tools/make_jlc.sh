@@ -79,8 +79,28 @@ with (stage / "HAND-SOLDER-parts.csv").open("w", newline="") as output:
     for value, _, lcsc, refs in groups(hand):
         writer.writerow([len(refs), ",".join(refs), value, lcsc])
     writer.writerow([
-        2, "off-board, in brake resistor lead (1 + spare)",
+        4, "off-board, in brake resistor leads (2 for parallel resistors + 2 spares)",
         "Q136 thermal fuse, 136 C, 25 A, DC 120 V", "C22396303",
+    ])
+    writer.writerow([
+        5, "off-board cable plug (mates with J1 PSU input + spares)",
+        "Amass XT60H-F (Female cable plug)", "C30170202",
+    ])
+    writer.writerow([
+        5, "off-board cable plug (mates with J5 brake resistor lead + spares)",
+        "Amass XT60H-M (Male cable plug)", "C5334533",
+    ])
+    writer.writerow([
+        15, "off-board cable plug (mates with J2-J4/J6/J7 outputs + spares)",
+        "Amass XT30U-M (Male cable plug)", "C99101",
+    ])
+    writer.writerow([
+        15, "off-board cable plug (for motor/splitter harnesses + spares)",
+        "Amass XT30U-F (Female cable plug)", "C99102",
+    ])
+    writer.writerow([
+        20, "off-board (J11 bring-up jumper cap, MOQ 20)",
+        "2.54 mm 1x2 jumper shunt cap", "C100114",
     ])
 
 # Each offset converts a KiCad footprint orientation to the JLC library orientation.
