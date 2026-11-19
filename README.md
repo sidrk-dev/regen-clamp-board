@@ -563,10 +563,10 @@ LCSC does not stock `200 W` chassis-mount brake resistors or `75–85 °C` `KSD9
 |---|---|---|---|
 | **Brake resistors** | **`2 Ω 200 W`** aluminum-housed wirewound (e.g., TE `HSC2002R0J` or `RX24 200W 2Ω`) at **36 V**; use **`2.5 Ω 200 W`** at **48 V** | `2×` (or `1×` for `≤ 20 A` single-resistor mode) | Two `2 Ω` in parallel (`1 Ω`) absorb up to `~35 A` returned at 36 V while holding the bus at `40.2–40.5 V` (`< 44 V` `moteus r4` limit) |
 | **Thermal switches (`J11`)** | **`KSD9700` Normally Closed (NC), `75 °C` or `80 °C`** (`70–90 °C`, metal w/ sleeve or plastic) | `2×` (+ spares) | Clamp one flat to each resistor case with thermal paste; wire both **in series** on `J11` (LCSC only stocks `50/65 °C` units) |
-| **Heatsink & mounting** | Aluminum heatsink / thick aluminum plate + thermal paste + mounting screws | `1×` plate/sink big enough for both resistors | Mount on a non-flammable surface on the bench (not on the arm) |
+| **Heatsink** | Aluminum heatsink / thick aluminum plate + thermal paste | `1×` plate/sink big enough for both resistors | Mount on a non-flammable surface on the bench (not on the arm) |
 | **Main PSU fuse + holder** | **`30 A` fuse rated `≥ 60 V DC`** (e.g., Littelfuse `58 V`/`80 V` MIDI-HV/MEGA or `10×38 mm` DC fuse) | `1×` (+ spares) | Install in `J1` positive lead; **do not use standard `32 V` automotive fuses** |
 | **Silicone wire & crimps** | `12 AWG` red/black (PSU & `J5` brake leads), `14–16 AWG` (`XT30` outputs), `22–24 AWG` twisted pair (`J11`/`J12`), crimp splices + high-temp silicone/Kapton sleeves | As needed | Crimp `Q136` fuse leads cleanly and insulate (they carry full bus voltage); keep `J5` leads short & twisted |
-| **Header & mounting hardware** | `2-pin` & `3-pin` `2.54 mm` Dupont female housings/crimps (`J11`, `J12`); `#8-32` pan-head screws + standoffs + **SAE** washers (`< 11 mm` OD) | `1` set | Do **not** use oversized USS washers on corner holes `H1–H4` |
+| **Header connectors** | `2-pin` & `3-pin` `2.54 mm` Dupont female housings/crimps (`J11`, `J12`) | `1` set | For connecting the `KSD9700` thermal-switch loop (`J11`) and optional MCU telemetry (`J12`) |
 | **Bench bring-up bleed resistor** | `100 Ω 25 W` power resistor | `1×` (total for bench) | Optional — used temporarily across the bench PSU in Bring-up Step 7 if your supply cannot sink current |
 
 ### Estimated cost
