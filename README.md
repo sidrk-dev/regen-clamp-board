@@ -1,5 +1,7 @@
 # Regen clamp + soft-start board (rev F)
 
+**Quick links:** [JLCPCB Ordering & Settings](#ordering-and-cost) · [Manufacturing Files (`jlcpcb/`)](jlcpcb/) · [Schematic PDF](docs/regen_precharge_schematic.pdf) · [Factory Assembly View](docs/regen_precharge_revF_factory.png) · [Bring-up](#bring-up)
+
 **Prototype for bench evaluation.** The board has not been built or measured. KiCad ERC and DRC pass on this copy,
 and the control rail and braking figures below are design targets from calculation and simulation.
 
@@ -508,22 +510,52 @@ sits by the input, TP24 by the outputs, the others in the control area.
 
 ## Ordering and cost
 
-Use the [rev F Gerbers](jlcpcb/regen_precharge_revF_gerbers.zip), [machine BOM](jlcpcb/BOM-JLCPCB.csv)
-and [placement file](jlcpcb/CPL-JLCPCB.csv) for top-side Economic assembly. The rev F quote used
-two-layer FR-4, 1.6 mm, 1 oz outer copper, and HASL. Select Confirm Parts Placement.
+### Files to upload
 
-The factory places **82 components on 45 BOM lines** (including the six TO-263 MOSFETs). The [hand-solder list](jlcpcb/HAND-SOLDER-parts.csv)
-covers **19 board components** plus the off-board thermal fuse and its spare: seven XT
-connectors, five 470 µF capacitors, the three 1 µF 100 V 1206 capacitors, RV1, SW1 and two headers.
-Quantities are per board.
+| File | Where to use it |
+|---|---|
+| [`jlcpcb/regen_precharge_revF_gerbers.zip`](jlcpcb/regen_precharge_revF_gerbers.zip) | JLCPCB quote page → **Add Gerber file** (11 files: 2 copper layers, top/bottom mask, paste & silkscreen, outline, PTH & NPTH drills) |
+| [`jlcpcb/BOM-JLCPCB.csv`](jlcpcb/BOM-JLCPCB.csv) | JLCPCB PCB Assembly → **Add BOM File** (45 lines, 82 SMT components) |
+| [`jlcpcb/CPL-JLCPCB.csv`](jlcpcb/CPL-JLCPCB.csv) | JLCPCB PCB Assembly → **Add CPL File** (82 top-side placements) |
+| [`jlcpcb/HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv) | Separate LCSC/DigiKey/Mouser cart — **do not upload to JLCPCB PCBA** (19 hand-solder board parts per board + 2 off-board `Q136` thermal fuses) |
 
-Six Extended feeder charges are expected: U1, U4, the CRSS042N10N MOSFETs, D11 and the two 0.1 % resistor values, $18.42 at
-JLCPCB's published Economic rate. Five bare boards with two factory assemblies and hand parts for **both**
-boards (one for the 36 V supply, one for the 48 V supply) come to about $71–$77 before shipping and tax. Hand parts for
-only one board, leaving out the spare output J7 and header J12, bring it to $65.38–$71.65 (the
-[engineering review](docs/arm-manufacturing-review.md) has the breakdown). Check the three assumed Preferred
-codes and any U1 X-ray inspection fee at checkout. The brake resistors, thermal fuses, heat sink, cables and
-mating connectors are extra.
+### Exact JLCPCB settings
+
+| Setting | Value | Notes |
+|---|---|---|
+| **Base Material** | FR-4 | Standard TG 135–140 |
+| **Layers** | 2 | Auto-detected from Gerbers |
+| **Dimensions** | 125 × 100 mm | Auto-detected from Gerbers |
+| **PCB Qty** | 5 | Minimum order (gives 2 assembled + 3 bare spare boards) |
+| **PCB Thickness** | 1.6 mm | Default |
+| **Outer Copper Weight** | **1 oz** | Default rev F quote (`$10.10` for 5 boards); 2 oz (`$47.40`) is optional if you want extra forward-current thermal margin—same Gerbers work for both |
+| **Surface Finish** | HASL (with lead) or LeadFree HASL | Either is fine; ENIG is not required |
+| **Solder Mask / Silkscreen** | Green / White | Standard defaults (free, fastest lead time) |
+| **PCB Assembly (PCBA)** | **Enabled — Economic** | Top side only |
+| **Assembly Side** | **Top Side** | All 82 SMT parts are on the top |
+| **PCBA Qty** | **2** | Minimum for Economic PCBA (or increase if building more boards) |
+| **Tooling Holes** | Added by JLCPCB | Default |
+| **Confirm Parts Placement** | **Yes** (`$0.45`) | **Required** — inspect the 3D preview before paying |
+
+### Step-by-step JLCPCB checkout
+
+1. Upload [`jlcpcb/regen_precharge_revF_gerbers.zip`](jlcpcb/regen_precharge_revF_gerbers.zip) and apply the PCB + PCBA settings above.
+2. Upload [`jlcpcb/BOM-JLCPCB.csv`](jlcpcb/BOM-JLCPCB.csv) and [`jlcpcb/CPL-JLCPCB.csv`](jlcpcb/CPL-JLCPCB.csv).
+3. Verify **45 BOM lines / 82 placements** match LCSC stock. **Six Extended feeder charges (`$18.42`)** are expected: `U1`, `U4`, the six `CRSS042N10N` MOSFETs (`C410926`), `D11`, and the two `0.1 %` resistor values (`R10/R14` and `R11/R15`).
+   - **Important:** Do **not** approve `50 V`-rated `0603` substitutes for the bus-connected resistors `R1, R3, R10, R14, R44` — the specified BOM parts (`C22935`, `C25803`, `C122538`) are rated `75 V`.
+   - Three parts (`D1/D2` `C42371549`, `D12` `C19077413`, `Q4` `C41375109`) are assumed Preferred (`$0` feeder fee); check whether checkout bills any of them as Extended (`+$3.07` each) or adds X-ray inspection on `U1`.
+4. Open the **Confirm Parts Placement** 3D preview and compare every polarized/multi-pin component against the [factory assembly view](docs/regen_precharge_revF_factory.png):
+   - **`U1` (`LM74800`):** Pin 1 dot upper-left.
+   - **`U3` (`LM393`):** Pin 1 dot upper-left; **`U2` (`CJ431`)** and **`U4` (`UCC27517`)** match pads.
+   - **`Q1, Q2, Q3, Q7, Q8, Q9` (`TO-263`):** Large drain tab sits on the large copper tab pad (`Q1/Q7` tabs face right; `Q2/Q8` tabs face left; `Q3/Q9` tabs face right).
+   - **`Q4` (`SOT-223`)**, **`Q10–Q13` (`SOT-23`)**, and **all 12 diodes/LEDs** (`D1, D2, D4, D7, D5, D10, D11, D12, D3, D6, D8, D9`): cathode bar/dot matches silkscreen.
+5. Paste this into the **Assembly Order Remark** box at checkout:
+   > `Hand-soldered SW1 and C1, C2, C6 intentionally omit F.Paste openings. Please apply standard IPC-7525 window-pane stencil segmentation to the six TO-263 drain tabs (Q1, Q2, Q3, Q7, Q8, Q9) and U1's floating thermal pad to minimize reflow voiding and solder pooling.`
+6. Order the remaining **19 hand-solder board parts** per board (seven XT connectors, five `470 µF` capacitors, three `1 µF 100 V` `1206` capacitors, `RV1`, `SW1`, `J11`, `J12`) plus the off-board `Q136` thermal fuses from [`jlcpcb/HAND-SOLDER-parts.csv`](jlcpcb/HAND-SOLDER-parts.csv) on LCSC (quantities in that CSV are per board, except the `Q136` fuse line which is 1 + 1 spare).
+
+### Estimated cost
+
+Five bare boards with two factory assemblies and hand parts for **both** boards (one for the 36 V supply, one for the 48 V supply) come to about **$71–$77** before shipping and tax. Hand parts for only one board, leaving out the spare output `J7` and optional header `J12`, bring it to **$65.38–$71.65** (the [engineering review](docs/arm-manufacturing-review.md) has the exact line-by-line breakdown). The external brake resistors (`2 Ω 200 W` at 36 V, `2.5 Ω` at 48 V), normally-closed `KSD9700` thermal switch, heat sink, input 30 A fuse/holder, cables, and mating XT connectors are extra.
 [JLCPCB’s Economic assembly pricing](https://jlcpcb.com/blog/reduce-pcb-assembly-cost-prototype)
 
 See the [factory assembly view](docs/regen_precharge_revF_factory.png), the [populated top
